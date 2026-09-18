@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Logo Design — Ayoub Chekhab</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  <canvas id="three-canvas"></canvas>
+  <div id="bat-explosion-overlay"></div>
+  <div id="cursor" class="cursor"></div>
+  <div id="cursorRing" class="cursor-ring"></div>
+  <header class="service-header">
+    <a href="index.html" class="back-link"><i class="fas fa-arrow-left"></i> Back</a>
+    <h1>Logo Design</h1>
+  </header>
+
+  <style>
+    /* make gallery cards transparent so homepage background shows through */
+    .plain-image-card { background: transparent; border-color: rgba(255,215,0,0.12); }
+    .plain-image-card img { background: transparent; }
+  </style>
+
+  <main class="service-main">
+    <section class="hero-landing">
+      <h2>Brand Identity & Logo Gallery</h2>
+      <p>Full-resolution logo gallery and project notes.</p>
+    </section>
+    <section class="admin-panel">
+      <button id="toggleManage" aria-expanded="false">Manage Logos</button>
+      <div id="managePanel" style="display:none; margin-top:12px;">
+        <p style="color:var(--text-muted);">يمكنك اختيار ملف للمعاينة (لن يتم حفظ الملف في المجلد تلقائياً). لتحفظ الصورة فعلياً، انسخ الملف يدوياً إلى مجلد <strong>images/</strong> ثم اكتب اسم الملف في خانة النص وحافظ التغييرات.</p>
+        <div id="slotsControls" style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:12px;"></div>
+        <div style="margin-top:12px;display:flex;gap:8px;">
+          <button id="applyBtn">Apply to Gallery</button>
+          <button id="exportBtn">Copy JSON config</button>
+        </div>
+      </div>
+    </section>
+    <section class="plain-gallery" id="logoGallery"></section>
+  </main>
+
+  <footer class="service-footer">
+    <a href="mailto:CHEKHABAYOUB04@GMAIL.COM">Hire for Branding</a>
+  </footer>
+
+  <script>
+    /**
+     * Edit `window.SERVICE_LOGOS` below to change the logos shown in the gallery.
+     * Format: { title: 'Name', url: '#', image: 'images/your-file.jpg' }
+     * - Use relative paths to files inside the `images/` folder.
+     * - To change an image, replace the `image` value with your filename.
+     */
+    window.SERVICE_LOGOS = [
+      { title: 'Batman', url: '#', image: 'images/logo13.jpg' },
+      { title: 'Logo 2', url: '#', image: 'images/logo2.jpg' },
+      { title: 'Logo 3', url: '#', image: 'images/logo3.jpg' },
+      { title: 'Logo 4', url: '#', image: 'images/logo4.jpg' },
+      { title: 'Logo 5', url: '#', image: 'images/logo5.jpg' },
+      { title: 'Logo 6', url: '#', image: 'images/logo6.jpg' },
+      { title: 'Logo 7', url: '#', image: 'images/logo7.jpg' },
+      { title: 'Logo 8', url: '#', image: 'images/logo8.jpg' },
+      { title: 'Logo 9', url: '#', image: 'images/logo9.jpg' },
+      { title: 'Logo 10', url: '#', image: 'images/logo10.jpg' },
+      { title: 'Logo 11', url: '#', image: 'images/logo11.jpg' },
+      { title: 'Logo 12', url: '#', image: 'images/logo12.jpg' }
+    ];
+
+  
+
+    function refreshGallery() {
+      const g = document.getElementById('logoGallery');
+      if (!g) return;
+      g.innerHTML = '';
+      if (!Array.isArray(window.SERVICE_LOGOS)) return;
+      window.SERVICE_LOGOS.forEach(item => {
+        const div = document.createElement('div');
+        div.className = 'plain-image-card';
+        const imageMarkup = item && item.image
+          ? `<img src="${item.image}" alt="${item.title}">`
+          : `<div class="slot-image-empty"><span>Upload Image</span></div>`;
+        div.innerHTML = imageMarkup;
+        g.appendChild(div);
+      });
+    }
+
+    function createManagePanel() {
+      const panel = document.getElementById('managePanel');
+      const controls = document.getElementById('slotsControls');
+      if (!panel || !controls) return;
+      controls.innerHTML = '';
+      const logos = Array.isArray(window.SERVICE_LOGOS) ? window.SERVICE_LOGOS : [];
+      logos.forEach((item, idx) => {
+        const wrap = document.createElement('div');
+        wrap.style.border = '1px solid rgba(255,215,0,.06)';
+        wrap.style.padding = '8px';
+        wrap.style.borderRadius = '6px';
+        wrap.innerHTML = `
+          <div style="height:80px;margin-bottom:8px;display:flex;align-items:center;justify-content:center;background:transparent;border-radius:4px;overflow:hidden;">
+            ${item.image ? `<img src="${item.image}" alt="${item.title}" style="max-width:100%;max-height:100%;">` : '<span style="color:rgba(255,255,255,.4)">empty</span>'}
+          </div>
+          <div style="display:flex;gap:6px;flex-direction:column;">
+            <input type="file" data-idx="${idx}" accept="image/*" class="fileInput">
+            <input type="text" data-idx="${idx}" class="fnameInput" placeholder="type filename in images/ (e.g. logo3.jpg)" value="${item.image ? item.image.replace(/^images\//,'') : ''}">
+          </div>`;
+        controls.appendChild(wrap);
+      });
+
+      // file inputs
+      controls.querySelectorAll('.fileInput').forEach(inp => {
+        inp.addEventListener('change', (e) => {
+          const f = e.target.files && e.target.files[0];
+          const idx = Number(e.target.dataset.idx);
+          if (!f) return;
+          const url = URL.createObjectURL(f);
+          // set preview and temporary image path (objectURL)
+          window.SERVICE_LOGOS[idx].image = url;
+          // update filename input to blank to indicate local preview
+          const txt = controls.querySelector(`.fnameInput[data-idx="${idx}"]`);
+          if (txt) txt.value = '';
+          refreshGallery();
+        });
+      });
+
+      // filename inputs
+      controls.querySelectorAll('.fnameInput').forEach(inp => {
+        inp.addEventListener('change', (e) => {
+          const val = e.target.value.trim();
+          const idx = Number(e.target.dataset.idx);
+          if (val === '') return;
+          window.SERVICE_LOGOS[idx].image = `images/${val}`;
+          refreshGallery();
+        });
+      });
+
+      // apply and export handlers
+      document.getElementById('applyBtn').addEventListener('click', () => {
+        refreshGallery();
+        alert('Applied to gallery. Remember: to make uploaded previews permanent, copy files into the images/ folder and set filenames in the inputs.');
+      });
+
+      document.getElementById('exportBtn').addEventListener('click', async () => {
+        // prepare exportable JSON with images paths only if they are inside images/
+        const exportArr = window.SERVICE_LOGOS.map(s => ({ title: s.title, url: s.url || '#', image: (s.image && s.image.startsWith('images/')) ? s.image : '' }));
+        const txt = JSON.stringify(exportArr, null, 2);
+        try { await navigator.clipboard.writeText(txt); alert('Configuration copied to clipboard. Paste into the script as `window.SERVICE_LOGOS`.'); }
+        catch(e) { prompt('Copy this JSON and paste into your code:', txt); }
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', ()=>{
+      // initial render
+      refreshGallery();
+      // manage panel toggle
+      const toggle = document.getElementById('toggleManage');
+      const panel = document.getElementById('managePanel');
+      toggle.addEventListener('click', () => {
+        const open = panel.style.display === 'block';
+        panel.style.display = open ? 'none' : 'block';
+        toggle.setAttribute('aria-expanded', (!open).toString());
+        if (!open) createManagePanel();
+      });
+    });
+  </script>
+  <script src="js/main.js"></script>
+  <script src="js/service-ui.js"></script>
+</body>
+</html>

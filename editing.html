@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Editing — Ayoub Chekhab</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  <header class="service-header">
+    <a href="index.html" class="back-link"><i class="fas fa-arrow-left"></i> Back</a>
+    <h1>Video & Photo Editing</h1>
+  </header>
+
+  <main class="service-main">
+    <section class="hero-landing">
+      <h2>Samples & Before/After</h2>
+      <p>Editing reels, ad cuts, color grading and compositing examples.</p>
+    </section>
+
+    <section class="editing-samples" id="editSamples"></section>
+  </main>
+
+  <footer class="service-footer">
+    <a href="mailto:CHEKHABAYOUB04@GMAIL.COM">Request Editing Quote</a>
+  </footer>
+
+  <script>
+    window.SERVICE_EDIT_SAMPLES = ['images/portfolio.jpeg','images/kostume01.JPG','images/project-saida.jpg','images/project-coffee.jpg','images/graphic6.jpg'];
+  </script>
+  <script type="module" src="js/service-ui.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', ()=>{
+      const out = document.getElementById('editSamples');
+      if(window.SERVICE_EDIT_SAMPLES){
+        window.SERVICE_EDIT_SAMPLES.forEach(s=>{
+          const div = document.createElement('div'); div.className='edit-item';
+          div.setAttribute('data-gallery', JSON.stringify([s]));
+          div.innerHTML = `<img src="${s}" alt="Sample">`;
+          out.appendChild(div);
+        });
+        if(window.ServiceUI) ServiceUI.initGalleries();
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Ad Campaigns — Ayoub Chekhab</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  <header class="service-header">
+    <a href="index.html" class="back-link"><i class="fas fa-arrow-left"></i> Back</a>
+    <h1>Advertising Campaigns</h1>
+  </header>
+
+  <main class="service-main">
+    <section class="hero-landing">
+      <h2>Campaign Case Studies</h2>
+      <p>Strategy breakdowns, creatives, and performance highlights.</p>
+    </section>
+
+    <section class="case-studies" id="caseStudies"></section>
+  </main>
+
+  <footer class="service-footer">
+    <a href="mailto:CHEKHABAYOUB04@GMAIL.COM">Discuss a Campaign</a>
+  </footer>
+
+  <script>
+    const studies = [
+      {title:'Coffee Break DZ', desc:'Local café campaign', assets:['images/project-coffee.jpg'], website:'https://sites.google.com/view/coffebreakdz/home'},
+      {title:'Titan Gym Promo', desc:'Gym sign-ups campaign', assets:['images/titangym .jpg'], website:'https://quiet-eclair-da88f3.netlify.app/'},
+      {title:'Dr. Badis Campaign', desc:'Medical clinic outreach', assets:['images/project-drbadis.jpg'], website:'https://chekhabayoub11-ops.github.io/dr.badis/'},
+      {title:'Dr. 213 Campaign', desc:'Medical platform promotion', assets:['images/project-dr213.jpg'], website:'https://chekhabayoub11-ops.github.io/dr.213/'},
+      {title:'Real Estate Promo', desc:'Architectural project campaign', assets:['images/Modern promotional website.jpg'], website:'https://chekhabayoub04-glitch.github.io/new-vession-promition-/'},
+      {title:'We Can Speak Deutsch', desc:'Language learning campaign', assets:['images/project-deutsch.jpg'], website:'https://chekhabayoub11-ops.github.io/we-can-speak-deutsch/'}
+    ];
+    const el = document.getElementById('caseStudies');
+    studies.forEach(s => {
+      const d = document.createElement('div'); d.className='case-item';
+      d.innerHTML = `<h3>${s.title}</h3><p>${s.desc}</p><p><a href="${s.website}" target="_blank">Visit Site <i class='fas fa-external-link-alt'></i></a></p><div class='assets'>${s.assets.map(a=>`<img src="${a}" alt="${s.title}">`).join('')}</div>`;
+      el.appendChild(d);
+    });
+  </script>
+</body>
+</html>

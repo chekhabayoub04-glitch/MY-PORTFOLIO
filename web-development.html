@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Web Development — Ayoub Chekhab</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  <header class="service-header">
+    <a href="index.html" class="back-link"><i class="fas fa-arrow-left"></i> Back</a>
+    <h1>Web Development</h1>
+  </header>
+
+  <main class="service-main">
+    <section class="hero-landing">
+      <h2>Landing Pages & Full Websites</h2>
+      <p>Case studies, live links, and deployment details for each project.</p>
+    </section>
+
+    <section class="projects-slider" aria-label="Projects carousel">
+      <div class="projects-rail" id="projectsList"></div>
+      <div class="carousel-controls">
+        <button class="ctrl prev" type="button" aria-label="Previous project">‹</button>
+        <button class="ctrl next" type="button" aria-label="Next project">›</button>
+      </div>
+    </section>
+  </main>
+
+  <footer class="service-footer">
+    <a href="mailto:CHEKHABAYOUB04@GMAIL.COM">Contact Me</a>
+  </footer>
+
+  <script>
+    window.SERVICE_PROJECTS = [
+      { title: 'TITAN GYM', desc: 'Fitness gym website', url: 'https://quiet-eclair-da88f3.netlify.app/' , img: 'images/titangym .jpg'},
+      { title: 'Dr. Badis', desc: 'Medical clinic website', url: 'https://chekhabayoub11-ops.github.io/dr.badis/', img: 'images/project-drbadis.jpg'},
+      { title: 'Dr. 213', desc: 'Medical platform', url: 'https://chekhabayoub11-ops.github.io/dr.213/', img: 'images/project-dr213.jpg'},
+      { title: 'We Can Speak Deutsch', desc: 'German learning platform', url: 'https://chekhabayoub11-ops.github.io/we-can-speak-deutsch/', img: 'images/project-deutsch.jpg'},
+      { title: 'Coffee Break DZ', desc: 'Café website', url: 'https://sites.google.com/view/coffebreakdz/home', img: 'images/project-coffee.jpg'},
+      { title: 'Real Estate Project', desc: 'Building study and architectural presentation', url: 'https://chekhabayoub04-glitch.github.io/new-vession-promition-/', img: 'images/Modern promotional website.jpg'}
+    ];
+  </script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const rail = document.getElementById('projectsList');
+      if (!rail) return;
+
+      const items = window.SERVICE_PROJECTS || [];
+      if (!items.length) return;
+
+      items.forEach((item) => {
+        const card = document.createElement('div');
+        card.className = 'project-slide';
+        card.setAttribute('role', 'link');
+        card.setAttribute('tabindex', '0');
+        card.setAttribute('aria-label', item.title);
+        card.innerHTML = `
+          <div class="project-slide-media" style="background-image:url('${item.img.replace(/"/g, '\\"')}')"></div>
+          <div class="project-slide-body">
+            <h3>${item.title}</h3>
+            <p>${item.desc}</p>
+            <span class="project-link">Open project</span>
+          </div>
+        `;
+
+        const openLink = () => {
+          if (!item.url || item.url === '#') return;
+          window.location.href = item.url;
+        };
+
+        card.addEventListener('click', (event) => {
+          if (dragMoved) {
+            event.preventDefault();
+            dragMoved = false;
+            return;
+          }
+          openLink();
+        });
+
+        card.addEventListener('keydown', (event) => {
+          if (event.key === 'Enter' || event.key === ' ') {
+            event.preventDefault();
+            openLink();
+          }
+        });
+
+        rail.appendChild(card);
+      });
+
+      const prevBtn = document.querySelector('.ctrl.prev');
+      const nextBtn = document.querySelector('.ctrl.next');
+
+      const scrollByCard = () => {
+        const firstCard = rail.querySelector('.project-slide');
+        if (!firstCard) return 420;
+        const gap = 22;
+        const cardWidth = firstCard.getBoundingClientRect().width;
+        return Math.round(cardWidth + gap);
+      };
+
+      const goNext = () => rail.scrollBy({ left: scrollByCard(), behavior: 'smooth' });
+      const goPrev = () => rail.scrollBy({ left: -scrollByCard(), behavior: 'smooth' });
+
+      prevBtn?.addEventListener('click', goPrev);
+      nextBtn?.addEventListener('click', goNext);
+
+      let isDown = false;
+      let startX = 0;
+      let startScrollLeft = 0;
+      let dragMoved = false;
+
+      rail.style.cursor = 'grab';
+      rail.addEventListener('pointerdown', (event) => {
+        isDown = true;
+        dragMoved = false;
+        startX = event.clientX;
+        startScrollLeft = rail.scrollLeft;
+        rail.setPointerCapture(event.pointerId);
+        rail.style.cursor = 'grabbing';
+      });
+
+      rail.addEventListener('pointermove', (event) => {
+        if (!isDown) return;
+        const dx = Math.abs(event.clientX - startX);
+        if (dx > 6) dragMoved = true;
+        const dragX = event.clientX - startX;
+        rail.scrollLeft = startScrollLeft - dragX;
+      });
+
+      const stopDragging = (event) => {
+        if (!isDown) return;
+        isDown = false;
+        rail.style.cursor = 'grab';
+        if (event && rail.hasPointerCapture && rail.hasPointerCapture(event.pointerId)) {
+          rail.releasePointerCapture(event.pointerId);
+        }
+      };
+
+      rail.addEventListener('pointerup', () => {
+        stopDragging();
+        dragMoved = false;
+      });
+      rail.addEventListener('pointerleave', () => {
+        stopDragging();
+        dragMoved = false;
+      });
+      rail.addEventListener('pointercancel', () => {
+        stopDragging();
+        dragMoved = false;
+      });
+
+      rail.querySelectorAll('.project-slide').forEach((link) => {
+        link.addEventListener('click', (event) => {
+          if (dragMoved) {
+            event.preventDefault();
+            dragMoved = false;
+          }
+        });
+      });
+
+      rail.addEventListener('wheel', (event) => {
+        event.preventDefault();
+        if (event.deltaY > 0) goNext(); else goPrev();
+      }, { passive: false });
+    });
+  </script>
+</body>
+</html>
