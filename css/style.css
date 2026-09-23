@@ -777,7 +777,6 @@ footer {
 }
 
 .project-slide:hover {
-  transform: translateY(-6px);
   border-color: rgba(255,215,0,.45);
 }
 
