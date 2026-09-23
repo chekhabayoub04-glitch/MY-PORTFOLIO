@@ -59,9 +59,9 @@
         card.innerHTML = `
           <div class="project-slide-media" style="background-image:url('${item.img.replace(/"/g, '\\"')}')"></div>
           <div class="project-slide-body">
-            <h3>${item.title}</h3>
+            <h3><a class="project-title" href="${item.url}" target="_blank" rel="noopener noreferrer">${item.title}</a></h3>
             <p>${item.desc}</p>
-            <span class="project-link">Open project</span>
+            <a class="project-link" href="${item.url}" target="_blank" rel="noopener noreferrer">Open project <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
           </div>
         `;
 
@@ -76,6 +76,7 @@
             dragMoved = false;
             return;
           }
+          if (event.target.closest('a')) return;
           openLink();
         });
 
@@ -138,27 +139,9 @@
         }
       };
 
-      rail.addEventListener('pointerup', () => {
-        stopDragging();
-        dragMoved = false;
-      });
-      rail.addEventListener('pointerleave', () => {
-        stopDragging();
-        dragMoved = false;
-      });
-      rail.addEventListener('pointercancel', () => {
-        stopDragging();
-        dragMoved = false;
-      });
-
-      rail.querySelectorAll('.project-slide').forEach((link) => {
-        link.addEventListener('click', (event) => {
-          if (dragMoved) {
-            event.preventDefault();
-            dragMoved = false;
-          }
-        });
-      });
+      rail.addEventListener('pointerup', stopDragging);
+      rail.addEventListener('pointerleave', stopDragging);
+      rail.addEventListener('pointercancel', stopDragging);
 
       rail.addEventListener('wheel', (event) => {
         event.preventDefault();
