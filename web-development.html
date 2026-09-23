@@ -51,39 +51,25 @@
       if (!items.length) return;
 
       items.forEach((item) => {
-        const card = document.createElement('div');
+        const card = document.createElement('a');
         card.className = 'project-slide';
-        card.setAttribute('role', 'link');
-        card.setAttribute('tabindex', '0');
+        card.href = item.url || '#';
+        card.target = '_blank';
+        card.rel = 'noopener noreferrer';
         card.setAttribute('aria-label', item.title);
         card.innerHTML = `
           <div class="project-slide-media" style="background-image:url('${item.img.replace(/"/g, '\\"')}')"></div>
           <div class="project-slide-body">
-            <h3><a class="project-title" href="${item.url}" target="_blank" rel="noopener noreferrer">${item.title}</a></h3>
+            <h3>${item.title}</h3>
             <p>${item.desc}</p>
-            <a class="project-link" href="${item.url}" target="_blank" rel="noopener noreferrer">Open project <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+            <span class="project-link">Open project <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></span>
           </div>
         `;
-
-        const openLink = () => {
-          if (!item.url || item.url === '#') return;
-          window.location.href = item.url;
-        };
 
         card.addEventListener('click', (event) => {
           if (dragMoved) {
             event.preventDefault();
             dragMoved = false;
-            return;
-          }
-          if (event.target.closest('a')) return;
-          openLink();
-        });
-
-        card.addEventListener('keydown', (event) => {
-          if (event.key === 'Enter' || event.key === ' ') {
-            event.preventDefault();
-            openLink();
           }
         });
 
