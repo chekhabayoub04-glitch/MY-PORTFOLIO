@@ -40,7 +40,8 @@ const pMat = new THREE.PointsMaterial({
   size: .1, vertexColors: true, transparent: true, opacity: .6,
   sizeAttenuation: true, blending: THREE.AdditiveBlending, depthWrite: false,
 });
-scene.add(new THREE.Points(pGeo, pMat));
+const particleCloud = new THREE.Points(pGeo, pMat);
+scene.add(particleCloud);
 
 // ── Floating Shapes ──────────────────────────────────────────
 const matSolid = new THREE.MeshStandardMaterial({ color: 0xFFD700, emissive: 0xFDB813, emissiveIntensity: .3, transparent: true, opacity: .6, metalness: .8, roughness: .2 });
@@ -58,6 +59,7 @@ const shapeDefs = [
 const floatingShapes = shapeDefs.map(([geo, x, y, z, mat]) => {
   const mesh = new THREE.Mesh(geo, mat.clone());
   mesh.position.set(x, y, z);
+  mesh.userData.baseY = y;
   scene.add(mesh);
   return mesh;
 });
@@ -106,13 +108,14 @@ document.addEventListener('mousemove', e => {
 
 // ── Animation Loop ───────────────────────────────────────────
 const clock = new THREE.Clock();
+const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 (function animate() {
-  requestAnimationFrame(animate);
-  const t = clock.getElapsedTime();
+  if (!prefersReducedMotion) requestAnimationFrame(animate);
+  const t = prefersReducedMotion ? 0 : clock.getElapsedTime();
 
   // Rotate particle cloud slowly
-  scene.children[0] && (scene.children[0].rotation && (scene.children[0].rotation.y = t * .02));
+  particleCloud.rotation.y = t * .02;
 
   // Animate floating shapes
   floatingShapes.forEach((mesh, i) => {
@@ -120,7 +123,7 @@ const clock = new THREE.Clock();
     mesh.rotation.x = t * s * .4;
     mesh.rotation.y = t * s * .6;
     mesh.rotation.z = t * s * .2;
-    mesh.position.y += Math.sin(t * .5 + i * 1.2) * .002;
+    mesh.position.y = mesh.userData.baseY + Math.sin(t * .5 + i * 1.2) * .35;
   });
 
   // Animate bats (gentle flap + drift)

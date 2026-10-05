@@ -29,7 +29,7 @@
   <script>
     const studies = [
       {title:'Coffee Break DZ', desc:'Local café campaign', assets:['images/project-coffee.jpg'], website:'https://sites.google.com/view/coffebreakdz/home'},
-      {title:'Titan Gym Promo', desc:'Gym sign-ups campaign', assets:['images/titangym .jpg'], website:'https://quiet-eclair-da88f3.netlify.app/'},
+      {title:'Titan Gym Promo', desc:'Gym sign-ups campaign', assets:['images/titangym.jpg'], website:'https://chekhabayoub04-glitch.github.io/titan-gym/'},
       {title:'Dr. Badis Campaign', desc:'Medical clinic outreach', assets:['images/project-drbadis.jpg'], website:'https://chekhabayoub11-ops.github.io/dr.badis/'},
       {title:'Dr. 213 Campaign', desc:'Medical platform promotion', assets:['images/project-dr213.jpg'], website:'https://chekhabayoub11-ops.github.io/dr.213/'},
       {title:'Real Estate Promo', desc:'Architectural project campaign', assets:['images/Modern promotional website.jpg'], website:'https://chekhabayoub04-glitch.github.io/new-vession-promition-/'},
@@ -38,7 +38,7 @@
     const el = document.getElementById('caseStudies');
     studies.forEach(s => {
       const d = document.createElement('div'); d.className='case-item';
-      d.innerHTML = `<h3>${s.title}</h3><p>${s.desc}</p><p><a href="${s.website}" target="_blank">Visit Site <i class='fas fa-external-link-alt'></i></a></p><div class='assets'>${s.assets.map(a=>`<img src="${a}" alt="${s.title}">`).join('')}</div>`;
+      d.innerHTML = `<h3>${s.title}</h3><p>${s.desc}</p><p><a href="${s.website}" target="_blank" rel="noopener noreferrer">Visit Site <i class='fas fa-external-link-alt' aria-hidden='true'></i></a></p><div class='assets'>${s.assets.map(a=>`<img src="${a}" alt="${s.title}">`).join('')}</div>`;
       el.appendChild(d);
     });
   </script>

@@ -34,7 +34,7 @@
 
   <script>
     window.SERVICE_PROJECTS = [
-      { title: 'TITAN GYM', desc: 'Fitness gym website', url: 'https://quiet-eclair-da88f3.netlify.app/' , img: 'images/titangym .jpg'},
+      { title: 'TITAN GYM', desc: 'Fitness gym website', url: 'https://chekhabayoub04-glitch.github.io/titan-gym/' , img: 'images/titangym.jpg'},
       { title: 'Dr. Badis', desc: 'Medical clinic website', url: 'https://chekhabayoub11-ops.github.io/dr.badis/', img: 'images/project-drbadis.jpg'},
       { title: 'Dr. 213', desc: 'Medical platform', url: 'https://chekhabayoub11-ops.github.io/dr.213/', img: 'images/project-dr213.jpg'},
       { title: 'We Can Speak Deutsch', desc: 'German learning platform', url: 'https://chekhabayoub11-ops.github.io/we-can-speak-deutsch/', img: 'images/project-deutsch.jpg'},
@@ -53,7 +53,9 @@
       items.forEach((item) => {
         const card = document.createElement('a');
         card.className = 'project-slide';
-        card.href = item.url || '#';
+        card.href = item.url;
+        card.target = '_blank';
+        card.rel = 'noopener noreferrer';
         card.setAttribute('aria-label', item.title);
         card.innerHTML = `
           <div class="project-slide-media" style="background-image:url('${item.img.replace(/"/g, '\\"')}')"></div>
@@ -84,10 +86,6 @@
       prevBtn?.addEventListener('click', goPrev);
       nextBtn?.addEventListener('click', goNext);
 
-      rail.addEventListener('wheel', (event) => {
-        event.preventDefault();
-        if (event.deltaY > 0) goNext(); else goPrev();
-      }, { passive: false });
     });
   </script>
 </body>

@@ -35,7 +35,7 @@
       const out = document.getElementById('editSamples');
       if(window.SERVICE_EDIT_SAMPLES){
         window.SERVICE_EDIT_SAMPLES.forEach(s=>{
-          const div = document.createElement('div'); div.className='edit-item';
+          const div = document.createElement('button'); div.type = 'button'; div.className='edit-item';
           div.setAttribute('data-gallery', JSON.stringify([s]));
           div.innerHTML = `<img src="${s}" alt="Sample">`;
           out.appendChild(div);

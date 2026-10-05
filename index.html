@@ -22,10 +22,10 @@
   <div class="cursor-ring" id="cursorRing"></div>
 
   <!-- Three.js Background Canvas -->
-  <canvas id="three-canvas"></canvas>
+  <canvas id="three-canvas" aria-hidden="true"></canvas>
 
   <!-- Bat Explosion Overlay (on load) -->
-  <div id="bat-explosion-overlay"></div>
+  <div id="bat-explosion-overlay" aria-hidden="true"></div>
 
   <div id="content">
 
@@ -42,12 +42,12 @@
         <li><a href="#hero">Home</a></li>
         <li><a href="#education">Education</a></li>
         <li><a href="#services">Services</a></li>
-        <li><a href="#services">Work</a></li>
+        <li><a href="#work">Work</a></li>
         <li><a href="#contact">Contact</a></li>
       </ul>
 
       <!-- Mobile hamburger -->
-      <button class="nav-hamburger" id="hamburger" aria-label="Menu">
+      <button class="nav-hamburger" id="hamburger" aria-label="Menu" aria-controls="mobileMenu" aria-expanded="false">
         <span></span><span></span><span></span>
       </button>
 
@@ -61,7 +61,7 @@
       <a href="#hero"      onclick="closeMobileMenu()">Home</a>
       <a href="#education" onclick="closeMobileMenu()">Education</a>
       <a href="#services"  onclick="closeMobileMenu()">Services</a>
-      <a href="#services"  onclick="closeMobileMenu()">Work</a>
+      <a href="#work"      onclick="closeMobileMenu()">Work</a>
       <a href="#contact"   onclick="closeMobileMenu()">Contact</a>
     </div>
 
@@ -244,6 +244,12 @@
           <a class="glass-card service-card reveal" href="social-media.html">
             <div class="service-body"><h3>Social Media</h3><p>Campaign creatives and templates.</p></div>
           </a>
+          <a class="glass-card service-card reveal" href="campaigns.html">
+            <div class="service-body"><h3>Campaigns</h3><p>Advertising campaign case studies and creative work.</p></div>
+          </a>
+          <a class="glass-card service-card reveal" href="editing.html">
+            <div class="service-body"><h3>Photo &amp; Video Editing</h3><p>Editing samples, color work, and promotional content.</p></div>
+          </a>
         </div>
 
       </div>
@@ -265,9 +271,7 @@
             </p>
             <div class="contact-media">
               <div class="socials">
-                <a href="https://www.linkedin.com/in/ayoub-chekhab-152750257/" target="_blank" rel="noreferrer" class="social-btn social-art social-linkedin" aria-label="LinkedIn"><span>LinkedIn</span></a>
-                <a href="#" class="social-btn social-art social-instagram" aria-label="Instagram"><span>Instagram</span></a>
-                <a href="#" class="social-btn social-art social-github" aria-label="GitHub"><span>GitHub</span></a>
+                <a href="https://www.linkedin.com/in/ayoub-chekhab-152750257/" target="_blank" rel="noopener noreferrer" class="social-btn social-art social-linkedin" aria-label="LinkedIn"><span>LinkedIn</span></a>
                 <a href="mailto:CHEKHABAYOUB04@GMAIL.COM" class="social-btn email social-art social-email" aria-label="Email"><span>CHEKHABAYOUB04@GMAIL.COM</span></a>
                 <a href="tel:0658030536" class="social-btn phone social-art social-phone" aria-label="Phone"><span>0658030536</span></a>
               </div>
@@ -277,14 +281,19 @@
           </div>
 
           <div class="reveal" style="transition-delay:.2s">
-            <form class="contact-form" onsubmit="return false">
-              <input  class="form-field" type="text"  placeholder="Your Name"    required>
-              <input  class="form-field" type="email" placeholder="Your Email"   required>
-              <input  class="form-field" type="text"  placeholder="Subject">
-              <textarea class="form-field" rows="5"   placeholder="Your message..."></textarea>
+            <form class="contact-form" id="contactForm" aria-describedby="contactFormNote">
+              <label class="sr-only" for="contactName">Your name</label>
+              <input id="contactName" name="name" class="form-field" type="text" autocomplete="name" placeholder="Your Name" required>
+              <label class="sr-only" for="contactEmail">Your email</label>
+              <input id="contactEmail" name="email" class="form-field" type="email" autocomplete="email" placeholder="Your Email" required>
+              <label class="sr-only" for="contactSubject">Subject</label>
+              <input id="contactSubject" name="subject" class="form-field" type="text" placeholder="Subject">
+              <label class="sr-only" for="contactMessage">Your message</label>
+              <textarea id="contactMessage" name="message" class="form-field" rows="5" placeholder="Your message..." required></textarea>
               <button class="btn-primary" type="submit">
-                Send Message &nbsp;<i class="fas fa-paper-plane"></i>
+                Continue in Email &nbsp;<i class="fas fa-paper-plane"></i>
               </button>
+              <p class="form-note" id="contactFormNote">Submitting opens a prefilled message in your email app.</p>
             </form>
           </div>
 
@@ -295,7 +304,7 @@
     <!-- ============ FOOTER ============ -->
     <footer>
       <img src="images/batman-logo.png" alt="Batman Logo" class="footer-bat">
-      <span class="footer-copy">© 2025 Ayoub Chekhab — All rights reserved</span>
+      <span class="footer-copy">© <span id="copyrightYear">2026</span> Ayoub Chekhab — All rights reserved</span>
       <img src="images/batman-logo.png" alt="Batman Logo" class="footer-bat">
     </footer>
 

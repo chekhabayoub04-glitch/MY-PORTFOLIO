@@ -51,8 +51,10 @@
     function refreshSocialGallery(){
       const g = document.getElementById('socialGallery'); if(!g) return; g.innerHTML = '';
       window.SOCIAL_SLOTS.forEach((s, idx) => {
-        const card = document.createElement('div');
+        const card = document.createElement('button');
+        card.type = 'button';
         card.className = 'social-card plain-image-card';
+        card.setAttribute('aria-label', `View ${s.title || `image ${idx + 1}`}`);
         card.setAttribute('data-idx', idx);
         if (s.image) {
           const img = document.createElement('img');
@@ -71,12 +73,13 @@
     function createSocialLightbox() {
       if (document.getElementById('socialLightbox')) return;
       const lb = document.createElement('div'); lb.id = 'socialLightbox'; lb.className = 'service-lightbox';
+      lb.setAttribute('role', 'dialog'); lb.setAttribute('aria-modal', 'true'); lb.setAttribute('aria-label', 'Social media image viewer');
       lb.innerHTML = `
         <div class="lb-inner">
-          <button class="lb-close">✕</button>
-          <button class="lb-prev">‹</button>
+          <button class="lb-close" type="button" aria-label="Close image viewer">✕</button>
+          <button class="lb-prev" type="button" aria-label="Previous image">‹</button>
           <div class="lb-stage"><img src="" alt=""></div>
-          <button class="lb-next">›</button>
+          <button class="lb-next" type="button" aria-label="Next image">›</button>
         </div>`;
       document.body.appendChild(lb);
       const img = lb.querySelector('.lb-stage img');
@@ -139,7 +142,7 @@
     @media (max-width: 700px) { #socialGallery { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
     @media (max-width: 420px) { #socialGallery { grid-template-columns: 1fr; } }
 
-    .social-card { aspect-ratio: 1/1; overflow: hidden; border-radius: 12px; border: 1px solid rgba(255,215,0,.06); background: rgba(10,10,10,0.35); display:flex; align-items:center; justify-content:center; }
+    .social-card { appearance: none; padding: 0; color: inherit; aspect-ratio: 1/1; overflow: hidden; border-radius: 12px; border: 1px solid rgba(255,215,0,.06); background: rgba(10,10,10,0.35); display:flex; align-items:center; justify-content:center; }
     .social-card img { width:100%; height:100%; display:block; object-fit:cover; }
     .social-card .slot-image-empty { padding:24px; }
   </style>

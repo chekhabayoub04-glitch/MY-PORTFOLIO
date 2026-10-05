@@ -8,8 +8,8 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-  <canvas id="three-canvas"></canvas>
-  <div id="bat-explosion-overlay"></div>
+  <canvas id="three-canvas" aria-hidden="true"></canvas>
+  <div id="bat-explosion-overlay" aria-hidden="true"></div>
   <div id="cursor" class="cursor"></div>
   <div id="cursorRing" class="cursor-ring"></div>
   <header class="service-header">
@@ -73,15 +73,22 @@
     function refreshGallery() {
       const g = document.getElementById('logoGallery');
       if (!g) return;
-      g.innerHTML = '';
+      g.replaceChildren();
       if (!Array.isArray(window.SERVICE_LOGOS)) return;
       window.SERVICE_LOGOS.forEach(item => {
         const div = document.createElement('div');
         div.className = 'plain-image-card';
-        const imageMarkup = item && item.image
-          ? `<img src="${item.image}" alt="${item.title}">`
-          : `<div class="slot-image-empty"><span>Upload Image</span></div>`;
-        div.innerHTML = imageMarkup;
+        if (item && item.image) {
+          const img = document.createElement('img');
+          img.src = item.image;
+          img.alt = item.title || 'Logo design';
+          div.appendChild(img);
+        } else {
+          const empty = document.createElement('div');
+          empty.className = 'slot-image-empty';
+          empty.textContent = 'Upload Image';
+          div.appendChild(empty);
+        }
         g.appendChild(div);
       });
     }
@@ -90,21 +97,39 @@
       const panel = document.getElementById('managePanel');
       const controls = document.getElementById('slotsControls');
       if (!panel || !controls) return;
-      controls.innerHTML = '';
+      controls.replaceChildren();
       const logos = Array.isArray(window.SERVICE_LOGOS) ? window.SERVICE_LOGOS : [];
       logos.forEach((item, idx) => {
         const wrap = document.createElement('div');
         wrap.style.border = '1px solid rgba(255,215,0,.06)';
         wrap.style.padding = '8px';
         wrap.style.borderRadius = '6px';
-        wrap.innerHTML = `
-          <div style="height:80px;margin-bottom:8px;display:flex;align-items:center;justify-content:center;background:transparent;border-radius:4px;overflow:hidden;">
-            ${item.image ? `<img src="${item.image}" alt="${item.title}" style="max-width:100%;max-height:100%;">` : '<span style="color:rgba(255,255,255,.4)">empty</span>'}
-          </div>
-          <div style="display:flex;gap:6px;flex-direction:column;">
-            <input type="file" data-idx="${idx}" accept="image/*" class="fileInput">
-            <input type="text" data-idx="${idx}" class="fnameInput" placeholder="type filename in images/ (e.g. logo3.jpg)" value="${item.image ? item.image.replace(/^images\//,'') : ''}">
-          </div>`;
+        const preview = document.createElement('div');
+        preview.style.cssText = 'height:80px;margin-bottom:8px;display:flex;align-items:center;justify-content:center;background:transparent;border-radius:4px;overflow:hidden;';
+        if (item.image) {
+          const img = document.createElement('img');
+          img.src = item.image;
+          img.alt = item.title || 'Logo preview';
+          img.style.cssText = 'max-width:100%;max-height:100%;';
+          preview.appendChild(img);
+        } else {
+          const empty = document.createElement('span');
+          empty.style.color = 'rgba(255,255,255,.4)';
+          empty.textContent = 'empty';
+          preview.appendChild(empty);
+        }
+        const fields = document.createElement('div');
+        fields.style.cssText = 'display:flex;gap:6px;flex-direction:column;';
+        const fileInput = document.createElement('input');
+        fileInput.type = 'file'; fileInput.dataset.idx = idx; fileInput.accept = 'image/*'; fileInput.className = 'fileInput';
+        fileInput.setAttribute('aria-label', `Choose preview for ${item.title || `logo ${idx + 1}`}`);
+        const nameInput = document.createElement('input');
+        nameInput.type = 'text'; nameInput.dataset.idx = idx; nameInput.className = 'fnameInput';
+        nameInput.placeholder = 'Filename in images/ (e.g. logo3.jpg)';
+        nameInput.value = item.image ? item.image.replace(/^images\//, '') : '';
+        nameInput.setAttribute('aria-label', `Image filename for ${item.title || `logo ${idx + 1}`}`);
+        fields.append(fileInput, nameInput);
+        wrap.append(preview, fields);
         controls.appendChild(wrap);
       });
 
@@ -130,23 +155,14 @@
           const val = e.target.value.trim();
           const idx = Number(e.target.dataset.idx);
           if (val === '') return;
+          if (/[\\/\\\\<>\"']/.test(val) || val.startsWith('.')) {
+            alert('Enter a filename only, without folders or special characters.');
+            e.target.value = '';
+            return;
+          }
           window.SERVICE_LOGOS[idx].image = `images/${val}`;
           refreshGallery();
         });
-      });
-
-      // apply and export handlers
-      document.getElementById('applyBtn').addEventListener('click', () => {
-        refreshGallery();
-        alert('Applied to gallery. Remember: to make uploaded previews permanent, copy files into the images/ folder and set filenames in the inputs.');
-      });
-
-      document.getElementById('exportBtn').addEventListener('click', async () => {
-        // prepare exportable JSON with images paths only if they are inside images/
-        const exportArr = window.SERVICE_LOGOS.map(s => ({ title: s.title, url: s.url || '#', image: (s.image && s.image.startsWith('images/')) ? s.image : '' }));
-        const txt = JSON.stringify(exportArr, null, 2);
-        try { await navigator.clipboard.writeText(txt); alert('Configuration copied to clipboard. Paste into the script as `window.SERVICE_LOGOS`.'); }
-        catch(e) { prompt('Copy this JSON and paste into your code:', txt); }
       });
     }
 
@@ -161,6 +177,18 @@
         panel.style.display = open ? 'none' : 'block';
         toggle.setAttribute('aria-expanded', (!open).toString());
         if (!open) createManagePanel();
+      });
+
+      document.getElementById('applyBtn').addEventListener('click', () => {
+        refreshGallery();
+        alert('Applied to this preview. Copy the JSON configuration to keep these changes after reloading.');
+      });
+
+      document.getElementById('exportBtn').addEventListener('click', async () => {
+        const exportArr = window.SERVICE_LOGOS.map(s => ({ title: s.title, url: s.url || '#', image: (s.image && s.image.startsWith('images/')) ? s.image : '' }));
+        const txt = JSON.stringify(exportArr, null, 2);
+        try { await navigator.clipboard.writeText(txt); alert('Configuration copied. Paste it into the SERVICE_LOGOS list in this file to keep the changes.'); }
+        catch(e) { prompt('Copy this JSON and paste it into the SERVICE_LOGOS list:', txt); }
       });
     });
   </script>

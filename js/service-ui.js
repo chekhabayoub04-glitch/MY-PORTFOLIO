@@ -3,7 +3,7 @@
   // Render 3D carousel for projects
   function initCarousel(containerSelector, items, options = {}){
     const container = document.querySelector(containerSelector);
-    if(!container) return;
+    if(!container || !Array.isArray(items) || !items.length) return;
     container.classList.add('carousel-3d');
     const radius = options.radius || 340;
     const theta = 360 / items.length;
@@ -29,11 +29,10 @@
         const url = el.getAttribute('data-url') || '#';
         if(url && url !== '#') {
           // open in new tab for reliability
-          window.open(url, '_blank');
+          window.open(url, '_blank', 'noopener,noreferrer');
         }
       });
       // keyboard support
-      el.addEventListener('keydown', (e)=>{ if(e.key === 'Enter' || e.key === ' ') { e.preventDefault(); const url=el.getAttribute('data-url'); if(url) window.open(url,'_blank'); } });
       container.appendChild(el);
     });
 
@@ -101,28 +100,33 @@
       const raw = -currentRotation / theta; let nearest = Math.round(raw); goToIndex(nearest);
     });
 
-    // wheel support (desktop) -> advance one by one
-    container.addEventListener('wheel', (e)=>{
-      e.preventDefault(); if(e.deltaY > 0) next(); else prev();
-    }, {passive:false});
   }
 
   // Simple lightbox with swipe
   function createLightbox(){
-    const lb = document.createElement('div'); lb.id='serviceLightbox'; lb.className='service-lightbox'; lb.innerHTML = `
+    const lb = document.createElement('div'); lb.id='serviceLightbox'; lb.className='service-lightbox';
+    lb.setAttribute('role', 'dialog'); lb.setAttribute('aria-modal', 'true'); lb.setAttribute('aria-label', 'Image viewer');
+    lb.innerHTML = `
       <div class="lb-inner">
-        <button class="lb-close">✕</button>
-        <button class="lb-prev">‹</button>
+        <button class="lb-close" type="button" aria-label="Close image viewer">✕</button>
+        <button class="lb-prev" type="button" aria-label="Previous image">‹</button>
         <div class="lb-stage"><img src="" alt=""></div>
-        <button class="lb-next">›</button>
+        <button class="lb-next" type="button" aria-label="Next image">›</button>
       </div>`;
     document.body.appendChild(lb);
     const img = lb.querySelector('.lb-stage img');
     let list = [], idx = 0;
-    function show(i){ idx = (i+list.length)%list.length; img.src = list[idx]; lb.classList.add('open'); }
+    function show(i){ if (!list.length) return; idx = (i+list.length)%list.length; img.src = list[idx]; lb.classList.add('open'); lb.querySelector('.lb-close').focus(); }
     lb.querySelector('.lb-close').onclick = ()=> lb.classList.remove('open');
     lb.querySelector('.lb-prev').onclick = ()=> show(idx-1);
     lb.querySelector('.lb-next').onclick = ()=> show(idx+1);
+    lb.addEventListener('click', e => { if (e.target === lb) lb.classList.remove('open'); });
+    document.addEventListener('keydown', e => {
+      if (!lb.classList.contains('open')) return;
+      if (e.key === 'Escape') lb.classList.remove('open');
+      if (e.key === 'ArrowLeft') show(idx - 1);
+      if (e.key === 'ArrowRight') show(idx + 1);
+    });
     // touch
     let startX=0;
     img.addEventListener('touchstart', (e)=> startX = e.touches[0].clientX);
@@ -151,7 +155,7 @@
       modal.innerHTML = `
         <div class="embed-inner">
           <button class="embed-close">✕</button>
-          <div class="embed-toolbar"><a class="embed-newtab" target="_blank">Open in new tab</a></div>
+        <div class="embed-toolbar"><a class="embed-newtab" target="_blank" rel="noopener noreferrer">Open in new tab</a></div>
           <div class="embed-stage"><iframe src="" frameborder="0" sandbox="allow-scripts allow-forms allow-same-origin allow-popups"></iframe></div>
         </div>`;
       document.body.appendChild(modal);

@@ -48,6 +48,13 @@ a     { text-decoration: none; color: inherit; }
 ul    { list-style: none; }
 button { cursor: pointer; font-family: var(--font-body); }
 
+.sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
+}
+
+:focus-visible { outline: 2px solid var(--yellow); outline-offset: 4px; }
+
 /* Three.js background canvas */
 #three-canvas {
   position: fixed; inset: 0;
@@ -505,6 +512,7 @@ button { cursor: pointer; font-family: var(--font-body); }
 .contact-portrait:hover { transform: translateY(-4px); opacity: 1; }
 
 .contact-form { display: flex; flex-direction: column; gap: 13px; }
+.form-note { color: var(--text-muted); font-size: .82rem; line-height: 1.5; }
 .form-field {
   background: var(--glass); backdrop-filter: blur(10px);
   border: 1px solid rgba(255,215,0,.18); color: var(--white);
@@ -569,6 +577,20 @@ footer {
   .contact-portrait { width: 110px; }
 }
 
+@media (hover: none), (pointer: coarse) {
+  body { cursor: auto; }
+  .cursor, .cursor-ring { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    scroll-behavior: auto !important;
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+  }
+}
+
 @media (max-width: 480px) {
   .hero-name     { font-size: 2.6rem; }
   .projects-grid { grid-template-columns: 1fr; }
@@ -589,6 +611,10 @@ footer {
   margin-left: 8px;
   font-size: clamp(1.8rem, 2vw, 2.5rem);
   color: var(--white);
+}
+@media (max-width: 520px) {
+  .service-header { align-items: flex-start; flex-direction: column; gap: 8px; }
+  .service-header h1 { margin-left: 0; }
 }
 .service-main { padding: 48px 50px; max-width: 1100px; margin: 0 auto; }
 .hero-landing h2 {
@@ -764,6 +790,8 @@ footer {
 
 .project-slide {
   position: relative;
+  display: flex;
+  flex-direction: column;
   flex: 0 0 min(54vw, 760px);
   min-height: 430px;
   border-radius: 18px;
@@ -781,13 +809,15 @@ footer {
 }
 
 .project-slide-media {
-  height: 70%;
+  flex: 1;
+  min-height: 230px;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
 }
 
 .project-slide-body {
+  flex: 0 0 auto;
   padding: 18px 22px 20px;
   display: flex;
   flex-direction: column;
@@ -871,4 +901,3 @@ footer {
 .carousel-controls { display:flex; gap:12px; justify-content:center; margin-top:18px; }
 .carousel-controls .ctrl { background: transparent; border: 2px solid rgba(255,215,0,.12); color: var(--yellow); padding: 8px 14px; font-size: 1.6rem; border-radius: 8px; cursor: pointer; }
 .carousel-controls .ctrl:hover { background: rgba(255,215,0,.06); }
-

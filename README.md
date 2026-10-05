@@ -7,14 +7,20 @@ A Batman-themed personal portfolio with 3D background, bat explosion intro, and 
 ```
 ayoub-portfolio/
 │
-├── index.html          ← Main HTML (structure only)
+├── index.html          ← Main portfolio and contact form
+├── web-development.html ← Website project gallery
+├── logo-design.html    ← Logo gallery and preview manager
+├── social-media.html   ← Social media graphics gallery
+├── campaigns.html      ← Advertising campaign case studies
+├── editing.html        ← Photo and video editing samples
 │
 ├── css/
 │   └── style.css       ← All styles (variables, layout, components, responsive)
 │
 ├── js/
-│   ├── three-bg.js     ← Three.js 3D background (bats + particles + shapes)
-│   └── main.js         ← UI logic (cursor, navbar, reveal, counters, bat explosion)
+│   ├── three-bg.js     ← Three.js 3D background (home page)
+│   ├── main.js         ← Shared UI interactions
+│   └── service-ui.js   ← Reusable service page galleries and lightbox
 │
 ├── images/             ← Put all your images here (see list below)
 │   ├── batman-logo.png
@@ -27,15 +33,15 @@ ayoub-portfolio/
 │   ├── project-dr213.jpg
 │   ├── project-deutsch.jpg
 │   ├── project-coffee.jpg
-│   ├── logo1.jpg → logo12.jpg
+│   ├── logo1.jpg → logo13.jpg
 │   └── graphic1.jpg → graphic7.jpg
 │
 └── README.md
 ```
 
-## 🖼️ Images to Add
+## 🖼️ Images
 
-Place these images in the `images/` folder:
+Portfolio images are stored in the `images/` folder. Keep the filenames used by the pages when replacing assets.
 
 | File | Description |
 |------|-------------|
@@ -49,7 +55,7 @@ Place these images in the `images/` folder:
 | `project-dr213.jpg` | Dr. 213 thumbnail |
 | `project-deutsch.jpg` | Deutsch project thumbnail |
 | `project-coffee.jpg` | Coffee Break DZ thumbnail |
-| `logo1.jpg` – `logo12.jpg` | Logo design gallery |
+| `logo1.jpg` – `logo13.jpg` | Logo design gallery |
 | `graphic1.jpg` – `graphic7.jpg` | Social media graphic gallery |
 
 ## 🚀 Run Locally
@@ -58,7 +64,9 @@ Place these images in the `images/` folder:
 2. Install the **Live Server** extension
 3. Right-click `index.html` → **Open with Live Server**
 
-> ⚠️ Must be opened via a server (not direct file open) because of the Three.js import map.
+The home page uses an import map for Three.js and should be opened through a local server rather than `file://`. The other pages are static HTML and can also be served from the same local server.
+
+The contact form opens a prefilled message in the visitor's email application; the site does not send or store messages on a server.
 
 ## 🌐 Deploy to GitHub Pages
 

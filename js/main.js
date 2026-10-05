@@ -13,25 +13,27 @@ const cursorDot  = document.getElementById('cursor');
 const cursorRing = document.getElementById('cursorRing');
 let mx = 0, my = 0, rx = 0, ry = 0;
 
-document.addEventListener('mousemove', e => {
-  mx = e.clientX; my = e.clientY;
-  cursorDot.style.left = mx + 'px';
-  cursorDot.style.top  = my + 'px';
-});
+if (cursorDot && cursorRing) {
+  document.addEventListener('mousemove', e => {
+    mx = e.clientX; my = e.clientY;
+    cursorDot.style.left = mx + 'px';
+    cursorDot.style.top  = my + 'px';
+  });
 
-(function animCursor() {
-  rx += (mx - rx) * .12;
-  ry += (my - ry) * .12;
-  cursorRing.style.left = rx + 'px';
-  cursorRing.style.top  = ry + 'px';
-  requestAnimationFrame(animCursor);
-})();
+  (function animCursor() {
+    rx += (mx - rx) * .12;
+    ry += (my - ry) * .12;
+    cursorRing.style.left = rx + 'px';
+    cursorRing.style.top  = ry + 'px';
+    requestAnimationFrame(animCursor);
+  })();
 
-// Scale ring on hover over interactive elements
-document.querySelectorAll('a, button, .project-card, .service-card, .masonry-item').forEach(el => {
-  el.addEventListener('mouseenter', () => cursorRing.style.transform = 'translate(-50%,-50%) scale(1.8)');
-  el.addEventListener('mouseleave', () => cursorRing.style.transform = 'translate(-50%,-50%) scale(1)');
-});
+  // Scale ring on hover over interactive elements
+  document.querySelectorAll('a, button, .project-card, .service-card, .masonry-item').forEach(el => {
+    el.addEventListener('mouseenter', () => cursorRing.style.transform = 'translate(-50%,-50%) scale(1.8)');
+    el.addEventListener('mouseleave', () => cursorRing.style.transform = 'translate(-50%,-50%) scale(1)');
+  });
+}
 
 // ── 2. NAVBAR SCROLL BEHAVIOUR ───────────────────────────────
 const navbar   = document.getElementById('navbar');
@@ -40,7 +42,7 @@ const navLinks = document.querySelectorAll('.nav-links a, .mobile-menu a');
 
 window.addEventListener('scroll', () => {
   // shrink on scroll
-  navbar.classList.toggle('scrolled', scrollY > 60);
+  navbar?.classList.toggle('scrolled', scrollY > 60);
 
   // active link highlight
   let current = '';
@@ -56,7 +58,8 @@ window.addEventListener('scroll', () => {
 const hamburger  = document.getElementById('hamburger');
 const mobileMenu = document.getElementById('mobileMenu');
 
-hamburger.addEventListener('click', () => {
+hamburger?.addEventListener('click', () => {
+  if (!mobileMenu) return;
   const open = mobileMenu.classList.toggle('open');
   hamburger.setAttribute('aria-expanded', open);
   // animate bars → X
@@ -73,14 +76,39 @@ hamburger.addEventListener('click', () => {
 });
 
 function closeMobileMenu() {
-  mobileMenu.classList.remove('open');
-  hamburger.setAttribute('aria-expanded', false);
+  mobileMenu?.classList.remove('open');
+  hamburger?.setAttribute('aria-expanded', 'false');
+  if (!hamburger) return;
   const bars = hamburger.querySelectorAll('span');
   bars[0].style.transform = '';
   bars[1].style.opacity   = '';
   bars[2].style.transform = '';
 }
 window.closeMobileMenu = closeMobileMenu; // expose to inline onclick
+document.addEventListener('keydown', event => {
+  if (event.key === 'Escape' && mobileMenu?.classList.contains('open')) {
+    closeMobileMenu();
+    hamburger?.focus();
+  }
+});
+
+// Static portfolio form: prepare a message in the visitor's email application.
+document.getElementById('contactForm')?.addEventListener('submit', event => {
+  event.preventDefault();
+  const form = event.currentTarget;
+  const data = new FormData(form);
+  const subject = String(data.get('subject') || `Portfolio inquiry from ${data.get('name')}`).trim();
+  const body = [
+    `Name: ${data.get('name')}`,
+    `Email: ${data.get('email')}`,
+    '',
+    String(data.get('message') || '')
+  ].join('\n');
+  window.location.href = `mailto:CHEKHABAYOUB04@GMAIL.COM?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+});
+
+const copyrightYear = document.getElementById('copyrightYear');
+if (copyrightYear) copyrightYear.textContent = new Date().getFullYear();
 
 // ── 4. SCROLL REVEAL ─────────────────────────────────────────
 const revealObs = new IntersectionObserver(entries => {
@@ -111,6 +139,10 @@ document.querySelectorAll('[data-target]').forEach(el => counterObs.observe(el))
 // ── 6. BAT EXPLOSION ON PAGE LOAD ────────────────────────────
 (function batExplosion() {
   const overlay  = document.getElementById('bat-explosion-overlay');
+  if (!overlay || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    overlay?.remove();
+    return;
+  }
   const BAT_COUNT = 180;
   const cx = innerWidth  / 2;
   const cy = innerHeight / 2;
@@ -128,8 +160,6 @@ document.querySelectorAll('[data-target]').forEach(el => counterObs.observe(el))
     const el = document.createElement('div');
     const size    = 28 + Math.random() * 75;
     const isGold  = Math.random() > .38;
-    const color   = isGold ? '%23FFD700' : '%23111111';
-    const svgData = batSVG.replace('COLOR', color.replace('#','%23'));
     const encoded = 'data:image/svg+xml,' + batSVG.replace('COLOR', isGold ? '%23FFD700' : '%23111');
 
     el.style.cssText = `
