@@ -6,7 +6,8 @@ import * as THREE from 'three';
 
 const canvas   = document.getElementById('three-canvas');
 const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
-renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+const compactViewport = matchMedia('(max-width: 760px)').matches;
+renderer.setPixelRatio(Math.min(devicePixelRatio, compactViewport ? 1.25 : 1.5));
 renderer.setSize(innerWidth, innerHeight);
 
 const scene  = new THREE.Scene();
@@ -19,7 +20,7 @@ const pl1 = new THREE.PointLight(0xFFD700, 2,   30); pl1.position.set( 5,  5,  5
 const pl2 = new THREE.PointLight(0xFFA500, 1.5, 25); pl2.position.set(-8, -3,  8); scene.add(pl2);
 
 // ── Particles ────────────────────────────────────────────────
-const PARTICLE_COUNT = 2000;
+const PARTICLE_COUNT = compactViewport ? 420 : 1100;
 const pPos = new Float32Array(PARTICLE_COUNT * 3);
 const pCol = new Float32Array(PARTICLE_COUNT * 3);
 
@@ -69,7 +70,7 @@ const loader = new THREE.TextureLoader();
 const batImgTexture = loader.load('images/batman-logo.png');
 batImgTexture.encoding = THREE.sRGBEncoding;
 
-const BAT_COUNT = 160;
+const BAT_COUNT = compactViewport ? 22 : 64;
 const batMeshes = [];
 
 for (let i = 0; i < BAT_COUNT; i++) {
@@ -108,10 +109,14 @@ document.addEventListener('mousemove', e => {
 
 // ── Animation Loop ───────────────────────────────────────────
 const clock = new THREE.Clock();
-const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)');
+let prefersReducedMotion = motionPreference.matches;
+let animationFrame = 0;
 
-(function animate() {
-  if (!prefersReducedMotion) requestAnimationFrame(animate);
+function animate() {
+  animationFrame = 0;
+  if (document.hidden) return;
+  if (!prefersReducedMotion) animationFrame = requestAnimationFrame(animate);
   const t = prefersReducedMotion ? 0 : clock.getElapsedTime();
 
   // Rotate particle cloud slowly
@@ -147,7 +152,31 @@ const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)
   camera.lookAt(0, 0, 0);
 
   renderer.render(scene, camera);
-})();
+}
+
+function startAnimation() {
+  if (!animationFrame && !document.hidden) animate();
+}
+
+startAnimation();
+document.addEventListener('visibilitychange', () => {
+  if (document.hidden) {
+    if (animationFrame) cancelAnimationFrame(animationFrame);
+    animationFrame = 0;
+    clock.stop();
+  } else {
+    clock.start();
+    startAnimation();
+  }
+});
+motionPreference.addEventListener?.('change', event => {
+  prefersReducedMotion = event.matches;
+  if (prefersReducedMotion && animationFrame) {
+    cancelAnimationFrame(animationFrame);
+    animationFrame = 0;
+  }
+  startAnimation();
+});
 
 // ── Resize ───────────────────────────────────────────────────
 window.addEventListener('resize', () => {

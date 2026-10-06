@@ -11,27 +11,32 @@
 // ── 1. CUSTOM CURSOR ─────────────────────────────────────────
 const cursorDot  = document.getElementById('cursor');
 const cursorRing = document.getElementById('cursorRing');
-let mx = 0, my = 0, rx = 0, ry = 0;
+let mx = 0, my = 0, rx = 0, ry = 0, ringScale = 1, currentRingScale = 1, cursorFrame = 0;
 
 if (cursorDot && cursorRing) {
   document.addEventListener('mousemove', e => {
     mx = e.clientX; my = e.clientY;
-    cursorDot.style.left = mx + 'px';
-    cursorDot.style.top  = my + 'px';
+    cursorDot.style.transform = `translate3d(${mx}px,${my}px,0) translate(-50%,-50%)`;
+    cursorDot.style.opacity = '1';
+    cursorRing.style.opacity = '.65';
+    if (!cursorFrame) cursorFrame = requestAnimationFrame(animateCursor);
   });
 
-  (function animCursor() {
-    rx += (mx - rx) * .12;
-    ry += (my - ry) * .12;
-    cursorRing.style.left = rx + 'px';
-    cursorRing.style.top  = ry + 'px';
-    requestAnimationFrame(animCursor);
-  })();
+  function animateCursor() {
+    cursorFrame = 0;
+    rx += (mx - rx) * .2;
+    ry += (my - ry) * .2;
+    currentRingScale += (ringScale - currentRingScale) * .2;
+    cursorRing.style.transform = `translate3d(${rx}px,${ry}px,0) translate(-50%,-50%) scale(${currentRingScale})`;
+    if (Math.abs(mx - rx) > .2 || Math.abs(my - ry) > .2 || Math.abs(ringScale - currentRingScale) > .01) {
+      cursorFrame = requestAnimationFrame(animateCursor);
+    }
+  }
 
   // Scale ring on hover over interactive elements
   document.querySelectorAll('a, button, .project-card, .service-card, .masonry-item').forEach(el => {
-    el.addEventListener('mouseenter', () => cursorRing.style.transform = 'translate(-50%,-50%) scale(1.8)');
-    el.addEventListener('mouseleave', () => cursorRing.style.transform = 'translate(-50%,-50%) scale(1)');
+    el.addEventListener('mouseenter', () => { ringScale = 1.8; if (!cursorFrame) cursorFrame = requestAnimationFrame(animateCursor); });
+    el.addEventListener('mouseleave', () => { ringScale = 1; if (!cursorFrame) cursorFrame = requestAnimationFrame(animateCursor); });
   });
 }
 
@@ -143,7 +148,7 @@ document.querySelectorAll('[data-target]').forEach(el => counterObs.observe(el))
     overlay?.remove();
     return;
   }
-  const BAT_COUNT = 180;
+  const BAT_COUNT = 88;
   const cx = innerWidth  / 2;
   const cy = innerHeight / 2;
   const bats = [];
@@ -193,7 +198,7 @@ document.querySelectorAll('[data-target]').forEach(el => counterObs.observe(el))
   }
 
   let start = null;
-  const DURATION = 1800;
+  const DURATION = 1450;
 
   function frame(ts) {
     if (!start) start = ts;

@@ -73,6 +73,7 @@ button { cursor: pointer; font-family: var(--font-body); }
 /* ─── 2. CURSOR ─────────────────────────────────────────── */
 .cursor {
   position: fixed; width: 10px; height: 10px;
+  left: 0; top: 0; opacity: 0;
   background: var(--yellow); border-radius: 50%;
   pointer-events: none; z-index: 9999;
   transform: translate(-50%, -50%);
@@ -80,10 +81,11 @@ button { cursor: pointer; font-family: var(--font-body); }
 }
 .cursor-ring {
   position: fixed; width: 34px; height: 34px;
+  left: 0; top: 0; opacity: 0;
   border: 1.5px solid var(--yellow); border-radius: 50%;
   pointer-events: none; z-index: 9998;
   transform: translate(-50%, -50%);
-  transition: all .12s ease-out; opacity: .6;
+  transition: opacity .15s ease-out;
 }
 
 /* ─── 3. LAYOUT UTILITIES ───────────────────────────────── */
@@ -1073,3 +1075,30 @@ footer {
 .carousel-controls { display:flex; gap:12px; justify-content:center; margin-top:18px; }
 .carousel-controls .ctrl { background: transparent; border: 2px solid rgba(255,215,0,.12); color: var(--yellow); padding: 8px 14px; font-size: 1.6rem; border-radius: 8px; cursor: pointer; }
 .carousel-controls .ctrl:hover { background: rgba(255,215,0,.06); }
+
+/* Lightweight SVG bat companion: pointer-following on mouse devices only. */
+.bat-companion {
+  position: fixed; top: 0; left: 0; z-index: 80; width: 136px; height: 86px;
+  pointer-events: none; opacity: 0; transform: translate3d(-200px,-200px,0);
+  transform-origin: 50% 50%; will-change: transform, opacity;
+  transition: opacity .7s ease;
+}
+.bat-companion.is-flying { opacity: .8; }
+.bat-companion svg { display: block; width: 100%; height: 100%; overflow: visible; filter: drop-shadow(0 0 8px rgba(255,190,25,.32)); }
+.bat-membrane { fill: url(#batMembrane); stroke: #74500e; stroke-width: 1; }
+.bat-edge { fill: none; stroke: url(#batMetal); stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.bat-vein { fill: none; stroke: rgba(255,201,53,.68); stroke-width: .8; stroke-linecap: round; }
+.bat-panel { fill: none; stroke: rgba(255,226,124,.22); stroke-width: .6; }
+.bat-body { fill: #090a0d; stroke: url(#batMetal); stroke-width: 1.6; }
+.bat-ears { fill: #101114; stroke: url(#batMetal); stroke-width: 1.5; stroke-linejoin: round; }
+.bat-face-line, .bat-core { fill: none; stroke: rgba(255,202,53,.68); stroke-width: .8; stroke-linecap: round; }
+.bat-eye { fill: url(#batEye); filter: drop-shadow(0 0 3px rgba(255,189,28,.95)); }
+.bat-tail { fill: #111216; stroke: #d69517; stroke-width: 1; }
+.companion-wing { transform-box: view-box; }
+.companion-wing-left { transform-origin: 77px 46px; animation: companion-wing-left .62s ease-in-out infinite alternate; }
+.companion-wing-right { transform-origin: 83px 46px; animation: companion-wing-right .62s ease-in-out infinite alternate; }
+.bat-companion.is-gliding .companion-wing { animation-duration: 1.05s; }
+.bat-companion.is-paused .companion-wing { animation-play-state: paused; }
+@keyframes companion-wing-left { from { rotate: -2deg; } to { rotate: 7deg; } }
+@keyframes companion-wing-right { from { rotate: 2deg; } to { rotate: -7deg; } }
+@media (max-width: 760px), (hover: none), (pointer: coarse), (prefers-reduced-motion: reduce) { .bat-companion { display: none !important; } }
