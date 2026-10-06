@@ -1,9 +1,5 @@
 # Editing Videos
 
-Add finished photo or video editing samples to this folder. Use descriptive filenames, for example `summer-reel-edit.mp4`.
+Add finished photo or video editing samples here using descriptive filenames, such as `summer-reel-edit.mp4`.
 
-To display a video, add its filename and title to the `files` array for `Video Editing` in `ai-videos.html`, for example:
-
-```js
-files: [{ src: 'summer-reel-edit.mp4', title: 'Summer Reel Edit' }]
-```
+This folder is ready for future editing work. When you want to show a sample on the portfolio, add it to the video library markup in `ai-videos.html` with a poster image and title.

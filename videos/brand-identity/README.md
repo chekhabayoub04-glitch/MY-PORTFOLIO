@@ -1,9 +1,12 @@
-# Brand Identity Videos
+# Brand Identity Films
 
-Add AI-created brand films to this folder. Use descriptive filenames, for example `northstar-brand-film.mp4`.
+The four published films are ordered in `ai-videos.html`:
 
-To display a video, add its filename and title to the `files` array for `Brand Identity Films` in `ai-videos.html`, for example:
+1. Clothing brand
+2. Glass brand
+3. Villa and home brand
+4. Car brand
 
-```js
-files: [{ src: 'northstar-brand-film.mp4', title: 'Northstar Brand Film' }]
-```
+The `.m4v` files are optimized 720p web copies. Their original `.MOV` files stay in `videos/source-originals/` on this computer and are excluded from publishing. Poster images live in `videos/posters/`.
+
+To add another film, place an optimized `.mp4`, `.m4v`, or `.webm` in this folder, add a poster under `videos/posters/`, then add its title, category, filename, and poster path to the `brandFilms` list in `ai-videos.html`.

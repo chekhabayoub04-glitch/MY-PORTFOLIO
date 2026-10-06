@@ -75,7 +75,7 @@ The contact form opens a prefilled message in the visitor's email application; t
 
 ## 🎬 Add videos
 
-Place AI brand videos in `videos/brand-identity/` and editing samples in `videos/editing/`. Then add each filename and display title to the matching `files` list in `ai-videos.html`. The page uses vertical 9:16 video cards suited to reels; it supports browser-playable MP4 and WebM files.
+The AI brand-film page presents a four-video cinematic carousel. The published clips are optimized 720p `.m4v` web copies, with poster images in `videos/posters/`. Full-resolution `.MOV` sources are kept locally in `videos/source-originals/` and excluded from GitHub Pages. To add another web-ready MP4, M4V, or WebM film, add it to `videos/brand-identity/` and add its title, category, video path, and poster path to the `brandFilms` list in `ai-videos.html`. Editing samples can be added to `videos/editing/` for a future gallery.
 
 ## 🌐 Deploy to GitHub Pages
 

@@ -17,7 +17,7 @@
   <main class="service-main video-library">
     <section class="hero-landing">
       <h2>Brand stories in motion</h2>
-      <p>A dedicated home for AI-created brand films and video edits. The video folders are ready for your work.</p>
+      <p>Four brand films, arranged as a cinematic reel. Choose a card to bring it forward, then play it with sound.</p>
     </section>
 
     <section class="video-collection" id="brand-identity" aria-labelledby="brandVideosTitle">
@@ -28,7 +28,17 @@
         </div>
         <code>videos/brand-identity/</code>
       </div>
-      <div class="video-grid" id="brandVideos"></div>
+      <div class="cinema-carousel" id="brandCarousel" role="region" aria-label="AI brand identity films" aria-roledescription="carousel">
+        <div class="cinema-stage" id="brandVideos"></div>
+        <div class="cinema-controls">
+          <button class="cinema-arrow" id="filmPrevious" type="button" aria-label="Previous video"><i class="fas fa-arrow-left" aria-hidden="true"></i></button>
+          <button class="cinema-rotation" id="filmRotation" type="button" aria-pressed="false" aria-label="Pause automatic rotation"><i class="fas fa-pause" aria-hidden="true"></i><span>Pause rotation</span></button>
+          <span class="cinema-status" id="filmStatus" aria-live="polite">01 / 04</span>
+          <button class="cinema-arrow" id="filmNext" type="button" aria-label="Next video"><i class="fas fa-arrow-right" aria-hidden="true"></i></button>
+        </div>
+        <div class="cinema-dots" id="filmDots" aria-label="Choose a video"></div>
+        <p class="cinema-hint">Select a side card to bring it forward, or use the arrows. Press play on the featured video to watch with sound.</p>
+      </div>
     </section>
 
     <section class="video-collection" id="editing" aria-labelledby="editingVideosTitle">
@@ -39,7 +49,10 @@
         </div>
         <code>videos/editing/</code>
       </div>
-      <div class="video-grid" id="editingVideos"></div>
+      <div class="video-empty glass-card">
+        <i class="fas fa-clapperboard" aria-hidden="true"></i>
+        <p>Editing videos will appear here when you add them to <code>videos/editing/</code>.</p>
+      </div>
     </section>
 
     <p class="video-library-note">When you add your videos, I can arrange them into polished reels and project showcases.</p>
@@ -50,42 +63,200 @@
   </footer>
 
   <script>
-    // Add each video path here after placing the file in its matching folder.
-    const videoCollections = [
-      { container: 'brandVideos', folder: 'videos/brand-identity/', title: 'Brand Identity Films', files: [] },
-      { container: 'editingVideos', folder: 'videos/editing/', title: 'Video Editing', files: [] }
+    const brandFilms = [
+      { title: 'Clothing Brand', category: 'Fashion Film', src: '01-clothing-brand.m4v', poster: 'videos/posters/01-clothing-brand.png' },
+      { title: 'Glass Brand', category: 'Product Film', src: '02-glass-brand.m4v', poster: 'videos/posters/02-glass-brand.png' },
+      { title: 'Villa & Home', category: 'Interior Film', src: '03-villa-home-brand.m4v', poster: 'videos/posters/03-villa-home-brand.png' },
+      { title: 'Car Brand', category: 'Automotive Film', src: '04-car-brand.m4v', poster: 'videos/posters/04-car-brand.png' }
     ];
 
-    videoCollections.forEach(collection => {
-      const container = document.getElementById(collection.container);
-      if (!collection.files.length) {
-        const empty = document.createElement('div');
-        empty.className = 'video-empty glass-card';
-        const icon = document.createElement('i');
-        icon.className = 'fas fa-film';
-        icon.setAttribute('aria-hidden', 'true');
-        const message = document.createElement('p');
-        message.textContent = `Your ${collection.title.toLowerCase()} will appear here.`;
-        empty.append(icon, message);
-        container.appendChild(empty);
-        return;
-      }
+    const carousel = document.getElementById('brandCarousel');
+    const stage = document.getElementById('brandVideos');
+    const status = document.getElementById('filmStatus');
+    const dots = document.getElementById('filmDots');
+    const rotationButton = document.getElementById('filmRotation');
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const slides = [];
+    let activeIndex = 0;
+    let rotationTimer;
+    let rotationPaused = reducedMotion.matches;
+    let isPlaying = false;
 
-      collection.files.forEach(file => {
-        const card = document.createElement('article');
-        card.className = 'video-card glass-card';
-        const video = document.createElement('video');
-        video.controls = true;
-        video.playsInline = true;
-        video.preload = 'metadata';
-        video.src = `${collection.folder}${file.src}`;
-        video.setAttribute('aria-label', file.title);
-        const title = document.createElement('h3');
-        title.textContent = file.title;
-        card.append(video, title);
-        container.appendChild(card);
+    if (rotationPaused) {
+      rotationButton.setAttribute('aria-pressed', 'true');
+      rotationButton.setAttribute('aria-label', 'Resume automatic rotation');
+      rotationButton.querySelector('i').className = 'fas fa-play';
+      rotationButton.querySelector('span').textContent = 'Resume rotation';
+    }
+
+    const formatIndex = value => String(value + 1).padStart(2, '0');
+
+    brandFilms.forEach((film, index) => {
+      const slide = document.createElement('article');
+      slide.className = 'cinema-card';
+      slide.tabIndex = 0;
+      slide.setAttribute('role', 'group');
+      slide.setAttribute('aria-roledescription', 'slide');
+      slide.setAttribute('aria-label', `${formatIndex(index)} of ${formatIndex(brandFilms.length - 1)}: ${film.title}`);
+
+      const video = document.createElement('video');
+      video.className = 'cinema-video';
+      video.poster = film.poster;
+      video.playsInline = true;
+      video.preload = 'none';
+      video.setAttribute('aria-label', film.title);
+
+      const shade = document.createElement('span');
+      shade.className = 'cinema-shade';
+      shade.setAttribute('aria-hidden', 'true');
+
+      const copy = document.createElement('div');
+      copy.className = 'cinema-copy';
+      const kicker = document.createElement('span');
+      kicker.className = 'cinema-kicker';
+      kicker.textContent = `${formatIndex(index)} / 04  ·  ${film.category}`;
+      const title = document.createElement('h3');
+      title.textContent = film.title;
+      copy.append(kicker, title);
+
+      const playButton = document.createElement('button');
+      playButton.className = 'cinema-play';
+      playButton.type = 'button';
+      playButton.setAttribute('aria-label', `Play ${film.title}`);
+      playButton.innerHTML = '<i class="fas fa-play" aria-hidden="true"></i>';
+
+      const fullscreenButton = document.createElement('button');
+      fullscreenButton.className = 'cinema-fullscreen';
+      fullscreenButton.type = 'button';
+      fullscreenButton.setAttribute('aria-label', `View ${film.title} full screen`);
+      fullscreenButton.innerHTML = '<i class="fas fa-expand" aria-hidden="true"></i>';
+
+      slide.append(video, shade, copy, playButton, fullscreenButton);
+      stage.appendChild(slide);
+      slides.push({ slide, video, playButton, film });
+
+      const dot = document.createElement('button');
+      dot.className = 'cinema-dot';
+      dot.type = 'button';
+      dot.setAttribute('aria-label', `Show video ${formatIndex(index)}: ${film.title}`);
+      dot.addEventListener('click', () => selectFilm(index));
+      dots.appendChild(dot);
+
+      slide.addEventListener('click', event => {
+        if (event.target.closest('button')) return;
+        if (index !== activeIndex) {
+          selectFilm(index);
+          return;
+        }
+        if (event.target.closest('video')) return;
+      });
+      slide.addEventListener('keydown', event => {
+        if (event.target !== slide) return;
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          selectFilm(index);
+        }
+      });
+      playButton.addEventListener('click', () => {
+        if (index !== activeIndex) selectFilm(index);
+        video.play().catch(() => {});
+      });
+      video.addEventListener('play', () => {
+        isPlaying = true;
+        slide.classList.add('is-playing');
+        stopRotation();
+      });
+      video.addEventListener('pause', () => {
+        slide.classList.remove('is-playing');
+        isPlaying = slides.some(item => !item.video.paused);
+        startRotation();
+      });
+      video.addEventListener('ended', () => selectFilm((activeIndex + 1) % brandFilms.length));
+      fullscreenButton.addEventListener('click', () => {
+        if (video.requestFullscreen) video.requestFullscreen();
+        else if (video.webkitEnterFullscreen) video.webkitEnterFullscreen();
       });
     });
+
+    function stopRotation() {
+      window.clearInterval(rotationTimer);
+      rotationTimer = undefined;
+    }
+
+    function startRotation() {
+      stopRotation();
+      if (rotationPaused || reducedMotion.matches || isPlaying || document.hidden || carousel.matches(':hover, :focus-within')) return;
+      rotationTimer = window.setInterval(() => selectFilm((activeIndex + 1) % brandFilms.length), 6500);
+    }
+
+    function selectFilm(nextIndex) {
+      activeIndex = (nextIndex + brandFilms.length) % brandFilms.length;
+      isPlaying = false;
+      const step = Math.min(260, Math.max(130, window.innerWidth * 0.245));
+
+      slides.forEach(({ slide, video, film }, index) => {
+        const raw = index - activeIndex;
+        const position = ((raw + brandFilms.length / 2) % brandFilms.length + brandFilms.length) % brandFilms.length - brandFilms.length / 2;
+        const distance = Math.abs(position);
+        slide.style.transform = `translate(calc(-50% + ${position * step}px), -50%) scale(${distance === 0 ? 1 : distance === 1 ? 0.84 : 0.68}) rotateY(${position * -11}deg)`;
+        slide.style.zIndex = String(brandFilms.length - distance);
+        slide.style.opacity = distance > 1 ? '0.2' : distance === 1 ? '0.7' : '1';
+        slide.style.filter = distance === 0 ? 'none' : `blur(${distance === 1 ? 1 : 2}px)`;
+        slide.setAttribute('aria-current', String(distance === 0));
+        slide.classList.toggle('is-active', distance === 0);
+        video.controls = distance === 0;
+
+        if (distance === 0 && !video.getAttribute('src')) {
+          video.src = `videos/brand-identity/${film.src}`;
+          video.load();
+        } else if (distance !== 0 && video.hasAttribute('src')) {
+          video.pause();
+          video.removeAttribute('src');
+          video.load();
+        }
+        const dot = dots.children[index];
+        dot.setAttribute('aria-current', String(distance === 0));
+      });
+
+      status.textContent = `${formatIndex(activeIndex)} / ${formatIndex(brandFilms.length - 1)}  ·  ${brandFilms[activeIndex].title}`;
+      startRotation();
+    }
+
+    document.getElementById('filmPrevious').addEventListener('click', () => selectFilm(activeIndex - 1));
+    document.getElementById('filmNext').addEventListener('click', () => selectFilm(activeIndex + 1));
+    rotationButton.addEventListener('click', () => {
+      rotationPaused = !rotationPaused;
+      rotationButton.setAttribute('aria-pressed', String(rotationPaused));
+      rotationButton.setAttribute('aria-label', rotationPaused ? 'Resume automatic rotation' : 'Pause automatic rotation');
+      rotationButton.querySelector('i').className = rotationPaused ? 'fas fa-play' : 'fas fa-pause';
+      rotationButton.querySelector('span').textContent = rotationPaused ? 'Resume rotation' : 'Pause rotation';
+      startRotation();
+    });
+    carousel.addEventListener('mouseenter', stopRotation);
+    carousel.addEventListener('mouseleave', startRotation);
+    carousel.addEventListener('focusin', stopRotation);
+    carousel.addEventListener('focusout', event => {
+      if (!carousel.contains(event.relatedTarget)) startRotation();
+    });
+    carousel.addEventListener('keydown', event => {
+      if (event.target.closest('video, button')) return;
+      if (event.key === 'ArrowLeft') selectFilm(activeIndex - 1);
+      if (event.key === 'ArrowRight') selectFilm(activeIndex + 1);
+    });
+    window.addEventListener('resize', () => selectFilm(activeIndex));
+    document.addEventListener('visibilitychange', startRotation);
+    reducedMotion.addEventListener?.('change', event => {
+      if (event.matches) {
+        rotationPaused = true;
+        rotationButton.setAttribute('aria-pressed', 'true');
+        rotationButton.setAttribute('aria-label', 'Resume automatic rotation');
+        rotationButton.querySelector('i').className = 'fas fa-play';
+        rotationButton.querySelector('span').textContent = 'Resume rotation';
+      }
+      startRotation();
+    });
+
+    selectFilm(0);
   </script>
 </body>
 </html>
