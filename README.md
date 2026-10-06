@@ -13,6 +13,7 @@ ayoub-portfolio/
 ├── social-media.html   ← Social media graphics gallery
 ├── campaigns.html      ← Advertising campaign case studies
 ├── editing.html        ← Photo and video editing samples
+├── ai-videos.html      ← AI video and brand identity library
 │
 ├── css/
 │   └── style.css       ← All styles (variables, layout, components, responsive)
@@ -35,6 +36,10 @@ ayoub-portfolio/
 │   ├── project-coffee.jpg
 │   ├── logo1.jpg → logo13.jpg
 │   └── graphic1.jpg → graphic7.jpg
+│
+├── videos/
+│   ├── brand-identity/ ← AI brand films
+│   └── editing/        ← Edited video samples
 │
 └── README.md
 ```
@@ -67,6 +72,10 @@ Portfolio images are stored in the `images/` folder. Keep the filenames used by 
 The home page uses an import map for Three.js and should be opened through a local server rather than `file://`. The other pages are static HTML and can also be served from the same local server.
 
 The contact form opens a prefilled message in the visitor's email application; the site does not send or store messages on a server.
+
+## 🎬 Add videos
+
+Place AI brand videos in `videos/brand-identity/` and editing samples in `videos/editing/`. Then add each filename and display title to the matching `files` list in `ai-videos.html`. The page uses vertical 9:16 video cards suited to reels; it supports browser-playable MP4 and WebM files.
 
 ## 🌐 Deploy to GitHub Pages
 

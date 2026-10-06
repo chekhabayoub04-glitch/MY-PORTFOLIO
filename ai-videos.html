@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="AI brand films and video editing by Ayoub Chekhab.">
+  <title>AI Videos &amp; Brand Identity — Ayoub Chekhab</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  <header class="service-header">
+    <a href="index.html" class="back-link"><i class="fas fa-arrow-left" aria-hidden="true"></i> Back</a>
+    <h1>AI Videos &amp; Brand Identity</h1>
+  </header>
+
+  <main class="service-main video-library">
+    <section class="hero-landing">
+      <h2>Brand stories in motion</h2>
+      <p>A dedicated home for AI-created brand films and video edits. The video folders are ready for your work.</p>
+    </section>
+
+    <section class="video-collection" id="brand-identity" aria-labelledby="brandVideosTitle">
+      <div class="video-collection-heading">
+        <div>
+          <span class="section-label">AI CREATION</span>
+          <h2 id="brandVideosTitle">Brand Identity Films</h2>
+        </div>
+        <code>videos/brand-identity/</code>
+      </div>
+      <div class="video-grid" id="brandVideos"></div>
+    </section>
+
+    <section class="video-collection" id="editing" aria-labelledby="editingVideosTitle">
+      <div class="video-collection-heading">
+        <div>
+          <span class="section-label">POST-PRODUCTION</span>
+          <h2 id="editingVideosTitle">Video Editing</h2>
+        </div>
+        <code>videos/editing/</code>
+      </div>
+      <div class="video-grid" id="editingVideos"></div>
+    </section>
+
+    <p class="video-library-note">When you add your videos, I can arrange them into polished reels and project showcases.</p>
+  </main>
+
+  <footer class="service-footer">
+    <a href="mailto:CHEKHABAYOUB04@GMAIL.COM">Discuss a Video Project</a>
+  </footer>
+
+  <script>
+    // Add each video path here after placing the file in its matching folder.
+    const videoCollections = [
+      { container: 'brandVideos', folder: 'videos/brand-identity/', title: 'Brand Identity Films', files: [] },
+      { container: 'editingVideos', folder: 'videos/editing/', title: 'Video Editing', files: [] }
+    ];
+
+    videoCollections.forEach(collection => {
+      const container = document.getElementById(collection.container);
+      if (!collection.files.length) {
+        const empty = document.createElement('div');
+        empty.className = 'video-empty glass-card';
+        const icon = document.createElement('i');
+        icon.className = 'fas fa-film';
+        icon.setAttribute('aria-hidden', 'true');
+        const message = document.createElement('p');
+        message.textContent = `Your ${collection.title.toLowerCase()} will appear here.`;
+        empty.append(icon, message);
+        container.appendChild(empty);
+        return;
+      }
+
+      collection.files.forEach(file => {
+        const card = document.createElement('article');
+        card.className = 'video-card glass-card';
+        const video = document.createElement('video');
+        video.controls = true;
+        video.playsInline = true;
+        video.preload = 'metadata';
+        video.src = `${collection.folder}${file.src}`;
+        video.setAttribute('aria-label', file.title);
+        const title = document.createElement('h3');
+        title.textContent = file.title;
+        card.append(video, title);
+        container.appendChild(card);
+      });
+    });
+  </script>
+</body>
+</html>
