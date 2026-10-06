@@ -3,148 +3,44 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Social Media — Ayoub Chekhab</title>
+  <meta name="description" content="Advertising imagery and campaign visuals by Ayoub Chekhab.">
+  <title>Campaign Images — Ayoub Chekhab</title>
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-<body>
-  <header class="service-header">
-    <a href="index.html" class="back-link"><i class="fas fa-arrow-left"></i> Back</a>
-    <h1>Social Media Management</h1>
-  </header>
-
-  <main class="service-main">
-    <section class="hero-landing">
-      <h2>Social Media Management</h2>
-      <p>Placeholders for social graphics — fill later from <strong>images/</strong>.</p>
+<body class="portfolio-page">
+  <header class="service-header"><a href="index.html" class="back-link"><i class="fas fa-arrow-left" aria-hidden="true"></i> Back to portfolio</a><h1>Campaign Images</h1></header>
+  <main class="service-main work-library" data-portfolio-gallery>
+    <section class="work-hero">
+      <div>
+        <span class="work-eyebrow">Campaign imagery</span>
+        <h2>Visuals that make the <span>message land.</span></h2>
+        <div class="work-hero-stats"><span class="work-stat">Digital campaigns</span><span class="work-stat">Product stories</span><span class="work-stat">Social formats</span></div>
+      </div>
+      <div class="work-hero-copy"><p>A selection of promotional visuals created for automotive, home service, beauty, and product brands. Use the filters to explore each kind of work.</p></div>
     </section>
-
-    <section class="plain-gallery" id="socialGallery" aria-label="Social image slots"></section>
+    <section class="portfolio-toolbar" aria-label="Filter campaign imagery"><div class="portfolio-filters" aria-label="Image categories"></div><label class="portfolio-search-wrap"><span class="sr-only">Search campaign images</span><i class="fas fa-magnifying-glass" aria-hidden="true"></i><input class="portfolio-search" type="search" placeholder="Search visuals…"></label></section>
+    <div class="portfolio-results"><span class="portfolio-count" aria-live="polite"></span></div>
+    <section class="portfolio-grid" aria-label="Campaign image gallery"></section>
+    <div class="portfolio-empty" hidden><i class="fas fa-magnifying-glass" aria-hidden="true"></i><h3>No matching visuals</h3><p>Try another search or category.</p></div>
   </main>
-
-  <footer class="service-footer">
-    <a href="mailto:CHEKHABAYOUB04@GMAIL.COM">Request a Campaign</a>
-  </footer>
-
-  <script>
-    // Edit `window.SOCIAL_SLOTS` below to set the filenames directly in code.
-    // Example: { title: 'Image 1', image: 'images/my-image.jpg' }
-    // Leave `image: ''` for an empty slot.
-    window.SOCIAL_SLOTS = [
-      { title: 'Image 1', image: 'images/april3.png' },
-      { title: 'Image 2', image: 'images/april4.png' },
-      { title: 'Image 3', image: 'images/april5.png' },
-      { title: 'Image 4', image: 'images/aprilll.jpg' },
-      { title: 'Image 5', image: 'images/april1.jpg' },
-      { title: 'Image 6', image: 'images/april2.jpg' },
-      { title: 'Image 7', image: 'images/lozan1.jpg' },
-      { title: 'Image 8', image: 'images/loazan3.jpg' },
-      { title: 'Image 9', image: 'images/rozan4.jpg' },
-      { title: 'Image 10', image: 'images/rozan5.jpg' },
-      { title: 'Image 11', image: 'images/rozan6.jpg' },
-      { title: 'Image 12', image: 'images/rozan7.jpg' },
-      { title: 'Image 13', image: 'images/rozan8.jpg' },
-      { title: 'Image 14', image: 'images/rozan9.jpg' }
-    ];
-
-    /* Render vertical list: preview on left, title/filename on right */
-    function refreshSocialGallery(){
-      const g = document.getElementById('socialGallery'); if(!g) return; g.innerHTML = '';
-      window.SOCIAL_SLOTS.forEach((s, idx) => {
-        const card = document.createElement('button');
-        card.type = 'button';
-        card.className = 'social-card plain-image-card';
-        card.setAttribute('aria-label', `View ${s.title || `image ${idx + 1}`}`);
-        card.setAttribute('data-idx', idx);
-        if (s.image) {
-          const img = document.createElement('img');
-          img.src = s.image; img.alt = s.title || `Image ${idx+1}`;
-          card.appendChild(img);
-          img.style.width = '100%'; img.style.height = '100%'; img.style.objectFit = 'cover'; img.style.display = 'block';
-          card.addEventListener('click', () => openLightboxForSlot(idx));
-        } else {
-          const empty = document.createElement('div'); empty.className = 'slot-image-empty'; empty.innerHTML = `<span>${s.title}</span>`; card.appendChild(empty);
-        }
-        g.appendChild(card);
-      });
-    }
-
-    /* --- Lightbox for social gallery --- */
-    function createSocialLightbox() {
-      if (document.getElementById('socialLightbox')) return;
-      const lb = document.createElement('div'); lb.id = 'socialLightbox'; lb.className = 'service-lightbox';
-      lb.setAttribute('role', 'dialog'); lb.setAttribute('aria-modal', 'true'); lb.setAttribute('aria-label', 'Social media image viewer');
-      lb.innerHTML = `
-        <div class="lb-inner">
-          <button class="lb-close" type="button" aria-label="Close image viewer">✕</button>
-          <button class="lb-prev" type="button" aria-label="Previous image">‹</button>
-          <div class="lb-stage"><img src="" alt=""></div>
-          <button class="lb-next" type="button" aria-label="Next image">›</button>
-        </div>`;
-      document.body.appendChild(lb);
-      const img = lb.querySelector('.lb-stage img');
-      let list = [];
-      let idx = 0;
-
-      function show(i){ if(!list.length) return; idx = (i + list.length) % list.length; img.src = list[idx]; lb.classList.add('open'); }
-      lb.querySelector('.lb-close').onclick = ()=> lb.classList.remove('open');
-      lb.querySelector('.lb-prev').onclick = ()=> show(idx-1);
-      lb.querySelector('.lb-next').onclick = ()=> show(idx+1);
-      lb.addEventListener('click', (e)=>{ if(e.target === lb) lb.classList.remove('open'); });
-
-      // expose helper
-      window._socialLightbox = {
-        openFromSlot(slotIndex){
-          // build list of image URLs from SOCIAL_SLOTS (only non-empty)
-          list = window.SOCIAL_SLOTS.map(s => s.image).filter(Boolean);
-          const targetUrl = window.SOCIAL_SLOTS[slotIndex].image;
-          const start = list.indexOf(targetUrl);
-          show(start >= 0 ? start : 0);
-        }
-      };
-      // keyboard navigation and wheel (scoped to this lightbox)
-      function onKey(e){ if(!lb.classList.contains('open')) return; if(e.key === 'ArrowLeft') show(idx-1); else if(e.key === 'ArrowRight') show(idx+1); else if(e.key === 'Escape') lb.classList.remove('open'); }
-      function onWheel(e){ if(!lb.classList.contains('open')) return; if(e.deltaY > 0) show(idx+1); else if(e.deltaY < 0) show(idx-1); }
-      document.addEventListener('keydown', onKey);
-      lb.addEventListener('wheel', onWheel, {passive:true});
-    }
-
-    function openLightboxForSlot(slotIdx){ if(!window._socialLightbox) createSocialLightbox(); window._socialLightbox.openFromSlot(slotIdx); }
-
-    document.addEventListener('DOMContentLoaded', ()=>{
-      refreshSocialGallery();
-    });
-  </script>
-  <style>
-    body { cursor: auto !important; }
-
-    .service-header h1,
-    .hero-landing h2 {
-      font-family: var(--font-body);
-      font-weight: 800;
-      letter-spacing: 0;
-    }
-
-    .service-main {
-      max-width: 1500px;
-      margin: 0 auto;
-      padding: 40px 30px 80px;
-    }
-
-    #socialGallery {
-      display:grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap:18px;
-      margin-top:18px;
-    }
-
-    @media (max-width: 1100px) { #socialGallery { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
-    @media (max-width: 700px) { #socialGallery { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-    @media (max-width: 420px) { #socialGallery { grid-template-columns: 1fr; } }
-
-    .social-card { appearance: none; padding: 0; color: inherit; aspect-ratio: 1/1; overflow: hidden; border-radius: 12px; border: 1px solid rgba(255,215,0,.06); background: rgba(10,10,10,0.35); display:flex; align-items:center; justify-content:center; }
-    .social-card img { width:100%; height:100%; display:block; object-fit:cover; }
-    .social-card .slot-image-empty { padding:24px; }
-  </style>
+  <footer class="service-footer"><a href="mailto:CHEKHABAYOUB04@GMAIL.COM">Plan a Campaign</a></footer>
+  <script>window.PORTFOLIO_TYPE='image';window.PORTFOLIO_ITEMS=[
+    {title:'Souq Al Sayarat — Buyer Guide',category:'Automotive',description:'A clear Arabic campaign visual explaining the car-buying journey.',image:'images/april3.png'},
+    {title:'Souq Al Sayarat — Book a Test Drive',category:'Automotive',description:'A desert-toned promotional story inviting customers to book a drive.',image:'images/april4.png'},
+    {title:'Souq Al Sayarat — Find Your Car',category:'Automotive',description:'A social-first marketplace visual designed to make discovery simple.',image:'images/april5.png'},
+    {title:'Rely — Built for the Journey',category:'Automotive',description:'A cinematic automotive campaign with a warm outdoor palette.',image:'images/aprilll.jpg'},
+    {title:'Online Window Quote',category:'Home Services',description:'A service campaign focused on a quick, stress-free online estimate.',image:'images/april1.jpg'},
+    {title:'Breathe Better',category:'Home Services',description:'A clean product message for replacement glazing and home comfort.',image:'images/april2.jpg'},
+    {title:'Lozan — Care for Every Journey',category:'Automotive',description:'A premium maintenance visual built around a confident red palette.',image:'images/lozan1.jpg'},
+    {title:'Service Reminder',category:'Automotive',description:'A direct maintenance reminder designed for mobile social feeds.',image:'images/loazan3.jpg'},
+    {title:'Auto Service — 5 Reasons',category:'Automotive',description:'An informative post presenting key reasons to book a service visit.',image:'images/rozan4.jpg'},
+    {title:'Gel Cream — Botanical Care',category:'Beauty & Product',description:'A product-focused skincare visual with a fresh green art direction.',image:'images/rozan5.jpg'},
+    {title:'Scent in Check',category:'Beauty & Product',description:'A dramatic fragrance concept using contrast, texture, and reflection.',image:'images/rozan6.jpg'},
+    {title:'A Note of Summer',category:'Beauty & Product',description:'A playful perfume visual with a bright, sunlit color story.',image:'images/rozan7.jpg'},
+    {title:'Arabian Nights',category:'Beauty & Product',description:'A cinematic fragrance campaign with rich tones and tactile detail.',image:'images/rozan8.jpg'},
+    {title:'A Natural Blend',category:'Beauty & Product',description:'A minimal product story arranged around ingredients and texture.',image:'images/rozan9.jpg'}
+  ];</script>
+  <script src="js/portfolio-gallery.js"></script>
 </body>
 </html>

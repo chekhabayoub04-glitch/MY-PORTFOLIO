@@ -3,44 +3,36 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Ad Campaigns — Ayoub Chekhab</title>
+  <meta name="description" content="Advertising and digital campaign projects by Ayoub Chekhab.">
+  <title>Campaigns — Ayoub Chekhab</title>
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-<body>
-  <header class="service-header">
-    <a href="index.html" class="back-link"><i class="fas fa-arrow-left"></i> Back</a>
-    <h1>Advertising Campaigns</h1>
-  </header>
-
-  <main class="service-main">
-    <section class="hero-landing">
-      <h2>Campaign Case Studies</h2>
-      <p>Campaign descriptions and destination links. Visuals will be added when final campaign assets are ready.</p>
+<body class="portfolio-page">
+  <header class="service-header"><a href="index.html" class="back-link"><i class="fas fa-arrow-left" aria-hidden="true"></i> Back to portfolio</a><h1>Campaigns</h1></header>
+  <main class="service-main work-library" data-portfolio-gallery>
+    <section class="work-hero">
+      <div>
+        <span class="work-eyebrow">Campaigns &amp; launches</span>
+        <h2>From first glance to <span>next step.</span></h2>
+        <div class="work-hero-stats"><span class="work-stat">Brand promotion</span><span class="work-stat">Digital launches</span><span class="work-stat">Live destinations</span></div>
+      </div>
+      <div class="work-hero-copy"><p>A selection of campaign destinations across fitness, healthcare, hospitality, education, and real estate.</p><p>Open a project to explore its live experience.</p></div>
     </section>
-
-    <section class="case-studies" id="caseStudies"></section>
+    <section class="portfolio-toolbar" aria-label="Filter campaigns"><div class="portfolio-filters" aria-label="Campaign categories"></div><label class="portfolio-search-wrap"><span class="sr-only">Search campaigns</span><i class="fas fa-magnifying-glass" aria-hidden="true"></i><input class="portfolio-search" type="search" placeholder="Search campaigns…"></label></section>
+    <div class="portfolio-results"><span class="portfolio-count" aria-live="polite"></span></div>
+    <section class="portfolio-grid" aria-label="Campaign case studies"></section>
+    <div class="portfolio-empty" hidden><i class="fas fa-magnifying-glass" aria-hidden="true"></i><h3>No matching campaigns</h3><p>Try another search or category.</p></div>
   </main>
-
-  <footer class="service-footer">
-    <a href="mailto:CHEKHABAYOUB04@GMAIL.COM">Discuss a Campaign</a>
-  </footer>
-
-  <script>
-    const studies = [
-      {title:'Coffee Break DZ', desc:'Local café campaign', website:'https://sites.google.com/view/coffebreakdz/home'},
-      {title:'Titan Gym Promo', desc:'Gym sign-ups campaign', website:'https://chekhabayoub04-glitch.github.io/titan-gym/'},
-      {title:'Dr. Badis Campaign', desc:'Medical clinic outreach', website:'https://chekhabayoub11-ops.github.io/dr.badis/'},
-      {title:'Dr. 213 Campaign', desc:'Medical platform promotion', website:'https://chekhabayoub11-ops.github.io/dr.213/'},
-      {title:'Real Estate Promo', desc:'Architectural project campaign', website:'https://chekhabayoub04-glitch.github.io/new-vession-promition-/'},
-      {title:'We Can Speak Deutsch', desc:'Language learning campaign', website:'https://chekhabayoub11-ops.github.io/we-can-speak-deutsch/'}
-    ];
-    const el = document.getElementById('caseStudies');
-    studies.forEach(s => {
-      const d = document.createElement('div'); d.className='case-item';
-      d.innerHTML = `<h3>${s.title}</h3><p>${s.desc}</p><p><a href="${s.website}" target="_blank" rel="noopener noreferrer">Visit Site <i class='fas fa-external-link-alt' aria-hidden='true'></i></a></p>`;
-      el.appendChild(d);
-    });
-  </script>
+  <footer class="service-footer"><a href="mailto:CHEKHABAYOUB04@GMAIL.COM">Discuss a Campaign</a></footer>
+  <script>window.PORTFOLIO_TYPE='campaign';window.PORTFOLIO_ITEMS=[
+    {title:'Titan Gym',category:'Fitness',description:'A high-energy digital presence for a local training brand.',image:'images/titangym.jpg',url:'https://chekhabayoub04-glitch.github.io/titan-gym/'},
+    {title:'Dr. Badis Clinic',category:'Healthcare',description:'A professional healthcare destination designed around clarity and trust.',image:'images/project-drbadis.jpg',url:'https://chekhabayoub11-ops.github.io/dr.badis/'},
+    {title:'Dr. 213',category:'Healthcare',description:'A medical platform that brings services and patient information together.',image:'images/project-dr213.jpg',url:'https://chekhabayoub11-ops.github.io/dr.213/'},
+    {title:'Coffee Break DZ',category:'Hospitality',description:'An inviting café experience centered on warmth and everyday ritual.',image:'images/project-coffee.jpg',url:'https://sites.google.com/view/coffebreakdz/home'},
+    {title:'Saïda Real Estate',category:'Architecture',description:'A property and architecture story presented for digital discovery.',image:'images/Modern promotional website.jpg',url:'https://chekhabayoub04-glitch.github.io/new-vession-promition-/'},
+    {title:'We Can Speak Deutsch',category:'Education',description:'A language-learning destination made approachable for new students.',image:'images/project-deutsch.jpg',url:'https://chekhabayoub11-ops.github.io/we-can-speak-deutsch/'}
+  ];</script>
+  <script src="js/portfolio-gallery.js"></script>
 </body>
 </html>

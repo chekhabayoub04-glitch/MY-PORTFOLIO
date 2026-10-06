@@ -9,8 +9,9 @@ ayoub-portfolio/
 │
 ├── index.html          ← Main portfolio and contact form
 ├── web-development.html ← Website project gallery
-├── logo-design.html    ← Logo gallery and preview manager
-├── social-media.html   ← Social media graphics gallery
+├── logo-design.html    ← Logo and brand identity gallery
+├── graphic-design.html ← Graphic design portfolio gallery
+├── social-media.html   ← Campaign image gallery
 ├── campaigns.html      ← Advertising campaign case studies
 ├── editing.html        ← Photo and video editing samples
 ├── ai-videos.html      ← AI video and brand identity library
@@ -21,7 +22,8 @@ ayoub-portfolio/
 ├── js/
 │   ├── three-bg.js     ← Three.js 3D background (home page)
 │   ├── main.js         ← Shared UI interactions
-│   └── service-ui.js   ← Reusable service page galleries and lightbox
+│   ├── service-ui.js   ← Shared service page UI
+│   └── portfolio-gallery.js ← Searchable, filterable project galleries
 │
 ├── images/             ← Put all your images here (see list below)
 │   ├── batman-logo.png
@@ -62,6 +64,8 @@ Portfolio images are stored in the `images/` folder. Keep the filenames used by 
 | `project-coffee.jpg` | Coffee Break DZ thumbnail |
 | `logo1.jpg` – `logo13.jpg` | Logo design gallery |
 | `graphic1.jpg` – `graphic7.jpg` | Social media graphic gallery |
+
+The website, logo, graphic design, campaign, and image galleries share a responsive portfolio layout with category filters, search, image previews, and keyboard-accessible navigation.
 
 ## 🚀 Run Locally
 

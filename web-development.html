@@ -3,90 +3,36 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Selected websites and digital experiences designed and developed by Ayoub Chekhab.">
   <title>Web Development — Ayoub Chekhab</title>
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-<body>
-  <header class="service-header">
-    <a href="index.html" class="back-link"><i class="fas fa-arrow-left"></i> Back</a>
-    <h1>Web Development</h1>
-  </header>
-
-  <main class="service-main">
-    <section class="hero-landing">
-      <h2>Landing Pages & Full Websites</h2>
-      <p>Case studies, live links, and deployment details for each project.</p>
-    </section>
-
-    <section class="projects-slider" aria-label="Projects carousel">
-      <div class="projects-rail" id="projectsList"></div>
-      <div class="carousel-controls">
-        <button class="ctrl prev" type="button" aria-label="Previous project">‹</button>
-        <button class="ctrl next" type="button" aria-label="Next project">›</button>
+<body class="portfolio-page">
+  <header class="service-header"><a href="index.html" class="back-link"><i class="fas fa-arrow-left" aria-hidden="true"></i> Back to portfolio</a><h1>Web Development</h1></header>
+  <main class="service-main work-library" data-portfolio-gallery>
+    <section class="work-hero">
+      <div>
+        <span class="work-eyebrow">Selected digital work</span>
+        <h2>Websites built to <span>move people.</span></h2>
+        <div class="work-hero-stats"><span class="work-stat">Strategy &amp; design</span><span class="work-stat">Responsive development</span><span class="work-stat">Live projects</span></div>
       </div>
+      <div class="work-hero-copy"><p>Digital experiences shaped around real businesses, clear journeys, and confident visual systems.</p><p>Explore the work and open each live project in a new tab.</p></div>
     </section>
+    <section class="portfolio-toolbar" aria-label="Filter website projects"><div class="portfolio-filters" aria-label="Project categories"></div><label class="portfolio-search-wrap"><span class="sr-only">Search website projects</span><i class="fas fa-magnifying-glass" aria-hidden="true"></i><input class="portfolio-search" type="search" placeholder="Search projects…"></label></section>
+    <div class="portfolio-results"><span class="portfolio-count" aria-live="polite"></span></div>
+    <section class="portfolio-grid" aria-label="Website projects"></section>
+    <div class="portfolio-empty" hidden><i class="fas fa-magnifying-glass" aria-hidden="true"></i><h3>No matching projects</h3><p>Try another search or category.</p></div>
   </main>
-
-  <footer class="service-footer">
-    <a href="mailto:CHEKHABAYOUB04@GMAIL.COM">Contact Me</a>
-  </footer>
-
-  <script>
-    window.SERVICE_PROJECTS = [
-      { title: 'TITAN GYM', desc: 'Fitness gym website', url: 'https://chekhabayoub04-glitch.github.io/titan-gym/' , img: 'images/titangym.jpg'},
-      { title: 'Dr. Badis', desc: 'Medical clinic website', url: 'https://chekhabayoub11-ops.github.io/dr.badis/', img: 'images/project-drbadis.jpg'},
-      { title: 'Dr. 213', desc: 'Medical platform', url: 'https://chekhabayoub11-ops.github.io/dr.213/', img: 'images/project-dr213.jpg'},
-      { title: 'We Can Speak Deutsch', desc: 'German learning platform', url: 'https://chekhabayoub11-ops.github.io/we-can-speak-deutsch/', img: 'images/project-deutsch.jpg'},
-      { title: 'Coffee Break DZ', desc: 'Café website', url: 'https://sites.google.com/view/coffebreakdz/home', img: 'images/project-coffee.jpg'},
-      { title: 'Real Estate Project', desc: 'Building study and architectural presentation', url: 'https://chekhabayoub04-glitch.github.io/new-vession-promition-/', img: 'images/Modern promotional website.jpg'}
-    ];
-  </script>
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const rail = document.getElementById('projectsList');
-      if (!rail) return;
-
-      const items = window.SERVICE_PROJECTS || [];
-      if (!items.length) return;
-
-      items.forEach((item) => {
-        const card = document.createElement('a');
-        card.className = 'project-slide';
-        card.href = item.url;
-        card.target = '_blank';
-        card.rel = 'noopener noreferrer';
-        card.setAttribute('aria-label', item.title);
-        card.innerHTML = `
-          <div class="project-slide-media" style="background-image:url('${item.img.replace(/"/g, '\\"')}')"></div>
-          <div class="project-slide-body">
-            <h3>${item.title}</h3>
-            <p>${item.desc}</p>
-            <span class="project-link">Open project <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></span>
-          </div>
-        `;
-
-        rail.appendChild(card);
-      });
-
-      const prevBtn = document.querySelector('.ctrl.prev');
-      const nextBtn = document.querySelector('.ctrl.next');
-
-      const scrollByCard = () => {
-        const firstCard = rail.querySelector('.project-slide');
-        if (!firstCard) return 420;
-        const gap = 22;
-        const cardWidth = firstCard.getBoundingClientRect().width;
-        return Math.round(cardWidth + gap);
-      };
-
-      const goNext = () => rail.scrollBy({ left: scrollByCard(), behavior: 'smooth' });
-      const goPrev = () => rail.scrollBy({ left: -scrollByCard(), behavior: 'smooth' });
-
-      prevBtn?.addEventListener('click', goPrev);
-      nextBtn?.addEventListener('click', goNext);
-
-    });
-  </script>
+  <footer class="service-footer"><a href="mailto:CHEKHABAYOUB04@GMAIL.COM">Start a Web Project</a></footer>
+  <script>window.PORTFOLIO_TYPE='web';window.PORTFOLIO_ITEMS=[
+    {title:'Titan Gym',category:'Fitness',description:'Bold digital presence for a modern training space.',image:'images/titangym.jpg',url:'https://chekhabayoub04-glitch.github.io/titan-gym/'},
+    {title:'Dr. Badis Clinic',category:'Healthcare',description:'A welcoming clinic experience built around patient trust.',image:'images/project-drbadis.jpg',url:'https://chekhabayoub11-ops.github.io/dr.badis/'},
+    {title:'Dr. 213',category:'Healthcare',description:'A focused medical platform with clear service pathways.',image:'images/project-dr213.jpg',url:'https://chekhabayoub11-ops.github.io/dr.213/'},
+    {title:'We Can Speak Deutsch',category:'Education',description:'A friendly digital home for German language learning.',image:'images/project-deutsch.jpg',url:'https://chekhabayoub11-ops.github.io/we-can-speak-deutsch/'},
+    {title:'Coffee Break DZ',category:'Hospitality',description:'A warm café identity presented through a simple web experience.',image:'images/project-coffee.jpg',url:'https://sites.google.com/view/coffebreakdz/home'},
+    {title:'Saïda Real Estate',category:'Architecture',description:'An architectural project presented as a polished promotional story.',image:'images/Modern promotional website.jpg',url:'https://chekhabayoub04-glitch.github.io/new-vession-promition-/'}
+  ];</script>
+  <script src="js/portfolio-gallery.js"></script>
 </body>
 </html>
