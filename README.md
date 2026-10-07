@@ -29,7 +29,7 @@ ayoub-portfolio/
 │   ├── batman-logo.png
 │   ├── avatar.jpg
 │   ├── university.jpg
-│   ├── service-web.jpg
+│   ├── service-web.png
 │   ├── service-logo.jpg
 │   ├── service-social.jpg
 │   ├── project-drbadis.jpg
@@ -55,7 +55,7 @@ Portfolio images are stored in the `images/` folder. Keep the filenames used by 
 | `batman-logo.png` | Batman logo (navbar + footer) |
 | `avatar.jpg` | Your face photo (circle) |
 | `university.jpg` | Université Alger 2 photo |
-| `service-web.jpg` | Web dev service image |
+| `service-web.png` | Web development service artwork |
 | `service-logo.jpg` | Logo design service image |
 | `service-social.jpg` | Social media service image |
 | `project-drbadis.jpg` | Dr. Badis project thumbnail |

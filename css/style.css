@@ -1102,3 +1102,7 @@ footer {
 @keyframes companion-wing-left { from { rotate: -2deg; } to { rotate: 7deg; } }
 @keyframes companion-wing-right { from { rotate: 2deg; } to { rotate: -7deg; } }
 @media (max-width: 760px), (hover: none), (pointer: coarse), (prefers-reduced-motion: reduce) { .bat-companion { display: none !important; } }
+
+/* Keep the square Web Development artwork complete and uncropped. */
+.web-service-image { height: 220px; background: #070705; }
+.web-service-image img { object-fit: contain; }
