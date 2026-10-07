@@ -134,6 +134,13 @@
       });
 
       card.append(preview);
+      const pocket = document.createElement('div');
+      pocket.className = 'portfolio-3d-pocket';
+      pocket.setAttribute('aria-hidden', 'true');
+      pocket.innerHTML = '<span class="portfolio-pocket-tab"></span><span class="portfolio-pocket-mark"><i class="fas fa-folder-open" aria-hidden="true"></i> PROJECT FILE</span><strong></strong><span class="portfolio-pocket-index"></span>';
+      pocket.querySelector('strong').textContent = item.title;
+      pocket.querySelector('.portfolio-pocket-index').textContent = `${String(displayIndex + 1).padStart(2, '0')} / ${String(visible.length).padStart(2, '0')}`;
+      card.append(pocket);
       let action;
       if (item.url) {
         action = document.createElement('a');
@@ -164,7 +171,7 @@
     }
     controls.hidden = false;
     activeIndex = (nextIndex + cards.length) % cards.length;
-    const step = Math.min(278, Math.max(105, window.innerWidth * 0.23));
+    const step = Math.min(230, Math.max(88, window.innerWidth * 0.18));
     const entries = visibleItems();
 
     cards.forEach((card, index) => {
@@ -178,7 +185,7 @@
       card.style.zIndex = String(10 - Math.round(distance * 2));
       card.style.opacity = isVisible ? String(distance === 0 ? 1 : distance === 1 ? .76 : .42) : '0';
       card.style.filter = distance > 1 ? 'saturate(.74) brightness(.68)' : 'none';
-      card.style.transform = `translate3d(calc(-50% + ${position * step}px), -50%, ${distance === 0 ? 70 : distance === 1 ? -20 : -150}px) scale(${distance === 0 ? 1 : distance === 1 ? .84 : .7}) rotateY(${position * -13}deg)`;
+      card.style.transform = `translate3d(calc(-50% + ${position * step}px), calc(-50% + ${distance * 7}px), ${distance === 0 ? 80 : distance === 1 ? -30 : -180}px) scale(${distance === 0 ? 1 : distance === 1 ? .88 : .74}) rotateY(${position * -15}deg) rotateZ(${position * 5}deg)`;
       card.setAttribute('aria-current', String(distance === 0));
       card.setAttribute('aria-label', `${index + 1} of ${cards.length}: ${entries[index].item.title}`);
       preview.tabIndex = isVisible ? 0 : -1;
