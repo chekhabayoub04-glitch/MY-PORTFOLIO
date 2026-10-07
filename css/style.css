@@ -707,17 +707,16 @@ footer {
 }
 .portfolio-3d-card[hidden] { display: none; }
 .portfolio-3d-face {
-  position: relative; display: block; width: 100%; height: 100%; padding: 10px; overflow: hidden; cursor: pointer;
-  border: 1px solid rgba(255,224,102,.35); border-radius: 23px; color: var(--white);
-  background: linear-gradient(145deg, rgba(35,32,21,.98), rgba(7,7,7,.99) 70%);
-  box-shadow: inset 0 1px 0 rgba(255,255,255,.16), 0 28px 70px rgba(0,0,0,.62), 0 0 32px rgba(255,215,0,.09);
-  transform: translateZ(0); transition: border-color .3s, box-shadow .3s;
+  position: relative; display: block; width: 100%; height: 100%; padding: 0; overflow: hidden; cursor: pointer;
+  border: 0; border-radius: 3px; color: var(--white); background: transparent;
+  box-shadow: 0 30px 72px rgba(0,0,0,.58), 0 0 23px rgba(255,215,0,.07);
+  transform: translateZ(0); transition: box-shadow .3s;
 }
-.portfolio-3d-face::before { position: absolute; z-index: 2; inset: 0; border-radius: inherit; background: linear-gradient(135deg, rgba(255,255,255,.16), transparent 21%, transparent 70%, rgba(255,215,0,.09)); content: ''; pointer-events: none; }
+.portfolio-3d-face::before { display: none; }
 .portfolio-3d-face:focus-visible { outline: 2px solid var(--yellow); outline-offset: 5px; }
-.portfolio-3d-card[aria-current="true"] .portfolio-3d-face { border-color: rgba(255,224,102,.8); box-shadow: inset 0 1px 0 rgba(255,255,255,.2), 0 35px 95px rgba(0,0,0,.75), 0 0 48px rgba(255,215,0,.18); }
-.portfolio-3d-face img { display: block; width: 100%; height: 100%; border-radius: 15px; background: #090909; object-fit: contain; }
-.portfolio-3d-shade { position: absolute; inset: 10px; border-radius: 15px; background: linear-gradient(180deg, transparent 35%, rgba(3,3,3,.12) 49%, rgba(3,3,3,.9) 100%); pointer-events: none; }
+.portfolio-3d-card[aria-current="true"] .portfolio-3d-face { box-shadow: 0 38px 100px rgba(0,0,0,.72), 0 0 42px rgba(255,215,0,.14); }
+.portfolio-3d-face img { display: block; width: 100%; height: 100%; border-radius: 2px; background: transparent; object-fit: contain; }
+.portfolio-3d-shade { position: absolute; inset: 0; border-radius: 2px; background: linear-gradient(180deg, transparent 35%, rgba(3,3,3,.12) 49%, rgba(3,3,3,.9) 100%); pointer-events: none; }
 .portfolio-3d-copy { position: absolute; right: 26px; bottom: 29px; left: 26px; display: grid; gap: 8px; text-align: left; pointer-events: none; }
 .portfolio-3d-category { color: var(--yellow); font-size: .63rem; font-weight: 750; letter-spacing: .17em; text-transform: uppercase; }
 .portfolio-3d-title { color: white; font-size: clamp(1.15rem, 2vw, 1.55rem); font-weight: 700; line-height: 1.15; text-wrap: balance; }
@@ -729,7 +728,6 @@ footer {
   box-shadow: inset 0 2px 0 rgba(255,255,255,.14), 0 24px 55px rgba(0,0,0,.68), 0 0 30px rgba(255,205,34,.13);
   backdrop-filter: blur(13px); pointer-events: none;
 }
-.portfolio-3d-pocket::after { position: absolute; inset: 10px; border: 1px solid rgba(255,223,117,.11); border-radius: 5px 19px 17px 17px; content: ''; }
 .portfolio-pocket-tab { position: absolute; top: -27px; left: -1px; width: 42%; height: 28px; border: 1px solid rgba(255,218,82,.55); border-bottom: 0; border-radius: 15px 15px 0 0; background: linear-gradient(110deg, rgba(34,29,14,.96), rgba(9,9,7,.96)); }
 .portfolio-3d-pocket strong { position: relative; z-index: 1; max-width: 100%; color: white; font-size: clamp(1.2rem, 2vw, 1.8rem); line-height: 1.12; text-wrap: balance; }
 .portfolio-3d-card[aria-current="true"] .portfolio-3d-face { animation: folioFloat 5.5s ease-in-out infinite; }
@@ -784,7 +782,7 @@ footer {
 @keyframes pocketFloat { 0%,100% { translate: 0 0; } 50% { translate: 0 3px; } }
 @media (max-width: 980px) { .portfolio-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } .work-hero { grid-template-columns: 1fr; gap: 22px; } .portfolio-3d-card { width: clamp(310px, 48vw, 420px); } }
 @media (max-width: 700px) { .portfolio-toolbar { grid-template-columns: 1fr; } .portfolio-grid { gap: 13px; } .portfolio-card-body { padding: 14px; } .portfolio-card-body h3 { font-size: 1rem; } .portfolio-card-body p { font-size: .77rem; } .portfolio-grid.portfolio-3d-stage { height: min(760px, 170vw); min-height: 590px; } .portfolio-3d-card { top: 40%; width: min(76vw, 380px); height: 76%; min-height: 455px; } .portfolio-3d-pocket { bottom: 54px; padding: 60px 23px 25px; } }
-@media (max-width: 500px) { .portfolio-grid { grid-template-columns: 1fr; } .portfolio-card-media.is-artwork { aspect-ratio: 4 / 4.6; } .work-hero { border-radius: 19px; } .portfolio-lightbox { padding: 12px; } .portfolio-lightbox-panel { padding: 12px; } .portfolio-lightbox-stage { grid-template-columns: 40px minmax(0,1fr) 40px; gap: 5px; } .portfolio-lightbox-arrow { width: 38px; height: 38px; } .portfolio-grid.portfolio-3d-stage { height: 158vw; min-height: 590px; max-height: 720px; border-radius: 20px; } .portfolio-3d-card { top: 40%; width: 75vw; height: 75%; min-height: 450px; } .portfolio-3d-face { padding: 7px; border-radius: 19px; } .portfolio-3d-face img, .portfolio-3d-shade { border-radius: 12px; } .portfolio-3d-shade { inset: 7px; } .portfolio-3d-copy { right: 20px; bottom: 22px; left: 20px; } .portfolio-3d-description { font-size: .7rem; } .portfolio-3d-pocket { right: -3%; bottom: 49px; left: -3%; padding: 57px 20px 24px; border-radius: 7px 21px 20px 20px; } .portfolio-pocket-tab { height: 24px; top: -23px; } .portfolio-3d-controls { gap: 12px; } .portfolio-3d-arrow { width: 42px; height: 42px; } }
+@media (max-width: 500px) { .portfolio-grid { grid-template-columns: 1fr; } .portfolio-card-media.is-artwork { aspect-ratio: 4 / 4.6; } .work-hero { border-radius: 19px; } .portfolio-lightbox { padding: 12px; } .portfolio-lightbox-panel { padding: 12px; } .portfolio-lightbox-stage { grid-template-columns: 40px minmax(0,1fr) 40px; gap: 5px; } .portfolio-lightbox-arrow { width: 38px; height: 38px; } .portfolio-grid.portfolio-3d-stage { height: 158vw; min-height: 590px; max-height: 720px; border-radius: 20px; } .portfolio-3d-card { top: 40%; width: 75vw; height: 75%; min-height: 450px; } .portfolio-3d-face { padding: 0; border-radius: 2px; } .portfolio-3d-face img, .portfolio-3d-shade { border-radius: 2px; } .portfolio-3d-shade { inset: 0; } .portfolio-3d-copy { right: 20px; bottom: 22px; left: 20px; } .portfolio-3d-description { font-size: .7rem; } .portfolio-3d-pocket { right: -3%; bottom: 49px; left: -3%; padding: 57px 20px 24px; border-radius: 7px 21px 20px 20px; } .portfolio-pocket-tab { height: 24px; top: -23px; } .portfolio-3d-controls { gap: 12px; } .portfolio-3d-arrow { width: 42px; height: 42px; } }
 @media (prefers-reduced-motion: reduce) { .portfolio-card, .portfolio-card-preview img, .portfolio-zoom, .portfolio-filter, .portfolio-lightbox, .portfolio-lightbox-panel, .portfolio-3d-card, .portfolio-3d-face, .portfolio-3d-pocket, .portfolio-3d-action, .portfolio-3d-arrow, .service-card, .folder-leaf { animation: none !important; transition: none !important; } }
 .video-library .hero-landing { margin-bottom: 46px; }
 .video-collection { margin-top: 46px; }
@@ -1162,25 +1160,29 @@ footer {
 /* Gold 3D project folders with a floating fan of real project artwork. */
 .services-showcase-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 30px; }
 .services-showcase-grid .service-body, #work .service-body { display: none; }
-.services-showcase-grid .service-card { overflow: hidden; border-color: rgba(255,215,0,.2); background: linear-gradient(150deg, rgba(20,19,15,.95), rgba(5,5,5,.98)); }
+.services-showcase-grid .service-card, #work .service-card { overflow: visible; border: 0; background: transparent; box-shadow: none; }
+.services-showcase-grid .service-card::before, #work .service-card::before,
+.services-showcase-grid .service-card::after, #work .service-card::after { display: none; }
+.services-showcase-grid .service-card:hover, #work .service-card:hover { border: 0; box-shadow: none; }
 .services-showcase-grid .service-img-wrap, .services-showcase-grid .service-visual-art,
 .services-showcase-grid .web-service-image, .services-showcase-grid .combined-design-card .service-img-wrap {
-  position: relative; display: block; height: clamp(330px, 35vw, 420px); overflow: hidden; isolation: isolate;
-  background: radial-gradient(ellipse at 50% 58%, rgba(255,197,23,.22), transparent 48%), linear-gradient(145deg,#111008,#050504 69%);
+  position: relative; display: block; height: clamp(330px, 35vw, 420px); overflow: visible; isolation: isolate;
+  background: transparent;
 }
-.services-showcase-grid .folder-showcase > img { width: 100%; height: 100%; object-fit: cover; opacity: .13; filter: blur(8px) saturate(.5); transform: scale(1.08); }
+.folder-showcase::before { position: absolute; z-index: 0; inset: 6% 8%; border-radius: 50%; background: radial-gradient(ellipse,rgba(255,191,26,.2),rgba(255,191,26,.06) 35%,transparent 72%); filter: blur(13px); content: ''; pointer-events: none; }
+.services-showcase-grid .folder-showcase > img { display: none; }
 .services-showcase-grid .folder-showcase .service-img-overlay,
 .services-showcase-grid .folder-showcase > i, .services-showcase-grid .folder-showcase > .visual-orbit,
 .services-showcase-grid .folder-showcase > .visual-art-label { display: none; }
-.folder-deck { position: absolute; inset: 5% 4% 0; perspective: 1200px; transform-style: preserve-3d; }
+.folder-deck { position: absolute; z-index: 1; inset: 5% 4% 0; perspective: 1200px; transform-style: preserve-3d; }
 .folder-leaf {
-  position: absolute; top: 1%; left: 32%; z-index: calc(5 - var(--leaf-index)); display: block; width: 36%; height: 78%; padding: 7px;
-  overflow: hidden; border: 1px solid rgba(255,224,115,.58); border-radius: 14px; background: linear-gradient(145deg,#e4c46b,#3b2b08 14%,#090908 32%);
-  box-shadow: inset 0 1px rgba(255,255,255,.42), 0 17px 27px rgba(0,0,0,.62), 0 0 18px rgba(255,207,38,.11);
+  position: absolute; top: 1%; left: 32%; z-index: calc(5 - var(--leaf-index)); display: block; width: 36%; height: 78%; padding: 0;
+  overflow: visible; border: 0; border-radius: 3px; background: transparent;
+  box-shadow: 0 19px 31px rgba(0,0,0,.5), 0 0 15px rgba(255,207,38,.07);
   transform-origin: 50% 88%; animation: folderLeafDrift 5.8s ease-in-out infinite; animation-delay: calc(var(--leaf-index) * -.73s);
   transition: translate .5s cubic-bezier(.2,.8,.2,1), filter .4s;
 }
-.folder-leaf img { display: block; width: 100%; height: 100%; border-radius: 9px; background: #0b0a06; object-fit: cover; }
+.folder-leaf img { display: block; width: 100%; height: 100%; border: 0; border-radius: 2px; background: transparent; object-fit: cover; }
 .folder-leaf:nth-child(1) { top: 19%; left: 3%; transform: rotate(-25deg) translateZ(0); }
 .folder-leaf:nth-child(2) { top: 8%; left: 17%; transform: rotate(-14deg) translateZ(18px); }
 .folder-leaf:nth-child(3) { top: 1%; left: 32%; z-index: 8; transform: rotate(0) translateZ(34px); }
@@ -1194,7 +1196,6 @@ footer {
   backdrop-filter: blur(14px); transform: perspective(900px) rotateX(3deg); transition: filter .35s, border-color .35s;
 }
 .folder-pocket::before { position: absolute; top: -21px; left: -1px; width: 39%; height: 22px; border: 1px solid rgba(255,219,79,.58); border-bottom: 0; border-radius: 13px 13px 0 0; background: linear-gradient(110deg,rgba(38,31,12,.97),rgba(11,10,7,.96)); content: ''; }
-.folder-pocket::after { position: absolute; inset: 9px; border: 1px solid rgba(255,224,120,.1); border-radius: 4px 17px 14px 14px; content: ''; pointer-events: none; }
 .folder-pocket-title { max-width: 520px; color: #fff; font-size: clamp(1.05rem, 1.8vw, 1.55rem); font-weight: 720; line-height: 1.15; text-wrap: balance; }
 .service-card:hover .folder-leaf { translate: 0 -18px; filter: brightness(1.13); }
 .service-card:hover .folder-pocket { border-color: rgba(255,224,107,.88); filter: brightness(1.08); }
@@ -1205,7 +1206,7 @@ footer {
 .service-card:hover .folder-leaf:nth-child(5) { translate: 3px -22px; }
 @keyframes folderLeafDrift { 0%,100% { translate: 0 0; } 50% { translate: 0 -7px; } }
 #work .service-card { perspective: 1000px; }
-#work .folder-showcase--compact { position: relative; display: block; height: 290px; overflow: hidden; isolation: isolate; background: radial-gradient(ellipse at 50% 56%,rgba(255,197,23,.18),transparent 52%),linear-gradient(145deg,#111008,#050504 69%); }
+#work .folder-showcase--compact { position: relative; display: block; height: 290px; overflow: visible; isolation: isolate; background: transparent; }
 #work .folder-showcase--compact .folder-deck { inset: 4% 2% 0; }
 #work .folder-showcase--compact .folder-leaf { height: 78%; }
 #work .folder-showcase--compact .folder-pocket { min-height: 49%; padding: 52px 18px 20px; }
