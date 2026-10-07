@@ -196,7 +196,7 @@
     else if (previous === cards.length - 1 && next === 0) card = trailingSet.copies[next];
     const centeredLeft = card.offsetLeft - track.offsetLeft - (viewport.clientWidth - card.offsetWidth) / 2;
     viewport.scrollTo({ left: centeredLeft, behavior: 'smooth' });
-    interactionPausedUntil = performance.now() + 1400;
+    interactionPausedUntil = performance.now() + 900;
     updateToggle();
   }
 
@@ -219,8 +219,10 @@
     if (event.key === 'ArrowRight') { event.preventDefault(); goTo(activeIndex + 1); }
   });
   viewport.addEventListener('pointerdown', () => { interactionPausedUntil = performance.now() + 5000; updateToggle(); }, { passive: true });
-  viewport.addEventListener('pointerup', () => { interactionPausedUntil = performance.now() + 1800; updateToggle(); }, { passive: true });
-  viewport.addEventListener('wheel', () => { interactionPausedUntil = performance.now() + 1800; updateToggle(); }, { passive: true });
+  const resumeAfterGesture = () => { interactionPausedUntil = performance.now() + 450; updateToggle(); };
+  viewport.addEventListener('pointerup', resumeAfterGesture, { passive: true });
+  viewport.addEventListener('pointercancel', resumeAfterGesture, { passive: true });
+  viewport.addEventListener('wheel', () => { interactionPausedUntil = performance.now() + 450; updateToggle(); }, { passive: true });
   viewport.addEventListener('scroll', () => {
     if (scrollUpdateFrame) cancelAnimationFrame(scrollUpdateFrame);
     scrollUpdateFrame = requestAnimationFrame(() => {
@@ -265,8 +267,7 @@
     const canMove = exhibitionVisible && !manuallyPaused && !videoPlaying && !viewerOpen && performance.now() >= interactionPausedUntil && !document.hidden;
     if (canMove && previousTime) {
       const span = Math.max(1, loopEnd - loopStart);
-      const progress = Math.max(0, Math.min(1, (viewport.scrollLeft - loopStart) / span));
-      const cinematicSpeed = 18 + 8 * Math.sin(progress * Math.PI);
+      const cinematicSpeed = 20;
       const nextLeft = viewport.scrollLeft + cinematicSpeed * Math.min(40, time - previousTime) / 1000;
       viewport.scrollLeft = nextLeft >= loopEnd ? loopStart + (nextLeft - loopEnd) : nextLeft;
     }
