@@ -3,15 +3,49 @@
   if (!root) return;
 
   const projects = [
-    { type: 'web', title: 'Titan Gym', category: 'Website · Fitness', description: 'A bold digital home for a modern training space.', image: 'images/titangym.jpg', url: 'https://chekhabayoub04-glitch.github.io/titan-gym/', detail: 'web-development.html' },
-    { type: 'web', title: 'Dr. Badis Clinic', category: 'Website · Healthcare', description: 'A welcoming clinic website built around patient trust.', image: 'images/project-drbadis.jpg', url: 'https://chekhabayoub11-ops.github.io/dr.badis/', detail: 'web-development.html' },
-    { type: 'web', title: 'We Can Speak Deutsch', category: 'Website · Education', description: 'A friendly online home for German language learning.', image: 'images/project-deutsch.jpg', url: 'https://chekhabayoub11-ops.github.io/we-can-speak-deutsch/', detail: 'web-development.html' },
-    { type: 'image', title: 'Souq Al Sayarat', category: 'Campaign · Automotive', description: 'A social campaign concept for an Arabic car marketplace.', image: 'images/april3.png', detail: 'graphic-design.html' },
-    { type: 'image', title: 'Rely — Built for the Journey', category: 'Campaign · Automotive', description: 'A cinematic automotive visual with a warm desert palette.', image: 'images/aprilll.jpg', detail: 'graphic-design.html' },
-    { type: 'logo', title: 'Strength & Form', category: 'Logo · Fitness', description: 'A strong emblem shaped around power and athletic movement.', image: 'images/logo3.jpg', detail: 'logo-design.html' },
-    { type: 'logo', title: 'Brew Bean', category: 'Logo · Hospitality', description: 'A memorable coffee identity with a playful wordmark.', image: 'images/logo4.jpg', detail: 'logo-design.html' },
+    { type: 'web', title: 'Titan Gym', category: 'Website · Fitness', description: 'Bold digital presence for a modern training space.', image: 'images/titangym.jpg', url: 'https://chekhabayoub04-glitch.github.io/titan-gym/', detail: 'web-development.html' },
+    { type: 'web', title: 'Dr. Badis Clinic', category: 'Website · Healthcare', description: 'A welcoming clinic experience built around patient trust.', image: 'images/project-drbadis.jpg', url: 'https://chekhabayoub11-ops.github.io/dr.badis/', detail: 'web-development.html' },
+    { type: 'web', title: 'Dr. 213', category: 'Website · Healthcare', description: 'A focused medical platform with clear service pathways.', image: 'images/project-dr213.jpg', url: 'https://chekhabayoub11-ops.github.io/dr.213/', detail: 'web-development.html' },
+    { type: 'web', title: 'We Can Speak Deutsch', category: 'Website · Education', description: 'A friendly digital home for German language learning.', image: 'images/project-deutsch.jpg', url: 'https://chekhabayoub11-ops.github.io/we-can-speak-deutsch/', detail: 'web-development.html' },
+    { type: 'web', title: 'Coffee Break DZ', category: 'Website · Hospitality', description: 'A warm café identity presented through a simple web experience.', image: 'images/project-coffee.jpg', url: 'https://sites.google.com/view/coffebreakdz/home', detail: 'web-development.html' },
+    { type: 'web', title: 'Saïda Real Estate', category: 'Website · Architecture', description: 'An architectural project presented as a polished promotional story.', image: 'images/Modern promotional website.jpg', url: 'https://chekhabayoub04-glitch.github.io/new-vession-promition-/', detail: 'web-development.html' },
+    { type: 'image', title: 'Souq Al Sayarat — Buyer Guide', category: 'Campaign · Automotive', description: 'A clear Arabic campaign visual explaining the car-buying journey.', image: 'images/april3.png', detail: 'graphic-design.html' },
+    { type: 'image', title: 'Souq Al Sayarat — Book a Test Drive', category: 'Campaign · Automotive', description: 'A desert-toned promotional story inviting customers to book a drive.', image: 'images/april4.png', detail: 'graphic-design.html' },
+    { type: 'image', title: 'Souq Al Sayarat — Find Your Car', category: 'Campaign · Automotive', description: 'A social-first marketplace visual designed to make discovery simple.', image: 'images/april5.png', detail: 'graphic-design.html' },
+    { type: 'image', title: 'Rely — Built for the Journey', category: 'Campaign · Automotive', description: 'A cinematic automotive campaign with a warm outdoor palette.', image: 'images/aprilll.jpg', detail: 'graphic-design.html' },
+    { type: 'image', title: 'Online Window Quote', category: 'Campaign · Home Services', description: 'A service campaign focused on a quick, stress-free online estimate.', image: 'images/april1.jpg', detail: 'graphic-design.html' },
+    { type: 'image', title: 'Breathe Better', category: 'Campaign · Home Services', description: 'A clean product message for replacement glazing and home comfort.', image: 'images/april2.jpg', detail: 'graphic-design.html' },
+    { type: 'image', title: 'Lozan — Care for Every Journey', category: 'Campaign · Automotive', description: 'A premium maintenance visual built around a confident red palette.', image: 'images/lozan1.jpg', detail: 'graphic-design.html' },
+    { type: 'image', title: 'Service Reminder', category: 'Campaign · Automotive', description: 'A direct maintenance reminder designed for mobile social feeds.', image: 'images/loazan3.jpg', detail: 'graphic-design.html' },
+    { type: 'image', title: 'Auto Service — 5 Reasons', category: 'Campaign · Automotive', description: 'An informative post presenting key reasons to book a service visit.', image: 'images/rozan4.jpg', detail: 'graphic-design.html' },
+    { type: 'image', title: 'Gel Cream — Botanical Care', category: 'Campaign · Beauty & Product', description: 'A product-focused skincare visual with a fresh green art direction.', image: 'images/rozan5.jpg', detail: 'graphic-design.html' },
+    { type: 'image', title: 'Scent in Check', category: 'Campaign · Beauty & Product', description: 'A dramatic fragrance concept using contrast, texture, and reflection.', image: 'images/rozan6.jpg', detail: 'graphic-design.html' },
+    { type: 'image', title: 'A Note of Summer', category: 'Campaign · Beauty & Product', description: 'A playful perfume visual with a bright, sunlit color story.', image: 'images/rozan7.jpg', detail: 'graphic-design.html' },
+    { type: 'image', title: 'Arabian Nights', category: 'Campaign · Beauty & Product', description: 'A cinematic fragrance campaign with rich tones and tactile detail.', image: 'images/rozan8.jpg', detail: 'graphic-design.html' },
+    { type: 'image', title: 'A Natural Blend', category: 'Campaign · Beauty & Product', description: 'A minimal product story arranged around ingredients and texture.', image: 'images/rozan9.jpg', detail: 'graphic-design.html' },
+    { type: 'image', title: 'Restaurant Menu Collection', category: 'Graphic Design · Food & Hospitality', description: 'Rich menu artwork created to bring food photography and offers together.', image: 'images/graphic1.jpg', detail: 'graphic-design.html' },
+    { type: 'image', title: 'Burger Brand Campaign', category: 'Graphic Design · Food & Hospitality', description: 'A bold promotional system for a fast-moving food brand.', image: 'images/graphic2.jpg', detail: 'graphic-design.html' },
+    { type: 'image', title: 'New Dishes & Drinks', category: 'Graphic Design · Food & Hospitality', description: 'A high-impact menu feature built around clear hierarchy and appetite appeal.', image: 'images/graphic3.jpg', detail: 'graphic-design.html' },
+    { type: 'image', title: 'Automotive Campaign System', category: 'Graphic Design · Automotive', description: 'A coordinated visual campaign with a striking black and yellow palette.', image: 'images/graphic4.jpg', detail: 'graphic-design.html' },
+    { type: 'image', title: 'Electronics Product Showcase', category: 'Graphic Design · Product Advertising', description: 'A product-led campaign layout balancing feature callouts and imagery.', image: 'images/graphic5.jpg', detail: 'graphic-design.html' },
+    { type: 'image', title: 'Match Day Poster', category: 'Graphic Design · Sports & Culture', description: 'An energetic sports graphic using layered portraits and collage.', image: 'images/graphic6.jpg', detail: 'graphic-design.html' },
+    { type: 'image', title: 'Streetwear Visual Campaign', category: 'Graphic Design · Sports & Culture', description: 'A bold editorial composition for footwear and streetwear promotion.', image: 'images/graphic7.jpg', detail: 'graphic-design.html' },
+    { type: 'logo', title: 'Kristina Afonina', category: 'Logo · Beauty', description: 'A refined signature mark presented as a luminous storefront identity.', image: 'images/logo2.jpg', detail: 'logo-design.html' },
+    { type: 'logo', title: 'Strength & Form', category: 'Logo · Fitness', description: 'A bold emblem built around power, motion, and athletic character.', image: 'images/logo3.jpg', detail: 'logo-design.html' },
+    { type: 'logo', title: 'Brew Bean', category: 'Logo · Hospitality', description: 'A playful coffee identity with a compact, memorable wordmark.', image: 'images/logo4.jpg', detail: 'logo-design.html' },
+    { type: 'logo', title: 'Bakery Collection', category: 'Logo · Food & Drink', description: 'A set of warm, approachable marks for a family of food brands.', image: 'images/logo5.jpg', detail: 'logo-design.html' },
+    { type: 'logo', title: 'Chic B’Lounge', category: 'Logo · Beauty', description: 'A purple visual identity extended across product and packaging touchpoints.', image: 'images/logo6.jpg', detail: 'logo-design.html' },
+    { type: 'logo', title: 'The Yummy', category: 'Logo · Food & Drink', description: 'A friendly hand-lettered mark for a bright food brand.', image: 'images/logo7.jpg', detail: 'logo-design.html' },
+    { type: 'logo', title: 'Design System', category: 'Logo · Brand Systems', description: 'A monochrome identity board exploring logo, stationery, and pattern.', image: 'images/logo8.jpg', detail: 'logo-design.html' },
+    { type: 'logo', title: 'Roast & Ritual', category: 'Logo · Hospitality', description: 'A warm coffee-inspired emblem set against a richly textured surface.', image: 'images/logo9.jpg', detail: 'logo-design.html' },
+    { type: 'logo', title: 'Coffee Energy', category: 'Logo · Hospitality', description: 'A bold café symbol paired with a clean, easy-to-read wordmark.', image: 'images/logo10.jpg', detail: 'logo-design.html' },
+    { type: 'logo', title: 'Restaurant Marks', category: 'Logo · Food & Drink', description: 'A collection of colorful identity directions for food businesses.', image: 'images/logo11.jpg', detail: 'logo-design.html' },
+    { type: 'logo', title: 'Logo Explorations', category: 'Logo · Brand Systems', description: 'A curated sheet of varied marks across several brand categories.', image: 'images/logo12.jpg', detail: 'logo-design.html' },
+    { type: 'logo', title: 'Ruch', category: 'Logo · Food & Drink', description: 'A character-led identity designed for a playful food brand.', image: 'images/logo13.jpg', detail: 'logo-design.html' },
     { type: 'video', title: 'Clothing Brand Film', category: 'AI Film · Fashion', description: 'A cinematic fashion identity in motion.', image: 'videos/posters/01-clothing-brand.png', video: 'videos/brand-identity/01-clothing-brand.m4v', detail: 'ai-videos.html' },
-    { type: 'video', title: 'Glass Brand Film', category: 'AI Film · Product', description: 'A polished product story for a contemporary glass brand.', image: 'videos/posters/02-glass-brand.png', video: 'videos/brand-identity/02-glass-brand.m4v', detail: 'ai-videos.html' }
+    { type: 'video', title: 'Glass Brand Film', category: 'AI Film · Product', description: 'A polished product story for a contemporary glass brand.', image: 'videos/posters/02-glass-brand.png', video: 'videos/brand-identity/02-glass-brand.m4v', detail: 'ai-videos.html' },
+    { type: 'video', title: 'Villa & Home Film', category: 'AI Film · Interior', description: 'A cinematic brand story shaped around modern living.', image: 'videos/posters/03-villa-home-brand.png', video: 'videos/brand-identity/03-villa-home-brand.m4v', detail: 'ai-videos.html' },
+    { type: 'video', title: 'Car Brand Film', category: 'AI Film · Automotive', description: 'An atmospheric automotive identity film.', image: 'videos/posters/04-car-brand.png', video: 'videos/brand-identity/04-car-brand.m4v', detail: 'ai-videos.html' }
   ];
 
   const viewport = root.querySelector('.work-exhibition-viewport');
@@ -267,7 +301,7 @@
     const canMove = exhibitionVisible && !manuallyPaused && !videoPlaying && !viewerOpen && performance.now() >= interactionPausedUntil && !document.hidden;
     if (canMove && previousTime) {
       const span = Math.max(1, loopEnd - loopStart);
-      const cinematicSpeed = 50;
+      const cinematicSpeed = 60;
       const nextLeft = viewport.scrollLeft + cinematicSpeed * Math.min(40, time - previousTime) / 1000;
       viewport.scrollLeft = nextLeft >= loopEnd ? loopStart + (nextLeft - loopEnd) : nextLeft;
     }
