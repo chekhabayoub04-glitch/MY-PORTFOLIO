@@ -22,13 +22,15 @@
   const toggle = root.querySelector('.exhibition-toggle');
   let activeIndex = 0;
   let manuallyPaused = false;
-  let hoverPaused = false;
-  let focusPaused = false;
   let videoPlaying = false;
   let exhibitionVisible = false;
+  let viewerOpen = false;
+  let interactionPausedUntil = 0;
+  let lastTogglePaused = null;
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (reducedMotion) toggle.hidden = true;
-  let animationFrame = 0;
+  let scrollUpdateFrame = 0;
+  let movementFrame = 0;
 
   const viewer = document.createElement('div');
   viewer.className = 'exhibition-lightbox';
@@ -44,6 +46,8 @@
     viewerImage.src = project.image;
     viewerImage.alt = project.title;
     viewerReturnFocus = target;
+    viewerOpen = true;
+    updateToggle();
     viewer.classList.add('is-open');
     document.body.classList.add('has-portfolio-lightbox');
     viewer.querySelector('button').focus();
@@ -52,6 +56,8 @@
   function closeImage() {
     viewer.classList.remove('is-open');
     document.body.classList.remove('has-portfolio-lightbox');
+    viewerOpen = false;
+    updateToggle();
     viewerImage.removeAttribute('src');
     viewerReturnFocus?.focus();
   }
@@ -148,6 +154,31 @@
   const cards = [...track.children];
   const dotButtons = [...dots.children];
 
+  function makeLoopCopy(sourceCards, className) {
+    const fragment = document.createDocumentFragment();
+    const copies = sourceCards.map(source => {
+      const copy = source.cloneNode(true);
+      copy.classList.add('is-loop-copy', className);
+      copy.setAttribute('aria-hidden', 'true');
+      copy.removeAttribute('aria-current');
+      copy.inert = true;
+      copy.querySelectorAll('a,button,video').forEach(control => {
+        control.tabIndex = -1;
+        if (control instanceof HTMLVideoElement) control.controls = false;
+      });
+      fragment.append(copy);
+      return copy;
+    });
+    return { fragment, copies };
+  }
+
+  const leadingSet = makeLoopCopy(cards, 'loop-before');
+  track.prepend(leadingSet.fragment);
+  const trailingSet = makeLoopCopy(cards, 'loop-after');
+  track.append(trailingSet.fragment);
+  let loopStart = 0;
+  let loopEnd = 0;
+
   function updateActive(index, announce = false) {
     activeIndex = (index + cards.length) % cards.length;
     cards.forEach((card, cardIndex) => card.setAttribute('aria-current', String(cardIndex === activeIndex)));
@@ -158,16 +189,23 @@
 
   function goTo(index) {
     const next = (index + cards.length) % cards.length;
+    const previous = activeIndex;
     updateActive(next, true);
-    const card = cards[next];
+    let card = cards[next];
+    if (previous === 0 && next === cards.length - 1) card = leadingSet.copies[next];
+    else if (previous === cards.length - 1 && next === 0) card = trailingSet.copies[next];
     const centeredLeft = card.offsetLeft - track.offsetLeft - (viewport.clientWidth - card.offsetWidth) / 2;
     viewport.scrollTo({ left: centeredLeft, behavior: 'smooth' });
+    interactionPausedUntil = performance.now() + 1400;
+    updateToggle();
   }
 
   function updateToggle() {
-    const paused = manuallyPaused || hoverPaused || focusPaused || videoPlaying;
+    const paused = manuallyPaused || videoPlaying || viewerOpen || performance.now() < interactionPausedUntil;
     toggle.setAttribute('aria-pressed', String(manuallyPaused));
-    toggle.setAttribute('aria-label', manuallyPaused ? 'Resume automatic gallery movement' : 'Pause automatic gallery movement');
+    toggle.setAttribute('aria-label', paused ? 'Resume automatic gallery movement' : 'Pause automatic gallery movement');
+    if (lastTogglePaused === paused) return;
+    lastTogglePaused = paused;
     toggle.innerHTML = paused
       ? '<i class="fas fa-play" aria-hidden="true"></i><span>Play</span>'
       : '<i class="fas fa-pause" aria-hidden="true"></i><span>Pause</span>';
@@ -176,19 +214,16 @@
   root.querySelector('.exhibition-arrow.previous').addEventListener('click', () => goTo(activeIndex - 1));
   root.querySelector('.exhibition-arrow.next').addEventListener('click', () => goTo(activeIndex + 1));
   toggle.addEventListener('click', () => { manuallyPaused = !manuallyPaused; updateToggle(); });
-  root.addEventListener('mouseenter', () => { hoverPaused = true; updateToggle(); });
-  root.addEventListener('mouseleave', () => { hoverPaused = false; updateToggle(); });
-  root.addEventListener('focusin', () => { focusPaused = true; updateToggle(); });
-  root.addEventListener('focusout', event => {
-    if (!root.contains(event.relatedTarget)) { focusPaused = false; updateToggle(); }
-  });
   viewport.addEventListener('keydown', event => {
     if (event.key === 'ArrowLeft') { event.preventDefault(); goTo(activeIndex - 1); }
     if (event.key === 'ArrowRight') { event.preventDefault(); goTo(activeIndex + 1); }
   });
+  viewport.addEventListener('pointerdown', () => { interactionPausedUntil = performance.now() + 5000; updateToggle(); }, { passive: true });
+  viewport.addEventListener('pointerup', () => { interactionPausedUntil = performance.now() + 1800; updateToggle(); }, { passive: true });
+  viewport.addEventListener('wheel', () => { interactionPausedUntil = performance.now() + 1800; updateToggle(); }, { passive: true });
   viewport.addEventListener('scroll', () => {
-    if (animationFrame) cancelAnimationFrame(animationFrame);
-    animationFrame = requestAnimationFrame(() => {
+    if (scrollUpdateFrame) cancelAnimationFrame(scrollUpdateFrame);
+    scrollUpdateFrame = requestAnimationFrame(() => {
       const center = viewport.scrollLeft + viewport.clientWidth / 2;
       let nearest = 0, nearestDistance = Infinity;
       cards.forEach((card, index) => {
@@ -196,7 +231,8 @@
         const distance = Math.abs(center - cardCenter);
         if (distance < nearestDistance) { nearestDistance = distance; nearest = index; }
       });
-      updateActive(nearest);
+      if (nearest !== activeIndex) updateActive(nearest);
+      updateToggle();
     });
   }, { passive: true });
 
@@ -210,12 +246,36 @@
 
   updateActive(0);
   updateToggle();
+  function alignLoop() {
+    const leadingCard = cards[0];
+    const trailingFirst = trailingSet.copies[0];
+    const centerOffset = (viewport.clientWidth - leadingCard.offsetWidth) / 2;
+    loopStart = leadingCard.offsetLeft - track.offsetLeft - centerOffset;
+    loopEnd = loopStart + trailingFirst.offsetLeft - leadingCard.offsetLeft;
+    viewport.scrollLeft = loopStart;
+  }
+  alignLoop();
+  window.addEventListener('resize', alignLoop, { passive: true });
   if ('IntersectionObserver' in window) {
     const observer = new IntersectionObserver(entries => { exhibitionVisible = entries[0].isIntersecting; }, { threshold: 0.12 });
     observer.observe(root);
   } else exhibitionVisible = true;
-  const rotation = reducedMotion ? null : window.setInterval(() => {
-    if (exhibitionVisible && !manuallyPaused && !hoverPaused && !focusPaused && !document.hidden && !videoPlaying) goTo(activeIndex + 1);
-  }, 5600);
-  window.addEventListener('pagehide', () => { if (rotation) window.clearInterval(rotation); }, { once: true });
+  let previousTime = 0;
+  function moveGallery(time) {
+    const canMove = exhibitionVisible && !manuallyPaused && !videoPlaying && !viewerOpen && performance.now() >= interactionPausedUntil && !document.hidden;
+    if (canMove && previousTime) {
+      const span = Math.max(1, loopEnd - loopStart);
+      const progress = Math.max(0, Math.min(1, (viewport.scrollLeft - loopStart) / span));
+      const cinematicSpeed = 18 + 8 * Math.sin(progress * Math.PI);
+      const nextLeft = viewport.scrollLeft + cinematicSpeed * Math.min(40, time - previousTime) / 1000;
+      viewport.scrollLeft = nextLeft >= loopEnd ? loopStart + (nextLeft - loopEnd) : nextLeft;
+    }
+    previousTime = canMove ? time : 0;
+    movementFrame = requestAnimationFrame(moveGallery);
+  }
+  if (!reducedMotion) movementFrame = requestAnimationFrame(moveGallery);
+  window.addEventListener('pagehide', () => {
+    if (movementFrame) cancelAnimationFrame(movementFrame);
+    if (scrollUpdateFrame) cancelAnimationFrame(scrollUpdateFrame);
+  }, { once: true });
 })();
