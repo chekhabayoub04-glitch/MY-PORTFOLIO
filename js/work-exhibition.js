@@ -267,7 +267,7 @@
     const canMove = exhibitionVisible && !manuallyPaused && !videoPlaying && !viewerOpen && performance.now() >= interactionPausedUntil && !document.hidden;
     if (canMove && previousTime) {
       const span = Math.max(1, loopEnd - loopStart);
-      const cinematicSpeed = 40;
+      const cinematicSpeed = 50;
       const nextLeft = viewport.scrollLeft + cinematicSpeed * Math.min(40, time - previousTime) / 1000;
       viewport.scrollLeft = nextLeft >= loopEnd ? loopStart + (nextLeft - loopEnd) : nextLeft;
     }
