@@ -1104,5 +1104,16 @@ footer {
 @media (max-width: 760px), (hover: none), (pointer: coarse), (prefers-reduced-motion: reduce) { .bat-companion { display: none !important; } }
 
 /* Keep the square Web Development artwork complete and uncropped. */
-.web-service-image { height: 220px; background: #070705; }
+.web-service-image { height: 280px; background: #070705; }
 .web-service-image img { object-fit: contain; }
+
+.services-showcase-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 26px; }
+.combined-design-card .service-img-wrap { height: 310px; background: #050504; }
+.combined-design-card .service-img-wrap img { object-fit: contain; }
+.combined-design-card .service-img-overlay { display: none; }
+
+@media (max-width: 760px) {
+  .services-showcase-grid { grid-template-columns: 1fr; }
+  .web-service-image { height: 280px; }
+  .combined-design-card .service-img-wrap { height: 320px; }
+}

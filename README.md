@@ -10,8 +10,8 @@ ayoub-portfolio/
 ├── index.html          ← Main portfolio and contact form
 ├── web-development.html ← Website project gallery
 ├── logo-design.html    ← Logo and brand identity gallery
-├── graphic-design.html ← Graphic design portfolio gallery
-├── social-media.html   ← Campaign image gallery
+├── graphic-design.html ← Combined campaign and graphic design gallery
+├── social-media.html   ← Redirect to the combined visual gallery
 ├── campaigns.html      ← Advertising campaign case studies
 ├── editing.html        ← Photo and video editing samples
 ├── ai-videos.html      ← AI video and brand identity library
@@ -56,6 +56,7 @@ Portfolio images are stored in the `images/` folder. Keep the filenames used by 
 | `avatar.jpg` | Your face photo (circle) |
 | `university.jpg` | Université Alger 2 photo |
 | `service-web.png` | Web development service artwork |
+| `graphic-campaigns-cover.png` | Graphic design and campaign service card cover |
 | `service-logo.jpg` | Logo design service image |
 | `service-social.jpg` | Social media service image |
 | `project-drbadis.jpg` | Dr. Badis project thumbnail |
