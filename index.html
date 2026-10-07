@@ -244,29 +244,25 @@
         <div class="reveal" style="text-align:center; margin-bottom:30px">
           <div class="section-label">Explore</div>
           <h2 class="section-title">DEEP-DIVE <span>Services</span></h2>
-          <p class="section-desc">Each service has its own dedicated page — click a card above or below to view full case studies and galleries.</p>
+          <p class="section-desc">A moving collection of real websites, campaign artwork, logos, and AI brand films.</p>
         </div>
 
-        <div class="cards-grid">
-          <a class="glass-card service-card reveal" href="web-development.html">
-            <div class="service-body"><h3>Web Development</h3><p>Full case studies and deployed sites.</p></div>
-          </a>
-          <a class="glass-card service-card reveal" href="graphic-design.html">
-            <div class="service-body"><h3>Graphic Design &amp; Campaigns</h3><p>Campaign images first, graphic design work after.</p></div>
-          </a>
-          <a class="glass-card service-card reveal" href="logo-design.html">
-            <div class="service-body"><h3>Logo Design</h3><p>Full brand identity galleries.</p></div>
-          </a>
-          <a class="glass-card service-card reveal" href="campaigns.html">
-            <div class="service-body"><h3>Live Campaign Case Studies</h3><p>Campaign websites and digital destinations.</p></div>
-          </a>
-          <a class="glass-card service-card reveal" href="editing.html">
-            <div class="service-body"><h3>Photo &amp; Video Editing</h3><p>Editing samples, color work, and promotional content.</p></div>
-          </a>
-          <a class="glass-card service-card reveal" href="ai-videos.html">
-            <div class="service-body"><h3>AI Video &amp; Brand Identity</h3><p>AI films, brand storytelling, and visual identity videos.</p></div>
-          </a>
-        </div>
+        <section class="work-exhibition" data-work-exhibition aria-label="Selected portfolio work">
+          <div class="work-exhibition-toolbar">
+            <p class="work-exhibition-hint"><i class="fas fa-hand-pointer" aria-hidden="true"></i> Explore the collection · swipe or use the arrows</p>
+            <div class="work-exhibition-controls">
+              <button class="exhibition-toggle" type="button" aria-pressed="false" aria-label="Pause automatic gallery movement"><i class="fas fa-pause" aria-hidden="true"></i><span>Pause</span></button>
+              <button class="exhibition-arrow previous" type="button" aria-label="Previous project"><i class="fas fa-arrow-left" aria-hidden="true"></i></button>
+              <span class="exhibition-status" aria-live="polite">01 / 09</span>
+              <button class="exhibition-arrow next" type="button" aria-label="Next project"><i class="fas fa-arrow-right" aria-hidden="true"></i></button>
+            </div>
+          </div>
+          <div class="work-exhibition-viewport" tabindex="0" role="region" aria-label="Horizontally scrolling project gallery">
+            <div class="work-exhibition-track"></div>
+          </div>
+          <div class="exhibition-dots" role="group" aria-label="Choose a portfolio project"></div>
+          <p class="sr-only exhibition-announcement" aria-live="polite"></p>
+        </section>
 
       </div>
     </section>
@@ -335,6 +331,7 @@
   <script type="module" src="js/three-bg.js"></script>
   <script src="js/main.js"></script>
   <script src="js/folder-showcase.js"></script>
+  <script src="js/work-exhibition.js"></script>
 
   <script src="js/bat-companion.js"></script>
 </body>
