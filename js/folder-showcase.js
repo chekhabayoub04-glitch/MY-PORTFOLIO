@@ -30,6 +30,9 @@
     const destination = new URL(card.href, window.location.href).pathname.split('/').pop();
     const images = collections[destination];
     if (!images) return;
+    const heading = card.querySelector('.service-body h3');
+    const titleText = heading?.textContent.trim() || 'Selected Work';
+    card.setAttribute('aria-label', titleText);
     let stage = card.querySelector('.service-img-wrap, .service-visual-art');
     if (!stage) {
       stage = document.createElement('div');
@@ -57,17 +60,10 @@
 
     const pocket = document.createElement('span');
     pocket.className = 'folder-pocket';
-    const heading = card.querySelector('.service-body h3');
-    const label = document.createElement('span');
-    label.className = 'folder-pocket-label';
-    label.innerHTML = '<i class="fas fa-folder-open" aria-hidden="true"></i> SELECTED WORK';
     const title = document.createElement('strong');
     title.className = 'folder-pocket-title';
-    title.textContent = heading?.textContent.trim() || 'Selected Work';
-    const count = document.createElement('span');
-    count.className = 'folder-pocket-count';
-    count.textContent = `${String(images.length).padStart(2, '0')} PROJECTS · OPEN FOLDER`;
-    pocket.append(label, title, count);
+    title.textContent = titleText;
+    pocket.append(title);
     stage.append(deck, pocket);
   });
 })();

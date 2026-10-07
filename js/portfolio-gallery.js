@@ -137,9 +137,8 @@
       const pocket = document.createElement('div');
       pocket.className = 'portfolio-3d-pocket';
       pocket.setAttribute('aria-hidden', 'true');
-      pocket.innerHTML = '<span class="portfolio-pocket-tab"></span><span class="portfolio-pocket-mark"><i class="fas fa-folder-open" aria-hidden="true"></i> PROJECT FILE</span><strong></strong><span class="portfolio-pocket-index"></span>';
+      pocket.innerHTML = '<span class="portfolio-pocket-tab"></span><strong></strong>';
       pocket.querySelector('strong').textContent = item.title;
-      pocket.querySelector('.portfolio-pocket-index').textContent = `${String(displayIndex + 1).padStart(2, '0')} / ${String(visible.length).padStart(2, '0')}`;
       card.append(pocket);
       let action;
       if (item.url) {
