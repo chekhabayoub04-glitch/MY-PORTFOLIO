@@ -1,0 +1,530 @@
+{
+  ".claude/hooks/session-start.sh": {
+    "mtime": 1791926208.9449112,
+    "seen": 1791926221.5097358,
+    "ast_hash": "dee8e048a7031de01031e55fef012e94",
+    "semantic_hash": ""
+  },
+  ".claude/settings.json": {
+    "mtime": 1791926208.9738238,
+    "seen": 1791926221.5097442,
+    "ast_hash": "24e9e89056eb258c85f4e3bb484fc75a",
+    "semantic_hash": ""
+  },
+  "js/bat-companion.js": {
+    "mtime": 1791912121.8543758,
+    "seen": 1791926221.5097477,
+    "ast_hash": "b11d54b98a051a04de1f1e90fc9e675b",
+    "semantic_hash": ""
+  },
+  "js/folder-showcase.js": {
+    "mtime": 1791912121.859646,
+    "seen": 1791926221.5097494,
+    "ast_hash": "b0c4856054f85713855638c093a82599",
+    "semantic_hash": ""
+  },
+  "js/main.js": {
+    "mtime": 1791912121.859646,
+    "seen": 1791926221.5097513,
+    "ast_hash": "12b2c1d886daa6d668c509d7838b5b5d",
+    "semantic_hash": ""
+  },
+  "js/portfolio-gallery.js": {
+    "mtime": 1791912121.859646,
+    "seen": 1791926221.5097528,
+    "ast_hash": "529c149510f76c01cc2cfce296472744",
+    "semantic_hash": ""
+  },
+  "js/service-ui.js": {
+    "mtime": 1791912121.859646,
+    "seen": 1791926221.509755,
+    "ast_hash": "7ae142ab93f52f1c36ac90852646f31b",
+    "semantic_hash": ""
+  },
+  "js/three-bg.js": {
+    "mtime": 1791912121.859646,
+    "seen": 1791926221.509756,
+    "ast_hash": "9c10a2a5a5c5c590010e0a09037a80ec",
+    "semantic_hash": ""
+  },
+  "js/work-exhibition.js": {
+    "mtime": 1791912121.859646,
+    "seen": 1791926221.5097575,
+    "ast_hash": "f18ee1d3c8ce4659d316d0fd3bd93711",
+    "semantic_hash": ""
+  },
+  ".claude/CLAUDE.md": {
+    "mtime": 1791926189.9000487,
+    "seen": 1791926221.5097587,
+    "ast_hash": "9b31786b637be3c13978bec4c2330752",
+    "semantic_hash": ""
+  },
+  ".claude/skills/ponytail-audit/SKILL.md": {
+    "mtime": 1791926197.8114355,
+    "seen": 1791926221.50976,
+    "ast_hash": "4a8ec0358488fe552500e549503771b4",
+    "semantic_hash": ""
+  },
+  ".claude/skills/ponytail-debt/SKILL.md": {
+    "mtime": 1791926197.8134286,
+    "seen": 1791926221.5097618,
+    "ast_hash": "e2dada2e759e1c261b17e4f3b04b060c",
+    "semantic_hash": ""
+  },
+  ".claude/skills/ponytail-gain/SKILL.md": {
+    "mtime": 1791926197.8155556,
+    "seen": 1791926221.5097635,
+    "ast_hash": "494a5d3fb448072369c3e0920a207382",
+    "semantic_hash": ""
+  },
+  ".claude/skills/ponytail-help/SKILL.md": {
+    "mtime": 1791926197.8173766,
+    "seen": 1791926221.5097656,
+    "ast_hash": "6b0e701f0b86245eb1f8b395676cfb0f",
+    "semantic_hash": ""
+  },
+  ".claude/skills/ponytail-review/SKILL.md": {
+    "mtime": 1791926197.8194218,
+    "seen": 1791926221.5097666,
+    "ast_hash": "9a06da6e1f26722dd3c34b50489a1c1e",
+    "semantic_hash": ""
+  },
+  ".claude/skills/ponytail/SKILL.md": {
+    "mtime": 1791926197.8211195,
+    "seen": 1791926221.5097682,
+    "ast_hash": "14fa897c537beacf82472ee98fafbd72",
+    "semantic_hash": ""
+  },
+  "AGENTS.md": {
+    "mtime": 1791926208.9794443,
+    "seen": 1791926221.5097694,
+    "ast_hash": "d0bbd4cc08040c72bb93f3515155134c",
+    "semantic_hash": ""
+  },
+  "CLAUDE.md": {
+    "mtime": 1791926208.9951184,
+    "seen": 1791926221.509771,
+    "ast_hash": "ef2c239e29251b130f9b49d6c5caeddb",
+    "semantic_hash": ""
+  },
+  "README.md": {
+    "mtime": 1791912121.6417124,
+    "seen": 1791926221.509772,
+    "ast_hash": "d6c92de8fcaa9c8ea45737d32c3a80bf",
+    "semantic_hash": ""
+  },
+  "ai-videos.html": {
+    "mtime": 1791912121.6417124,
+    "seen": 1791926221.5097733,
+    "ast_hash": "8159193ac362a8b5752faa72e6aa2368",
+    "semantic_hash": ""
+  },
+  "campaigns.html": {
+    "mtime": 1791912121.6417124,
+    "seen": 1791926221.5097744,
+    "ast_hash": "f5872f974a55daa9a08b121cb8d34e5f",
+    "semantic_hash": ""
+  },
+  "docs/omniroute.md": {
+    "mtime": 1791926217.5847743,
+    "seen": 1791926221.5097756,
+    "ast_hash": "0d7c7e034c406fa6cd18daee70e01b17",
+    "semantic_hash": ""
+  },
+  "editing.html": {
+    "mtime": 1791912121.6503758,
+    "seen": 1791926221.5097773,
+    "ast_hash": "891d43c86162de2d05e5ecfb7849eec5",
+    "semantic_hash": ""
+  },
+  "graphic-design.html": {
+    "mtime": 1791912121.6503758,
+    "seen": 1791926221.5097787,
+    "ast_hash": "566102c43e3af2d67d12111992b584d6",
+    "semantic_hash": ""
+  },
+  "index.html": {
+    "mtime": 1791912121.8543758,
+    "seen": 1791926221.50978,
+    "ast_hash": "025aebc7fa98ffdc7cc05e469724b65e",
+    "semantic_hash": ""
+  },
+  "logo-design.html": {
+    "mtime": 1791912121.859646,
+    "seen": 1791926221.509781,
+    "ast_hash": "581281cfb7bae53d5402c0f4c8a53bd5",
+    "semantic_hash": ""
+  },
+  "social-media.html": {
+    "mtime": 1791912121.859646,
+    "seen": 1791926221.509782,
+    "ast_hash": "d39679312a5d5fe73e9fff48ce084968",
+    "semantic_hash": ""
+  },
+  "videos/brand-identity/README.md": {
+    "mtime": 1791912122.3223758,
+    "seen": 1791926221.509783,
+    "ast_hash": "2b71d8c657c191f96aba55050ce4f666",
+    "semantic_hash": ""
+  },
+  "videos/editing/README.md": {
+    "mtime": 1791912122.3223758,
+    "seen": 1791926221.5097842,
+    "ast_hash": "c591d9df1c568acefae18e06bf9f56d8",
+    "semantic_hash": ""
+  },
+  "web-development.html": {
+    "mtime": 1791912122.3343759,
+    "seen": 1791926221.5097857,
+    "ast_hash": "f2d9678ed2c22cd02cc64fc17d8376fc",
+    "semantic_hash": ""
+  },
+  "images/Modern promotional website.jpg": {
+    "mtime": 1791912121.6503758,
+    "seen": 1791926221.5097866,
+    "ast_hash": "b3b472914d5163886b74ba9229359df0",
+    "semantic_hash": ""
+  },
+  "images/april1.jpg": {
+    "mtime": 1791912121.656604,
+    "seen": 1791926221.5097876,
+    "ast_hash": "841ba07b426fd595863f051d2a9ff7b8",
+    "semantic_hash": ""
+  },
+  "images/april2.jpg": {
+    "mtime": 1791912121.656604,
+    "seen": 1791926221.5097888,
+    "ast_hash": "d5680cca72f86b2e08574ee6d612d670",
+    "semantic_hash": ""
+  },
+  "images/april3.png": {
+    "mtime": 1791912121.6623757,
+    "seen": 1791926221.50979,
+    "ast_hash": "d4115c48e54b15ba6342e0173fd5940e",
+    "semantic_hash": ""
+  },
+  "images/april4.png": {
+    "mtime": 1791912121.6743758,
+    "seen": 1791926221.509791,
+    "ast_hash": "b542baba1918abf936db89f42b44075f",
+    "semantic_hash": ""
+  },
+  "images/april5.png": {
+    "mtime": 1791912121.6903758,
+    "seen": 1791926221.509792,
+    "ast_hash": "5af1a16bd1a9c81d16341c8254cf6d7a",
+    "semantic_hash": ""
+  },
+  "images/aprilll.jpg": {
+    "mtime": 1791912121.6983757,
+    "seen": 1791926221.509793,
+    "ast_hash": "dc50a7f7ea2ffaf30c6b0898caaa305c",
+    "semantic_hash": ""
+  },
+  "images/avatar.jpg": {
+    "mtime": 1791912121.6983757,
+    "seen": 1791926221.5097945,
+    "ast_hash": "5499c294f50f3532ff65fbf3c8bad643",
+    "semantic_hash": ""
+  },
+  "images/batman-logo.png": {
+    "mtime": 1791912121.6983757,
+    "seen": 1791926221.509796,
+    "ast_hash": "0554a9e0f6c623199d827958ac3b615a",
+    "semantic_hash": ""
+  },
+  "images/graphic-campaigns-cover.png": {
+    "mtime": 1791912121.7263758,
+    "seen": 1791926221.5097969,
+    "ast_hash": "a5e783f829fa7530d38b1c5acf229442",
+    "semantic_hash": ""
+  },
+  "images/graphic1.jpg": {
+    "mtime": 1791912121.7303758,
+    "seen": 1791926221.509798,
+    "ast_hash": "b4b065126f6cc1b5b47dd875a7ecdeee",
+    "semantic_hash": ""
+  },
+  "images/graphic2.jpg": {
+    "mtime": 1791912121.738376,
+    "seen": 1791926221.5097995,
+    "ast_hash": "8d2284d84751957805a8491d54331c48",
+    "semantic_hash": ""
+  },
+  "images/graphic3.jpg": {
+    "mtime": 1791912121.7423759,
+    "seen": 1791926221.5098004,
+    "ast_hash": "3e261144be8a00022ada365858699e8b",
+    "semantic_hash": ""
+  },
+  "images/graphic4.jpg": {
+    "mtime": 1791912121.7463758,
+    "seen": 1791926221.509803,
+    "ast_hash": "24c204ba6ce4c4fc0b80607b01a0657e",
+    "semantic_hash": ""
+  },
+  "images/graphic5.jpg": {
+    "mtime": 1791912121.7503757,
+    "seen": 1791926221.5098038,
+    "ast_hash": "715ab4449f917258f93dc4154ad32e66",
+    "semantic_hash": ""
+  },
+  "images/graphic6.jpg": {
+    "mtime": 1791912121.7543757,
+    "seen": 1791926221.509805,
+    "ast_hash": "6bfd0047aa480a20f38db8a4734501df",
+    "semantic_hash": ""
+  },
+  "images/graphic7.jpg": {
+    "mtime": 1791912121.7623758,
+    "seen": 1791926221.5098064,
+    "ast_hash": "aa57df8cb9812d4cd5e9b0b95f7fd8dd",
+    "semantic_hash": ""
+  },
+  "images/kostume01.JPG": {
+    "mtime": 1791912121.7663758,
+    "seen": 1791926221.509807,
+    "ast_hash": "ee4142e7f3d7dbb9ce9ff08422f706c5",
+    "semantic_hash": ""
+  },
+  "images/loazan3.jpg": {
+    "mtime": 1791912121.7663758,
+    "seen": 1791926221.5098083,
+    "ast_hash": "d58812cc8cb4434ee9eff43e55c4e6ef",
+    "semantic_hash": ""
+  },
+  "images/logo10.jpg": {
+    "mtime": 1791912121.7663758,
+    "seen": 1791926221.5098095,
+    "ast_hash": "de2c52e98b7858a0e40d2ee1001efe35",
+    "semantic_hash": ""
+  },
+  "images/logo11.jpg": {
+    "mtime": 1791912121.7703757,
+    "seen": 1791926221.5098107,
+    "ast_hash": "c9e3037f69db6758ded6331a27141f64",
+    "semantic_hash": ""
+  },
+  "images/logo12.jpg": {
+    "mtime": 1791912121.7703757,
+    "seen": 1791926221.5098116,
+    "ast_hash": "349689f0e2e67f8319934e00f6cef6c3",
+    "semantic_hash": ""
+  },
+  "images/logo13.jpg": {
+    "mtime": 1791912121.7743757,
+    "seen": 1791926221.5098128,
+    "ast_hash": "21e044792e5efc2fb09a644b368ba0fa",
+    "semantic_hash": ""
+  },
+  "images/logo2.jpg": {
+    "mtime": 1791912121.7743757,
+    "seen": 1791926221.5098143,
+    "ast_hash": "e01c86c95b170c1536289aa8c2a945e5",
+    "semantic_hash": ""
+  },
+  "images/logo3.jpg": {
+    "mtime": 1791912121.7783759,
+    "seen": 1791926221.5098155,
+    "ast_hash": "528039d3e7ea77772b0ce572edd32204",
+    "semantic_hash": ""
+  },
+  "images/logo4.jpg": {
+    "mtime": 1791912121.7783759,
+    "seen": 1791926221.5098166,
+    "ast_hash": "acfcb0901294130e69e38d32a65f6d97",
+    "semantic_hash": ""
+  },
+  "images/logo5.jpg": {
+    "mtime": 1791912121.7823758,
+    "seen": 1791926221.509818,
+    "ast_hash": "de8e9ae1e2b2c09ad6c37c1806191671",
+    "semantic_hash": ""
+  },
+  "images/logo6.jpg": {
+    "mtime": 1791912121.7823758,
+    "seen": 1791926221.509819,
+    "ast_hash": "c78cde4a46a360fc09841cf0036bf82a",
+    "semantic_hash": ""
+  },
+  "images/logo7.jpg": {
+    "mtime": 1791912121.7823758,
+    "seen": 1791926221.50982,
+    "ast_hash": "46949b0b4fa5f41f521ccf8d29861c37",
+    "semantic_hash": ""
+  },
+  "images/logo8.jpg": {
+    "mtime": 1791912121.7823758,
+    "seen": 1791926221.5098212,
+    "ast_hash": "e0818be931b2b7045a73580f7b0b40db",
+    "semantic_hash": ""
+  },
+  "images/logo9.jpg": {
+    "mtime": 1791912121.7903757,
+    "seen": 1791926221.5098221,
+    "ast_hash": "c06d4446ff018349ab34ab70df24d872",
+    "semantic_hash": ""
+  },
+  "images/lozan1.jpg": {
+    "mtime": 1791912121.7903757,
+    "seen": 1791926221.5098238,
+    "ast_hash": "e4d45601c99c003d2d05170890b96848",
+    "semantic_hash": ""
+  },
+  "images/lozan2.jpg": {
+    "mtime": 1791912121.7903757,
+    "seen": 1791926221.5098255,
+    "ast_hash": "639fcadf5a96f8612a62bd9ef3e2607f",
+    "semantic_hash": ""
+  },
+  "images/portfolio.jpeg": {
+    "mtime": 1791912121.794376,
+    "seen": 1791926221.509827,
+    "ast_hash": "24120807f1344ad690fb26183de2fed9",
+    "semantic_hash": ""
+  },
+  "images/project-coffee.jpg": {
+    "mtime": 1791912121.794376,
+    "seen": 1791926221.5098283,
+    "ast_hash": "de2c52e98b7858a0e40d2ee1001efe35",
+    "semantic_hash": ""
+  },
+  "images/project-deutsch.jpg": {
+    "mtime": 1791912121.794376,
+    "seen": 1791926221.5098295,
+    "ast_hash": "cff4888296c729d217025eb79e10d4ed",
+    "semantic_hash": ""
+  },
+  "images/project-dr213.jpg": {
+    "mtime": 1791912121.7983758,
+    "seen": 1791926221.509831,
+    "ast_hash": "6cebae2f6bbf55f7592f418ff31fc978",
+    "semantic_hash": ""
+  },
+  "images/project-drbadis.jpg": {
+    "mtime": 1791912121.8023758,
+    "seen": 1791926221.509832,
+    "ast_hash": "c402fc07b6f6b4f009ef057e6b83bca2",
+    "semantic_hash": ""
+  },
+  "images/project-saida.jpg": {
+    "mtime": 1791912121.8023758,
+    "seen": 1791926221.5098329,
+    "ast_hash": "d41d8cd98f00b204e9800998ecf8427e",
+    "semantic_hash": ""
+  },
+  "images/rozan4.jpg": {
+    "mtime": 1791912121.8023758,
+    "seen": 1791926221.5098343,
+    "ast_hash": "dff18c319671e7bfae57b73237d1d824",
+    "semantic_hash": ""
+  },
+  "images/rozan5.jpg": {
+    "mtime": 1791912121.8143759,
+    "seen": 1791926221.5098352,
+    "ast_hash": "30c678b5e0c214c06af65231d3b7355e",
+    "semantic_hash": ""
+  },
+  "images/rozan6.jpg": {
+    "mtime": 1791912121.8143759,
+    "seen": 1791926221.5098364,
+    "ast_hash": "267eef55dfee35d319ea721a6a6bd189",
+    "semantic_hash": ""
+  },
+  "images/rozan7.jpg": {
+    "mtime": 1791912121.8143759,
+    "seen": 1791926221.5098374,
+    "ast_hash": "a0f06cfb33591bf73485002c67ba19f8",
+    "semantic_hash": ""
+  },
+  "images/rozan8.jpg": {
+    "mtime": 1791912121.8143759,
+    "seen": 1791926221.5098386,
+    "ast_hash": "3035b912fba708af3d27aac33fb160dd",
+    "semantic_hash": ""
+  },
+  "images/rozan9.jpg": {
+    "mtime": 1791912121.8143759,
+    "seen": 1791926221.5098398,
+    "ast_hash": "12ed34ad90060077c4a068594883fc94",
+    "semantic_hash": ""
+  },
+  "images/service-logo.jpg": {
+    "mtime": 1791912121.8183758,
+    "seen": 1791926221.5098412,
+    "ast_hash": "98040f9ac9123329528226f6ddd8de26",
+    "semantic_hash": ""
+  },
+  "images/service-social.jpg": {
+    "mtime": 1791912121.8223758,
+    "seen": 1791926221.5098422,
+    "ast_hash": "ab1445e6b4b3283c3534d47cd016d286",
+    "semantic_hash": ""
+  },
+  "images/service-web.png": {
+    "mtime": 1791912121.850376,
+    "seen": 1791926221.5098433,
+    "ast_hash": "384b565317b63c7e91df9bc8b4347c0d",
+    "semantic_hash": ""
+  },
+  "images/titangym.jpg": {
+    "mtime": 1791912121.850376,
+    "seen": 1791926221.5098448,
+    "ast_hash": "7cde6361d46509427d0e9bd473ee4c3b",
+    "semantic_hash": ""
+  },
+  "images/university.jpg": {
+    "mtime": 1791912121.8543758,
+    "seen": 1791926221.509846,
+    "ast_hash": "fda034f1a83ef8ae3221c6046f85451e",
+    "semantic_hash": ""
+  },
+  "videos/posters/01-clothing-brand.png": {
+    "mtime": 1791912122.3263757,
+    "seen": 1791926221.509847,
+    "ast_hash": "c392e96b637ad6c5543d886150a9fd48",
+    "semantic_hash": ""
+  },
+  "videos/posters/02-glass-brand.png": {
+    "mtime": 1791912122.3303757,
+    "seen": 1791926221.5098484,
+    "ast_hash": "f7e9a050397e30967d517787e7628583",
+    "semantic_hash": ""
+  },
+  "videos/posters/03-villa-home-brand.png": {
+    "mtime": 1791912122.3303757,
+    "seen": 1791926221.5098493,
+    "ast_hash": "a3e138735610b22bf8679b0d0047092b",
+    "semantic_hash": ""
+  },
+  "videos/posters/04-car-brand.png": {
+    "mtime": 1791912122.3343759,
+    "seen": 1791926221.5098507,
+    "ast_hash": "1ebf0815483f8c101247e776f0714e55",
+    "semantic_hash": ""
+  },
+  "videos/brand-identity/01-clothing-brand.m4v": {
+    "mtime": 1791912122.0743759,
+    "seen": 1791926221.5098517,
+    "ast_hash": "418ef21d530fad3b17e10c9798340577",
+    "semantic_hash": ""
+  },
+  "videos/brand-identity/02-glass-brand.m4v": {
+    "mtime": 1791912122.146376,
+    "seen": 1791926221.509853,
+    "ast_hash": "6146f0433ca423233579c846415b6d13",
+    "semantic_hash": ""
+  },
+  "videos/brand-identity/03-villa-home-brand.m4v": {
+    "mtime": 1791912122.2303758,
+    "seen": 1791926221.5098553,
+    "ast_hash": "c9a38314350746827f2dbc6384d8ec4c",
+    "semantic_hash": ""
+  },
+  "videos/brand-identity/04-car-brand.m4v": {
+    "mtime": 1791912122.3223758,
+    "seen": 1791926221.5098562,
+    "ast_hash": "6b8a1cd5927710a8abeda205b2b8e6c1",
+    "semantic_hash": ""
+  }
+}

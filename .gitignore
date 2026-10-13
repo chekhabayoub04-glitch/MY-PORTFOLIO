@@ -1,3 +1,5 @@
 
 # Keep full-resolution source footage local; publish optimized copies instead.
 /videos/source-originals/
+graphify-out/cache/
+graphify-out/graph.html
