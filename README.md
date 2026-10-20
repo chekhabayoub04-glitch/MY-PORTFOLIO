@@ -1,6 +1,34 @@
 # Ayoub Chekhab — Portfolio Website 🦇
 
-A Batman-themed personal portfolio with 3D background, bat explosion intro, and multi-section layout.
+**Shadow & Light** — a black & gold, Batman-themed portfolio. The home page opens on a gold
+halftone hero where the portrait waits as a silhouette; your cursor is a liquid light that
+reveals the real photo (WebGL/GLSL metaball shader, CSS-mask fallback). Every image on the
+page follows the same rule: it stays in shadow until you light it.
+
+Home page sections: Ignition (loader) · Shadow Reveal hero (pinned: scrolling sends a light beam
+across the screen that flips day → night and reveals the services beside Ayoub's silhouette and the
+bat-signal) · Manifesto · Arsenal (the work in four chapters: stacked sticky cards — a browser frame where
+pointer x switches between three live sites and pointer y scrolls them, poster trios, AI-film reels
+with sound, a logo wall) · Case Files (pinned horizontal archive) · Origin (education + numbers) · Protocol (process) ·
+The Emblem (real-time Three.js gold bat emblem, lazy-loaded) · Signal (contact). The previous home page is kept as `index-v1.html`.
+
+### Hero asset pipeline (Python)
+
+`tools/build_hero.py` turns `images/hero/ayoub-source.png` (white studio background) into
+`ayoub-cutout.webp` (the light) and `ayoub-shadow.webp` (the silhouette):
+
+```bash
+python3 -m venv .venv-tools && .venv-tools/bin/pip install pillow numpy
+.venv-tools/bin/python tools/build_hero.py
+.venv-tools/bin/python tools/optimize_images.py   # responsive WebP copies → images/opt/ (9.4 MB → 1.4 MB)
+```
+
+Re-run `optimize_images.py` after replacing any home-page image. To refresh the website screenshots
+in the browser frame, run `node tools/capture_sites.mjs` (needs `puppeteer-core` and Chrome), then the
+optimiser again.
+
+The link-preview image (`images/og-cover.jpg`, used by WhatsApp, Facebook, LinkedIn and X) is
+designed in `tools/og-card.html`; re-render it with `node tools/render_og.mjs`.
 
 ## 📁 Project Structure
 
@@ -17,10 +45,12 @@ ayoub-portfolio/
 ├── ai-videos.html      ← AI video and brand identity library
 │
 ├── css/
-│   └── style.css       ← All styles (variables, layout, components, responsive)
+│   ├── noir.css        ← New home page styles (Shadow & Light)
+│   └── style.css       ← Service pages + legacy home page styles
 │
 ├── js/
-│   ├── three-bg.js     ← Three.js 3D background (home page)
+│   ├── noir/           ← New home page: hero-reveal.js (WebGL), emblem3d.js (Three.js), app.js
+│   ├── three-bg.js     ← Three.js 3D background (legacy home page)
 │   ├── main.js         ← Shared UI interactions
 │   ├── service-ui.js   ← Shared service page UI
 │   └── portfolio-gallery.js ← Searchable, filterable project galleries
@@ -74,7 +104,7 @@ The website, logo, graphic design, campaign, and image galleries share a respons
 2. Install the **Live Server** extension
 3. Right-click `index.html` → **Open with Live Server**
 
-The home page uses an import map for Three.js and should be opened through a local server rather than `file://`. The other pages are static HTML and can also be served from the same local server.
+The home page should be opened through a local server rather than `file://` — WebGL can't read image textures from `file://`, so the hero would drop to its simpler CSS fallback. The other pages are static HTML and can also be served from the same local server.
 
 The contact form opens a prefilled message in the visitor's email application; the site does not send or store messages on a server.
 
@@ -103,9 +133,12 @@ git push -u origin main
 
 | Tech | Role |
 |------|------|
-| HTML5 | Structure |
-| CSS3 | Styling, animations, responsive |
-| JavaScript (ES6+) | Interactivity, cursor, scroll effects |
-| Three.js (r128) | 3D background, flying bats, particles |
+| HTML5 | Structure, speculation-rules prefetch |
+| CSS | `@property`, masks, view transitions, clip-path, responsive |
+| JavaScript (ES2022) | Lens cursor, spotlight surfaces, pinned scroll, counters |
+| WebGL / GLSL | Shadow Reveal hero shader (metaball light, noise edge, gold rim) |
+| Three.js r170 (ES module) | The Emblem: extruded PBR gold/obsidian bat, env-map reflections, pointer torch, gold dust |
+| Python (Pillow + NumPy) | Hero cut-out, silhouette, responsive WebP pipeline |
+| Three.js (r128) | 3D background on the legacy home page (`index-v1.html`) |
 | Google Fonts | Bebas Neue, Black Ops One, Outfit |
 | Font Awesome 6 | Icons |

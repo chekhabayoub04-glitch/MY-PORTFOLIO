@@ -1,3 +1,7 @@
 
 # Keep full-resolution source footage local; publish optimized copies instead.
 /videos/source-originals/
+
+.venv-tools/
+images/sites/raw/
+.claude/

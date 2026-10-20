@@ -16,6 +16,8 @@
    13. Responsive
 ============================================================ */
 
+@view-transition { navigation: auto; }
+
 /* ─── 1. VARIABLES & RESET ─────────────────────────────── */
 :root {
   --black:        #000000;

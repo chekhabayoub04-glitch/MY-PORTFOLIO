@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ayoub Chekhab — Digital Creator & Designer</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Black+Ops+One&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Custom Cursor -->
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
+
+  <!-- Three.js Background Canvas -->
+  <canvas id="three-canvas" aria-hidden="true"></canvas>
+
+  <!-- Bat Explosion Overlay (on load) -->
+  <div id="bat-explosion-overlay" aria-hidden="true"></div>
+
+  <div id="content">
+
+    <!-- ============ NAVBAR ============ -->
+    <nav id="navbar">
+      <div class="nav-logo" onclick="scrollTo(0,0)" title="Home">
+        <img src="images/batman-logo.png" alt="Batman Logo" id="navBatLogo">
+      </div>
+      <div class="nav-phone">
+        <a href="tel:0658030536"><i class="fas fa-phone"></i> 0658030536</a>
+      </div>
+
+      <ul class="nav-links">
+        <li><a href="#hero">Home</a></li>
+        <li><a href="#education">Education</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#work">Work</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+
+      <!-- Mobile hamburger -->
+      <button class="nav-hamburger" id="hamburger" aria-label="Menu" aria-controls="mobileMenu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+
+      <button class="btn-outline nav-cta" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">
+        Let's Talk
+      </button>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+      <a href="#hero"      onclick="closeMobileMenu()">Home</a>
+      <a href="#education" onclick="closeMobileMenu()">Education</a>
+      <a href="#services"  onclick="closeMobileMenu()">Services</a>
+      <a href="#work"      onclick="closeMobileMenu()">Work</a>
+      <a href="#contact"   onclick="closeMobileMenu()">Contact</a>
+    </div>
+
+    <!-- ============ HERO ============ -->
+    <section id="hero">
+      <div class="hero-overlay"></div>
+
+      <div class="hero-content">
+
+        <!-- PORTFOLIO heading -->
+        <div class="portfolio-heading" id="portfolioHeading">
+          <span style="animation-delay:.10s">P</span>
+          <span style="animation-delay:.15s">O</span>
+          <span style="animation-delay:.20s">R</span>
+          <span style="animation-delay:.25s">T</span>
+          <span style="animation-delay:.30s">F</span>
+          <span style="animation-delay:.35s">O</span>
+          <span style="animation-delay:.40s">L</span>
+          <span style="animation-delay:.45s">I</span>
+          <span style="animation-delay:.50s">O</span>
+        </div>
+
+        <div class="hero-spacer"></div>
+
+        <p class="hero-greeting">HELLO, I'M</p>
+        <h1 class="hero-name">Ayoub<br>Chekhab</h1>
+
+        <p class="hero-desc">
+          Digital creator specializing in web development, logo design,
+          and social media content that turns ideas into impactful brands.
+        </p>
+
+        <!-- Mini avatar row -->
+        <div class="hero-mini">
+          <img src="images/portfolio.jpeg" alt="Portfolio Cover" id="miniAvatar">
+          <span>Web Developer · Logo Designer · Social Media Creator</span>
+        </div>
+
+        <div class="hero-btns">
+          <button class="btn-primary" onclick="document.getElementById('work').scrollIntoView({behavior:'smooth'})">
+            View My Work
+          </button>
+          <button class="btn-outline" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">
+            Get In Touch
+          </button>
+        </div>
+      </div>
+
+      <!-- Scroll indicator -->
+      <div class="scroll-indicator">
+        <span>Scroll</span>
+        <i class="fas fa-chevron-down"></i>
+      </div>
+    </section>
+
+    <div class="divider-wrap"><div class="divider"></div></div>
+
+    <!-- ============ EDUCATION ============ -->
+    <section class="section" id="education">
+      <div class="section-inner">
+        <div class="section-grid">
+
+          <div class="reveal">
+            <div class="section-label">Background</div>
+            <h2 class="section-title">MY <span>Education</span></h2>
+            <p class="section-desc">
+              Specialized in <strong>Spanish Language &amp; Literature</strong> at
+              Université d'Alger 2 — 3 years of study building strong communication
+              and creative skills that power every digital project.
+            </p>
+          </div>
+
+          <div class="reveal" style="transition-delay:.2s">
+            <div class="edu-card glass-card">
+              <div class="edu-img-wrap">
+                <img src="images/university.jpg" alt="Université d'Alger 2">
+                <div class="edu-img-overlay">UNIVERSITÉ ALGER 2</div>
+              </div>
+              <div class="edu-card-body">
+                <div class="edu-icon"><i class="fas fa-graduation-cap"></i></div>
+                <h3>Université d'Alger 2</h3>
+                <p><span class="text-yellow">Spanish Language &amp; Literature</span><br>
+                  Studied Spanish language and literature</p>
+                <span class="badge">2022 – 2025</span>
+              </div>
+            </div>
+
+            <div class="stats-row">
+              <div class="stat-box">
+                <div class="stat-num" data-target="50">0</div>
+                <div class="stat-label">Projects</div>
+              </div>
+              <div class="stat-box">
+                <div class="stat-num" data-target="30">0</div>
+                <div class="stat-label">Clients</div>
+              </div>
+              <div class="stat-box">
+                <div class="stat-num" data-target="3">0</div>
+                <div class="stat-label">Years Exp</div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <div class="divider-wrap"><div class="divider"></div></div>
+
+    <!-- ============ SERVICES ============ -->
+    <section class="section" id="services">
+      <div class="section-inner">
+
+        <div class="reveal" style="text-align:center;margin-bottom:50px">
+          <div class="section-label" style="justify-content:center">What I Do</div>
+          <h2 class="section-title">MY <span>Services</span></h2>
+        </div>
+
+        <div class="cards-grid services-showcase-grid">
+
+          <a class="glass-card service-card reveal" href="web-development.html" style="transition-delay:.1s">
+            <div class="service-img-wrap web-service-image">
+              <img src="images/service-web.png" alt="Your website speaks before you do — web development artwork">
+              <div class="service-img-overlay"></div>
+            </div>
+            <div class="service-body">
+              <h3>Web Development</h3>
+              <p>High-converting landing pages and responsive websites — fast, modern, professional.</p>
+              <span class="badge"><i class="fas fa-arrow-right"></i> View Projects</span>
+            </div>
+          </a>
+
+          <a class="glass-card service-card reveal combined-design-card" href="graphic-design.html" style="transition-delay:.2s">
+            <div class="service-img-wrap">
+              <img src="images/graphic-campaigns-cover.png" alt="Design Trends — graphic design and campaign creative">
+            </div>
+            <div class="service-body">
+              <h3>Design Trends · Graphic Design &amp; Campaigns</h3>
+              <p>Campaign visuals first, followed by graphic design work in one curated gallery.</p>
+              <span class="badge"><i class="fas fa-arrow-right"></i> Explore Visual Work</span>
+            </div>
+          </a>
+
+          <a class="glass-card service-card reveal" href="ai-videos.html" style="transition-delay:.3s">
+            <div class="service-visual-art" aria-hidden="true">
+              <span class="visual-orbit orbit-one"></span>
+              <span class="visual-orbit orbit-two"></span>
+              <i class="fas fa-film"></i>
+              <span class="visual-art-label">AI BRAND FILMS</span>
+            </div>
+            <div class="service-body">
+              <h3>AI Video &amp; Brand Identity</h3>
+              <p>AI-crafted brand films and visual storytelling made to give brands a distinctive identity.</p>
+              <span class="badge"><i class="fas fa-arrow-right" aria-hidden="true"></i> Explore Videos</span>
+            </div>
+          </a>
+
+          <a class="glass-card service-card reveal" href="logo-design.html" style="transition-delay:.4s">
+            <div class="service-img-wrap">
+              <img src="images/service-logo.jpg" alt="Logo Design">
+              <div class="service-img-overlay"></div>
+            </div>
+            <div class="service-body">
+              <h3>Logo Design</h3>
+              <p>Unique logos and brand identities that capture your business essence.</p>
+              <span class="badge"><i class="fas fa-arrow-right"></i> View Gallery</span>
+            </div>
+          </a>
+
+
+        </div>
+      </div>
+    </section>
+
+    <div class="divider-wrap"><div class="divider"></div></div>
+
+    <!-- ============ WORK / PROJECTS (simplified landing) ============ -->
+    <section class="section" id="work">
+      <div class="section-inner">
+        <div class="reveal" style="text-align:center; margin-bottom:30px">
+          <div class="section-label">Explore</div>
+          <h2 class="section-title">DEEP-DIVE <span>Services</span></h2>
+          <p class="section-desc">A moving collection of real websites, campaign artwork, logos, and AI brand films.</p>
+        </div>
+
+        <section class="work-exhibition" data-work-exhibition aria-label="Selected portfolio work">
+          <div class="work-exhibition-toolbar">
+            <p class="work-exhibition-hint"><i class="fas fa-hand-pointer" aria-hidden="true"></i> Explore the collection · swipe or use the arrows</p>
+            <div class="work-exhibition-controls">
+              <button class="exhibition-toggle" type="button" aria-pressed="false" aria-label="Pause automatic gallery movement"><i class="fas fa-pause" aria-hidden="true"></i><span>Pause</span></button>
+              <button class="exhibition-arrow previous" type="button" aria-label="Previous project"><i class="fas fa-arrow-left" aria-hidden="true"></i></button>
+              <span class="exhibition-status" aria-live="polite">01 / 09</span>
+              <button class="exhibition-arrow next" type="button" aria-label="Next project"><i class="fas fa-arrow-right" aria-hidden="true"></i></button>
+            </div>
+          </div>
+          <div class="work-exhibition-viewport" tabindex="0" role="region" aria-label="Horizontally scrolling project gallery">
+            <div class="work-exhibition-track"></div>
+          </div>
+          <div class="exhibition-dots" role="group" aria-label="Choose a portfolio project"></div>
+          <p class="sr-only exhibition-announcement" aria-live="polite"></p>
+        </section>
+
+      </div>
+    </section>
+
+    <div class="divider-wrap"><div class="divider"></div></div>
+
+    <!-- ============ CONTACT ============ -->
+    <section class="section" id="contact">
+      <div class="section-inner">
+        <div class="contact-grid">
+
+          <div class="reveal">
+            <div class="section-label">Get In Touch</div>
+            <h2 class="section-title">LET'S<br><span>Connect</span></h2>
+            <p class="section-desc">
+              Ready to launch your next project? Landing page, logo, or social media
+              — let's make it happen.
+            </p>
+            <div class="contact-media">
+              <div class="socials">
+                <a href="https://www.linkedin.com/in/ayoub-chekhab-152750257/" target="_blank" rel="noopener noreferrer" class="social-btn social-art social-linkedin" aria-label="LinkedIn"><span>LinkedIn</span></a>
+                <a href="mailto:CHEKHABAYOUB04@GMAIL.COM" class="social-btn email social-art social-email" aria-label="Email"><span>CHEKHABAYOUB04@GMAIL.COM</span></a>
+                <a href="tel:0658030536" class="social-btn phone social-art social-phone" aria-label="Phone"><span>0658030536</span></a>
+              </div>
+
+              <img src="images/kostume01.JPG" alt="Ayoub Portrait" class="contact-portrait">
+            </div>
+          </div>
+
+          <div class="reveal" style="transition-delay:.2s">
+            <form class="contact-form" id="contactForm" aria-describedby="contactFormNote">
+              <label class="sr-only" for="contactName">Your name</label>
+              <input id="contactName" name="name" class="form-field" type="text" autocomplete="name" placeholder="Your Name" required>
+              <label class="sr-only" for="contactEmail">Your email</label>
+              <input id="contactEmail" name="email" class="form-field" type="email" autocomplete="email" placeholder="Your Email" required>
+              <label class="sr-only" for="contactSubject">Subject</label>
+              <input id="contactSubject" name="subject" class="form-field" type="text" placeholder="Subject">
+              <label class="sr-only" for="contactMessage">Your message</label>
+              <textarea id="contactMessage" name="message" class="form-field" rows="5" placeholder="Your message..." required></textarea>
+              <button class="btn-primary" type="submit">
+                Continue in Email &nbsp;<i class="fas fa-paper-plane"></i>
+              </button>
+              <p class="form-note" id="contactFormNote">Submitting opens a prefilled message in your email app.</p>
+            </form>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ FOOTER ============ -->
+    <footer>
+      <img src="images/batman-logo.png" alt="Batman Logo" class="footer-bat">
+      <span class="footer-copy">© <span id="copyrightYear">2026</span> Ayoub Chekhab — All rights reserved</span>
+      <img src="images/batman-logo.png" alt="Batman Logo" class="footer-bat">
+    </footer>
+
+  </div><!-- /content -->
+
+  <!-- Three.js via importmap -->
+  <script type="importmap">
+    {"imports": {"three": "https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.module.js"}}
+  </script>
+
+  <!-- Scripts -->
+  <script type="module" src="js/three-bg.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/folder-showcase.js"></script>
+  <script src="js/work-exhibition.js"></script>
+
+</body>
+</html>

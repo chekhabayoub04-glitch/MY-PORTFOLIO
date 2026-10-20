@@ -3,336 +3,554 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ayoub Chekhab — Digital Creator & Designer</title>
+  <title>Ayoub Chekhab — Web Developer, Designer &amp; AI Film Creator</title>
+  <meta name="description" content="Ayoub Chekhab — digital creator from Algiers. Websites, brand marks, campaign visuals and AI brand films, brought out of the shadow and into the light.">
+  <meta name="theme-color" content="#FFD700">
+
+  <!-- Link previews (WhatsApp, Facebook, LinkedIn, X): Ayoub + his services, no logo -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Ayoub Chekhab">
+  <meta property="og:url" content="https://ayoubchekhab-dev.is-a.dev/">
+  <meta property="og:title" content="Ayoub Chekhab — Web Developer, Designer &amp; AI Film Creator">
+  <meta property="og:description" content="Websites, campaign visuals, AI brand films and brand marks. Digital creator based in Algiers.">
+  <meta property="og:image" content="https://ayoubchekhab-dev.is-a.dev/images/og-cover.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Ayoub Chekhab with his services: Web Experiences, Campaign Visuals, AI Brand Films, Brand Marks">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Ayoub Chekhab — Web Developer, Designer &amp; AI Film Creator">
+  <meta name="twitter:description" content="Websites, campaign visuals, AI brand films and brand marks. Digital creator based in Algiers.">
+  <meta name="twitter:image" content="https://ayoubchekhab-dev.is-a.dev/images/og-cover.jpg">
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Black+Ops+One&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Black+Ops+One&family=Instrument+Serif:ital@0;1&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
   <!-- Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
   <!-- Styles -->
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="images/batman-logo.png">
+  <link rel="preload" as="image" href="images/hero/ayoub-shadow.webp">
+  <link rel="stylesheet" href="css/noir.css">
+
+  <!-- Prefetch the deep-dive pages so the jump feels instant -->
+  <script type="speculationrules">
+    {"prefetch": [{"source": "list", "urls": ["web-development.html", "graphic-design.html", "logo-design.html", "ai-videos.html"]}]}
+  </script>
 </head>
-<body>
+<body class="is-loading">
 
-  <!-- Custom Cursor -->
-  <div class="cursor" id="cursor"></div>
-  <div class="cursor-ring" id="cursorRing"></div>
+  <!-- Vector bat emblem, reused everywhere via <use href="#bat"> -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="bat" viewBox="0 0 200 100">
+      <g id="batHalf"><path d="M100 26 L105 8 L111 28 Q127 32 131 10 Q146 34 198 24 Q184 42 189 58 Q171 51 160 75 Q149 62 136 68 Q121 72 115 93 Q107 79 100 99 Z"/></g>
+      <use href="#batHalf" transform="translate(200 0) scale(-1 1)"/>
+    </symbol>
+  </svg>
 
-  <!-- Three.js Background Canvas -->
-  <canvas id="three-canvas" aria-hidden="true"></canvas>
+  <!-- ============ PRELOADER · "Ignition" ============ -->
+  <div class="ignition" id="ignition" aria-hidden="true">
+    <div class="ignition-door ignition-door--top"></div>
+    <div class="ignition-door ignition-door--bottom"></div>
+    <div class="ignition-core">
+      <img src="images/batman-logo.png" alt="">
+      <span class="ignition-count" id="ignitionCount">000</span>
+      <span class="ignition-label">Charging the signal</span>
+    </div>
+  </div>
 
-  <!-- Bat Explosion Overlay (on load) -->
-  <div id="bat-explosion-overlay" aria-hidden="true"></div>
+  <!-- ============ CURSOR · "Lens" ============ -->
+  <div class="lens" id="lens" aria-hidden="true"><span class="lens-label" id="lensLabel"></span></div>
+  <div class="lens-dot" id="lensDot" aria-hidden="true"></div>
 
-  <div id="content">
+  <a class="skip-link" href="#manifesto">Skip to content</a>
 
-    <!-- ============ NAVBAR ============ -->
-    <nav id="navbar">
-      <div class="nav-logo" onclick="scrollTo(0,0)" title="Home">
-        <img src="images/batman-logo.png" alt="Batman Logo" id="navBatLogo">
-      </div>
-      <div class="nav-phone">
-        <a href="tel:0658030536"><i class="fas fa-phone"></i> 0658030536</a>
-      </div>
-
+  <!-- ============ NAV ============ -->
+  <header class="nav" id="nav">
+    <a class="nav-brand" href="#top" aria-label="Ayoub Chekhab — back to top">
+      <svg class="bat" viewBox="0 0 200 100" aria-hidden="true"><use href="#bat"/></svg>
+      <span>Ayoub Chekhab<sup>®</sup></span>
+    </a>
+    <nav aria-label="Primary">
       <ul class="nav-links">
-        <li><a href="#hero">Home</a></li>
-        <li><a href="#education">Education</a></li>
-        <li><a href="#services">Services</a></li>
-        <li><a href="#work">Work</a></li>
-        <li><a href="#contact">Contact</a></li>
+        <li><a href="#arsenal">Arsenal</a></li>
+        <li><a href="#case-files">Case Files</a></li>
+        <li><a href="#origin">Origin</a></li>
+        <li><a href="#protocol">Protocol</a></li>
       </ul>
-
-      <!-- Mobile hamburger -->
-      <button class="nav-hamburger" id="hamburger" aria-label="Menu" aria-controls="mobileMenu" aria-expanded="false">
-        <span></span><span></span><span></span>
-      </button>
-
-      <button class="btn-outline nav-cta" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">
-        Let's Talk
-      </button>
     </nav>
+    <a class="nav-cta" href="#signal" data-lens="Call">Light the Signal <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
+    <button class="nav-burger" id="burger" type="button" aria-label="Open menu" aria-controls="drawer" aria-expanded="false"><span></span><span></span></button>
+  </header>
 
-    <!-- Mobile Menu -->
-    <div class="mobile-menu" id="mobileMenu">
-      <a href="#hero"      onclick="closeMobileMenu()">Home</a>
-      <a href="#education" onclick="closeMobileMenu()">Education</a>
-      <a href="#services"  onclick="closeMobileMenu()">Services</a>
-      <a href="#work"      onclick="closeMobileMenu()">Work</a>
-      <a href="#contact"   onclick="closeMobileMenu()">Contact</a>
+  <div class="drawer" id="drawer" hidden>
+    <a href="#arsenal"><small>01</small>Arsenal</a>
+    <a href="#case-files"><small>02</small>Case Files</a>
+    <a href="#origin"><small>03</small>Origin</a>
+    <a href="#protocol"><small>04</small>Protocol</a>
+    <a href="#signal"><small>05</small>Signal</a>
+  </div>
+
+  <main>
+
+    <!-- ============ HERO · "Shadow Reveal" ============ -->
+    <section class="hero" id="top" aria-label="Introduction">
+      <div class="hero-sticky">
+        <div class="hero-stage" id="heroStage">
+          <div class="hero-glow" aria-hidden="true"></div>
+
+          <h1 class="hero-word" aria-label="Ayoub Chekhab — Creator">
+            <span class="hero-word-line" aria-hidden="true">
+              <span>C</span><span>R</span><span>E</span><span>A</span><span>T</span><span>O</span><span>R</span>
+            </span>
+          </h1>
+
+          <div class="hero-dots" aria-hidden="true"></div>
+
+          <figure class="hero-portrait" id="heroPortrait" data-lens="Reveal">
+            <img class="hero-shadow" src="images/hero/ayoub-shadow.webp" alt="Portrait of Ayoub Chekhab — move your cursor to bring him out of the shadow" width="1142" height="1148">
+            <img class="hero-light" src="images/hero/ayoub-cutout.webp" alt="" width="1142" height="1148" aria-hidden="true">
+            <canvas class="hero-canvas" id="heroCanvas" aria-hidden="true"></canvas>
+          </figure>
+
+          <div class="hero-meta">
+            <span class="hero-tag"><i></i> Digital Creator — Algiers, DZ</span>
+            <span class="hero-hint">Move your light across the shadow <i class="fas fa-arrow-down-long" aria-hidden="true"></i></span>
+          </div>
+
+          <div class="hero-foot">
+            <div class="hero-proof">
+              <div class="hero-faces" aria-hidden="true">
+                <img src="images/opt/logo3-800.webp" alt="" width="48" height="48">
+                <img src="images/opt/logo4-800.webp" alt="" width="48" height="48">
+                <img src="images/opt/logo6-800.webp" alt="" width="48" height="48">
+              </div>
+              <p><strong>30+ brands</strong> pulled into the light.<br>50+ launches and counting.</p>
+            </div>
+
+            <p class="hero-line">Brands are born in the dark.<br><em>I bring them into the light.</em></p>
+
+            <div class="hero-chips">
+              <a class="chip chip--light" href="#arsenal" data-lens="Open">
+                <span class="chip-dots" aria-hidden="true"><i></i><i></i><i></i></span>
+                Web · Brand · AI Film
+              </a>
+              <a class="chip chip--dark" href="#signal" data-lens="Call">
+                <span class="chip-pulse" aria-hidden="true"></span>
+                Booking new missions
+              </a>
+            </div>
+          </div>
+        </div>
+        <!-- Night scene: revealed by the light beam as you scroll -->
+        <div class="hero-night" id="heroNight">
+          <div class="night-signal" aria-hidden="true">
+            <svg class="bat" viewBox="0 0 200 100"><use href="#bat"/></svg>
+          </div>
+          <figure class="night-figure">
+            <img src="images/hero/ayoub-cutout.webp" alt="Ayoub Chekhab" width="1142" height="1148">
+          </figure>
+
+          <div class="night-panel">
+            <span class="kicker">Out of the shadow</span>
+            <h2 class="night-title">What I bring<br><em>into the light.</em></h2>
+            <ol class="night-list">
+              <li><a href="web-development.html" data-lens="Open"><small>01</small><span>Web Experiences</span><i class="fas fa-arrow-right" aria-hidden="true"></i></a></li>
+              <li><a href="graphic-design.html" data-lens="Open"><small>02</small><span>Campaign Visuals</span><i class="fas fa-arrow-right" aria-hidden="true"></i></a></li>
+              <li><a href="ai-videos.html" data-lens="Watch"><small>03</small><span>AI Brand Films</span><i class="fas fa-arrow-right" aria-hidden="true"></i></a></li>
+              <li><a href="logo-design.html" data-lens="Open"><small>04</small><span>Brand Marks</span><i class="fas fa-arrow-right" aria-hidden="true"></i></a></li>
+              <li><a href="campaigns.html" data-lens="Open"><small>05</small><span>Ad Campaigns</span><i class="fas fa-arrow-right" aria-hidden="true"></i></a></li>
+            </ol>
+          </div>
+        </div>
+
+        <div class="hero-beam" id="heroBeam" aria-hidden="true"><span></span></div>
+        <div class="hero-scrollcue" aria-hidden="true"><span></span>Scroll</div>
+      </div>
+    </section>
+
+    <!-- ============ TICKER ============ -->
+    <div class="ticker" aria-hidden="true">
+      <div class="ticker-track">
+        <span>Web Experiences</span><svg class="bat" viewBox="0 0 200 100" aria-hidden="true"><use href="#bat"/></svg>
+        <span>Brand Marks</span><svg class="bat" viewBox="0 0 200 100" aria-hidden="true"><use href="#bat"/></svg>
+        <span>Campaign Visuals</span><svg class="bat" viewBox="0 0 200 100" aria-hidden="true"><use href="#bat"/></svg>
+        <span>AI Brand Films</span><svg class="bat" viewBox="0 0 200 100" aria-hidden="true"><use href="#bat"/></svg>
+        <span>Web Experiences</span><svg class="bat" viewBox="0 0 200 100" aria-hidden="true"><use href="#bat"/></svg>
+        <span>Brand Marks</span><svg class="bat" viewBox="0 0 200 100" aria-hidden="true"><use href="#bat"/></svg>
+        <span>Campaign Visuals</span><svg class="bat" viewBox="0 0 200 100" aria-hidden="true"><use href="#bat"/></svg>
+        <span>AI Brand Films</span><svg class="bat" viewBox="0 0 200 100" aria-hidden="true"><use href="#bat"/></svg>
+      </div>
     </div>
 
-    <!-- ============ HERO ============ -->
-    <section id="hero">
-      <div class="hero-overlay"></div>
+    <!-- ============ MANIFESTO ============ -->
+    <section class="manifesto" id="manifesto" aria-label="Manifesto">
+      <span class="kicker">(00) — The Manifesto</span>
+      <p class="manifesto-text" data-words>
+        I don't decorate. I engineer attention. Websites, identities, campaigns and films built
+        in the shadows, then switched on in a single moment, so your brand is the one thing
+        nobody can look away from.
+      </p>
+      <div class="manifesto-sign">
+        <img src="images/batman-logo.png" alt="">
+        <span>Ayoub Chekhab<br><small>Creator · Developer · Designer</small></span>
+      </div>
+    </section>
 
-      <div class="hero-content">
+    <!-- ============ ARSENAL · the work, in four chapters ============ -->
+    <section class="arsenal" id="arsenal" aria-labelledby="arsenalTitle">
+      <div class="arsenal-intro">
+        <div class="rule"><span>(01)</span><span>The Arsenal</span><span>Four chapters</span></div>
+        <h2 class="display" id="arsenalTitle">The work,<br><em>in four chapters.</em></h2>
+        <nav class="chapter-index" aria-label="Chapters">
+          <a href="#ch-web"><span class="ci-icon"><i class="fas fa-code" aria-hidden="true"></i></span><span><b>Web Development</b><small>06 live sites ↓</small></span></a>
+          <a href="#ch-design"><span class="ci-icon"><i class="fas fa-pen-nib" aria-hidden="true"></i></span><span><b>Graphic Design</b><small>20+ visuals ↓</small></span></a>
+          <a href="#ch-films"><span class="ci-icon"><i class="fas fa-film" aria-hidden="true"></i></span><span><b>AI Brand Films</b><small>04 reels ↓</small></span></a>
+          <a href="#ch-marks"><span class="ci-icon"><i class="fas fa-shapes" aria-hidden="true"></i></span><span><b>Brand Marks</b><small>12 identities ↓</small></span></a>
+        </nav>
+      </div>
 
-        <!-- PORTFOLIO heading -->
-        <div class="portfolio-heading" id="portfolioHeading">
-          <span style="animation-delay:.10s">P</span>
-          <span style="animation-delay:.15s">O</span>
-          <span style="animation-delay:.20s">R</span>
-          <span style="animation-delay:.25s">T</span>
-          <span style="animation-delay:.30s">F</span>
-          <span style="animation-delay:.35s">O</span>
-          <span style="animation-delay:.40s">L</span>
-          <span style="animation-delay:.45s">I</span>
-          <span style="animation-delay:.50s">O</span>
+      <!-- Chapter 01 · Web -->
+      <div class="chapter" id="ch-web">
+        <header class="chapter-head">
+          <span class="ci-icon"><i class="fas fa-code" aria-hidden="true"></i></span>
+          <h3>Web Development</h3>
+          <span class="chapter-count">06 live sites</span>
+        </header>
+        <div class="stack">
+          <article class="stack-card">
+            <div class="stack-info">
+              <div class="stack-top"><span class="tag"><i class="fas fa-globe" aria-hidden="true"></i> Fitness</span><span class="stack-num">01 / 03</span></div>
+              <h4>Titan<br>Gym.</h4>
+              <p class="stack-meta">Fitness club · Algiers</p>
+              <p class="stack-text">A bold dark-and-red home for a premium training club: programmes, spaces and one-tap booking.</p>
+              <a class="stack-cta" href="https://chekhabayoub04-glitch.github.io/titan-gym/" target="_blank" rel="noopener noreferrer" data-lens="Live">Visit the live site <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+              <p class="stack-foot">Live website · Arabic RTL</p>
+            </div>
+            <a class="browser" href="https://chekhabayoub04-glitch.github.io/titan-gym/" target="_blank" rel="noopener noreferrer" data-browser data-lens="Live" aria-label="Open Titan Gym. live">
+              <div class="browser-bar">
+                <span class="browser-dots" aria-hidden="true"><i></i><i></i><i></i></span>
+                <span class="browser-url">chekhabayoub04-glitch.github.io/titan-gym</span>
+              </div>
+              <div class="browser-view">
+                <img class="browser-shot is-on" src="images/sites/titan-gym.webp" alt="Titan Gym. website" loading="lazy" decoding="async">
+              </div>
+              <span class="browser-hint" aria-hidden="true"><i class="fas fa-arrows-up-down"></i> Move up &amp; down to scroll the site</span>
+            </a>
+          </article>
+
+          <article class="stack-card">
+            <div class="stack-info">
+              <div class="stack-top"><span class="tag"><i class="fas fa-globe" aria-hidden="true"></i> Healthcare</span><span class="stack-num">02 / 03</span></div>
+              <h4>Dr. Badis<br>Clinic.</h4>
+              <p class="stack-meta">Family medicine · Clinic</p>
+              <p class="stack-text">A calm, trustworthy clinic site where every service and the appointment button are one scroll away.</p>
+              <a class="stack-cta" href="https://chekhabayoub11-ops.github.io/dr.badis/" target="_blank" rel="noopener noreferrer" data-lens="Live">Visit the live site <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+              <p class="stack-foot">Live website · Arabic RTL</p>
+            </div>
+            <a class="browser" href="https://chekhabayoub11-ops.github.io/dr.badis/" target="_blank" rel="noopener noreferrer" data-browser data-lens="Live" aria-label="Open Dr. Badis Clinic. live">
+              <div class="browser-bar">
+                <span class="browser-dots" aria-hidden="true"><i></i><i></i><i></i></span>
+                <span class="browser-url">chekhabayoub11-ops.github.io/dr.badis</span>
+              </div>
+              <div class="browser-view">
+                <img class="browser-shot is-on" src="images/sites/dr-badis.webp" alt="Dr. Badis Clinic. website" loading="lazy" decoding="async">
+              </div>
+              <span class="browser-hint" aria-hidden="true"><i class="fas fa-arrows-up-down"></i> Move up &amp; down to scroll the site</span>
+            </a>
+          </article>
+
+          <article class="stack-card">
+            <div class="stack-info">
+              <div class="stack-top"><span class="tag"><i class="fas fa-globe" aria-hidden="true"></i> Real estate</span><span class="stack-num">03 / 03</span></div>
+              <h4>Saïda<br>Real Estate.</h4>
+              <p class="stack-meta">Property promotion · Sale &amp; rent</p>
+              <p class="stack-text">A gold-on-black promotional story that sells luxury apartments before the first phone call.</p>
+              <a class="stack-cta" href="https://chekhabayoub04-glitch.github.io/new-vession-promition-/" target="_blank" rel="noopener noreferrer" data-lens="Live">Visit the live site <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+              <p class="stack-foot">Live website · Arabic RTL</p>
+            </div>
+            <a class="browser" href="https://chekhabayoub04-glitch.github.io/new-vession-promition-/" target="_blank" rel="noopener noreferrer" data-browser data-lens="Live" aria-label="Open Saïda Real Estate. live">
+              <div class="browser-bar">
+                <span class="browser-dots" aria-hidden="true"><i></i><i></i><i></i></span>
+                <span class="browser-url">chekhabayoub04-glitch.github.io/new-vession-promition-</span>
+              </div>
+              <div class="browser-view">
+                <img class="browser-shot is-on" src="images/sites/saida-real-estate.webp" alt="Saïda Real Estate. website" loading="lazy" decoding="async">
+              </div>
+              <span class="browser-hint" aria-hidden="true"><i class="fas fa-arrows-up-down"></i> Move up &amp; down to scroll the site</span>
+            </a>
+          </article>
+        </div>
+        <a class="chapter-more" href="web-development.html" data-lens="Open">See all 6 websites <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
+      </div>
+
+      <!-- Chapter 02 · Graphic design -->
+      <div class="chapter" id="ch-design">
+        <header class="chapter-head">
+          <span class="ci-icon"><i class="fas fa-pen-nib" aria-hidden="true"></i></span>
+          <h3>Graphic Design</h3>
+          <span class="chapter-count">02 campaigns · 06 key visuals</span>
+        </header>
+        <div class="stack">
+          <article class="stack-card">
+            <div class="stack-info">
+              <div class="stack-top"><span class="tag">Automotive</span><span class="stack-num">01 / 02</span></div>
+              <h4>Souq<br>Al Sayarat.</h4>
+              <p class="stack-meta">Car marketplace · Social campaign</p>
+              <p class="stack-text">A desert-toned launch series: one look, three headlines, built for the Arabic social feed.</p>
+              <p class="stack-foot">Launch campaign · 3 key visuals</p>
+            </div>
+            <a class="poster-stage" href="graphic-design.html" data-lens="Open">
+              <figure class="poster" style="--k:0"><img src="images/opt/april3-800.webp" alt="" loading="lazy" decoding="async"></figure>
+              <figure class="poster" style="--k:1"><img src="images/opt/april4-800.webp" alt="" loading="lazy" decoding="async"></figure>
+              <figure class="poster" style="--k:2"><img src="images/opt/april5-800.webp" alt="" loading="lazy" decoding="async"></figure>
+            </a>
+          </article>
+
+          <article class="stack-card">
+            <div class="stack-info">
+              <div class="stack-top"><span class="tag">Beauty &amp; Fragrance</span><span class="stack-num">02 / 02</span></div>
+              <h4>Scent,<br>in the spotlight.</h4>
+              <p class="stack-meta">Perfume &amp; skincare · Product ads</p>
+              <p class="stack-text">Contrast, texture and reflection, so each bottle looks worth reaching for before a word is read.</p>
+              <p class="stack-foot">Product campaign · 3 key visuals</p>
+            </div>
+            <a class="poster-stage poster-stage--ember" href="graphic-design.html" data-lens="Open">
+              <figure class="poster" style="--k:0"><img src="images/opt/rozan6-800.webp" alt="" loading="lazy" decoding="async"></figure>
+              <figure class="poster" style="--k:1"><img src="images/opt/rozan7-800.webp" alt="" loading="lazy" decoding="async"></figure>
+              <figure class="poster" style="--k:2"><img src="images/opt/rozan8-800.webp" alt="" loading="lazy" decoding="async"></figure>
+            </a>
+          </article>
+        </div>
+      </div>
+
+      <!-- Chapter 03 · AI films -->
+      <div class="chapter" id="ch-films">
+        <header class="chapter-head chapter-head--split">
+          <span class="ci-icon"><i class="fas fa-film" aria-hidden="true"></i></span>
+          <h3>AI Brand Films</h3>
+          <p>AI-crafted films and short-form brand stories. Hover to preview, tap <b>Sound</b> to listen.</p>
+        </header>
+        <div class="reels">
+          <figure class="reel" data-reel><video src="videos/brand-identity/01-clothing-brand.m4v" poster="images/opt/01-clothing-brand-800.webp" muted loop playsinline preload="none"></video><span class="reel-tag">Reel 01</span><span class="reel-time">0:00</span><figcaption>Clothing brand</figcaption><button class="reel-sound" type="button" aria-label="Play with sound"><i class="fas fa-play" aria-hidden="true"></i></button></figure>
+          <figure class="reel" data-reel><video src="videos/brand-identity/02-glass-brand.m4v" poster="images/opt/02-glass-brand-800.webp" muted loop playsinline preload="none"></video><span class="reel-tag">Reel 02</span><span class="reel-time">0:00</span><figcaption>Glass brand</figcaption><button class="reel-sound" type="button" aria-label="Play with sound"><i class="fas fa-play" aria-hidden="true"></i></button></figure>
+          <figure class="reel" data-reel><video src="videos/brand-identity/03-villa-home-brand.m4v" poster="images/opt/03-villa-home-brand-800.webp" muted loop playsinline preload="none"></video><span class="reel-tag">Reel 03</span><span class="reel-time">0:00</span><figcaption>Villa &amp; home</figcaption><button class="reel-sound" type="button" aria-label="Play with sound"><i class="fas fa-play" aria-hidden="true"></i></button></figure>
+          <figure class="reel" data-reel><video src="videos/brand-identity/04-car-brand.m4v" poster="images/opt/04-car-brand-800.webp" muted loop playsinline preload="none"></video><span class="reel-tag">Reel 04</span><span class="reel-time">0:00</span><figcaption>Car brand</figcaption><button class="reel-sound" type="button" aria-label="Play with sound"><i class="fas fa-play" aria-hidden="true"></i></button></figure>
+        </div>
+        <a class="chapter-more" href="ai-videos.html" data-lens="Watch">Open the film library <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
+      </div>
+
+      <!-- Chapter 04 · Brand marks -->
+      <div class="chapter" id="ch-marks">
+        <header class="chapter-head">
+          <span class="ci-icon"><i class="fas fa-shapes" aria-hidden="true"></i></span>
+          <h3>Brand Marks</h3>
+          <span class="chapter-count">12 identities</span>
+        </header>
+        <div class="stack">
+          <article class="stack-card">
+            <div class="stack-info">
+              <div class="stack-top"><span class="tag">Logo &amp; identity</span><span class="stack-num">01 / 01</span></div>
+              <h4>One symbol.<br>A whole business.</h4>
+              <p class="stack-meta">Food · Beauty · Fitness · Coffee</p>
+              <p class="stack-text">Marks designed to work everywhere: storefront, cup, story, favicon.</p>
+              <a class="stack-cta" href="logo-design.html" data-lens="Open">Open the logo gallery <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
+            </div>
+            <a class="mark-grid" href="logo-design.html" data-lens="Open">
+              <span><img src="images/opt/logo2-800.webp" alt="" loading="lazy" decoding="async"></span><span><img src="images/opt/logo3-800.webp" alt="" loading="lazy" decoding="async"></span><span><img src="images/opt/logo4-800.webp" alt="" loading="lazy" decoding="async"></span><span><img src="images/opt/logo5-800.webp" alt="" loading="lazy" decoding="async"></span><span><img src="images/opt/logo6-800.webp" alt="" loading="lazy" decoding="async"></span><span><img src="images/opt/logo7-800.webp" alt="" loading="lazy" decoding="async"></span>
+            </a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ CASE FILES (work) ============ -->
+    <section class="case-files" id="case-files" aria-labelledby="casesTitle">
+      <div class="case-pin">
+        <div class="case-head">
+          <span class="kicker">(02) — Case Files</span>
+          <h2 class="display" id="casesTitle">Declassified<br><em>work.</em></h2>
+          <p class="lede">Hover a file to switch the light on. Scroll to move through the archive.</p>
+          <div class="case-progress" aria-hidden="true"><span id="caseBar"></span></div>
+        </div>
+        <div class="case-viewport" id="caseViewport" tabindex="0" role="region" aria-label="Selected projects, scrolls horizontally">
+          <ol class="case-track" id="caseTrack"></ol>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ ORIGIN (education + numbers) ============ -->
+    <section class="section origin" id="origin" aria-labelledby="originTitle">
+      <div class="origin-grid">
+        <div>
+          <span class="kicker">(03) — Origin Story</span>
+          <h2 class="display" id="originTitle">Trained in<br><em>language.</em><br>Fluent in pixels.</h2>
+          <p class="lede">
+            Three years of <strong>Spanish Language &amp; Literature</strong> at the University of Algiers 2 taught me
+            how a story is built: rhythm, tension, the one word that lands. Now I write it in layouts,
+            code, colour and motion.
+          </p>
+
+          <div class="origin-card" data-tilt>
+            <div class="origin-card-media">
+              <img src="images/opt/university-800.webp" alt="University of Algiers 2 — Abou El Kacem Saadallah, Bouzareah" width="739" height="415" loading="lazy" decoding="async">
+            </div>
+            <div class="origin-card-body">
+              <i class="fas fa-graduation-cap" aria-hidden="true"></i>
+              <div>
+                <h3>University of Algiers 2</h3>
+                <p>Abou El Kacem Saadallah · Bouzareah, Algiers</p>
+                <p>Spanish Language &amp; Literature</p>
+              </div>
+              <span class="pill">2022 — 2025</span>
+              <p class="origin-note">A public university in Bouzareah, founded in 2009 when the University of Algiers was divided into three.</p>
+            </div>
+          </div>
         </div>
 
-        <div class="hero-spacer"></div>
+        <div class="intel">
+          <div class="intel-cell">
+            <span class="intel-num" data-count="50">0</span><span class="intel-plus">+</span>
+            <p>Projects shipped</p>
+          </div>
+          <div class="intel-cell">
+            <span class="intel-num" data-count="30">0</span><span class="intel-plus">+</span>
+            <p>Brands served</p>
+          </div>
+          <div class="intel-cell">
+            <span class="intel-num" data-count="3">0</span>
+            <p>Years in the field</p>
+          </div>
+          <div class="intel-cell">
+            <span class="intel-num" data-count="4">0</span>
+            <p>Disciplines, one vision</p>
+          </div>
+          <div class="intel-cell intel-cell--wide">
+            <p class="intel-label">Speaks</p>
+            <p class="intel-langs"><span>Arabic</span><span>Spanish</span><span>French</span><span>English</span></p>
+          </div>
+        </div>
+      </div>
+    </section>
 
-        <p class="hero-greeting">HELLO, I'M</p>
-        <h1 class="hero-name">Ayoub<br>Chekhab</h1>
+    <!-- ============ PROTOCOL (process) ============ -->
+    <section class="section protocol" id="protocol" aria-labelledby="protocolTitle">
+      <div class="section-head">
+        <span class="kicker">(04) — The Protocol</span>
+        <h2 class="display" id="protocolTitle">From darkness<br><em>to daylight.</em></h2>
+      </div>
 
-        <p class="hero-desc">
-          Digital creator specializing in web development, logo design,
-          and social media content that turns ideas into impactful brands.
-        </p>
+      <ol class="protocol-list">
+        <li class="step" data-spot data-tilt>
+          <span class="step-num">01</span>
+          <h3>Decode</h3>
+          <p>We talk. I study your brand, your audience and your rivals until the real problem is in plain sight.</p>
+          <span class="step-tag">Brief · Research</span>
+        </li>
+        <li class="step" data-spot data-tilt>
+          <span class="step-num">02</span>
+          <h3>Sketch in the dark</h3>
+          <p>Concepts, moodboards and directions. Rough, fast and brave, so the right idea has room to appear.</p>
+          <span class="step-tag">Concept · Direction</span>
+        </li>
+        <li class="step" data-spot data-tilt>
+          <span class="step-num">03</span>
+          <h3>Forge</h3>
+          <p>The chosen idea is designed, coded or filmed to the pixel, with you reviewing every milestone.</p>
+          <span class="step-tag">Design · Build</span>
+        </li>
+        <li class="step" data-spot data-tilt>
+          <span class="step-num">04</span>
+          <h3>Signal</h3>
+          <p>Launch day. Files, sites and films delivered, ready to post, print or go live, and supported after.</p>
+          <span class="step-tag">Launch · Support</span>
+        </li>
+      </ol>
+    </section>
 
-        <!-- Mini avatar row -->
-        <div class="hero-mini">
-          <img src="images/portfolio.jpeg" alt="Portfolio Cover" id="miniAvatar">
-          <span>Web Developer · Logo Designer · Social Media Creator</span>
+    <!-- ============ EMBLEM (3D interlude) ============ -->
+    <section class="emblem" id="emblem" aria-label="The emblem">
+      <div class="emblem-stage">
+        <canvas class="emblem-canvas" id="emblemCanvas" aria-hidden="true"></canvas>
+        <img class="emblem-fallback" src="images/batman-logo.png" alt="" aria-hidden="true">
+        <p class="emblem-word emblem-word--l" aria-hidden="true">Shadow</p>
+        <p class="emblem-word emblem-word--r" aria-hidden="true">Light</p>
+        <div class="emblem-caption">
+          <span class="kicker">The Emblem</span>
+          <p>Forged in real-time 3D. Drag your light across it, or scroll to turn it in your hands.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ SIGNAL (contact) ============ -->
+    <section class="signal" id="signal" aria-labelledby="signalTitle">
+      <div class="signal-beam" id="signalBeam" aria-hidden="true"></div>
+
+      <div class="signal-inner">
+        <div class="signal-copy">
+          <span class="kicker">(05) — The Signal</span>
+          <h2 class="signal-title" id="signalTitle">Got a brand<br>hiding in<br>the <em>dark?</em></h2>
+          <p class="lede">Light the signal. Landing page, logo, campaign or film, tell me the mission and I'll answer within a day.</p>
+
+          <ul class="signal-lines">
+            <li><a href="mailto:CHEKHABAYOUB04@GMAIL.COM" data-lens="Write"><i class="fas fa-envelope" aria-hidden="true"></i><span>CHEKHABAYOUB04@GMAIL.COM</span></a></li>
+            <li><a href="tel:0658030536" data-lens="Call"><i class="fas fa-phone" aria-hidden="true"></i><span>0658 03 05 36</span></a></li>
+            <li><a href="https://www.linkedin.com/in/ayoub-chekhab-152750257/" target="_blank" rel="noopener noreferrer" data-lens="Visit"><i class="fab fa-linkedin-in" aria-hidden="true"></i><span>LinkedIn</span></a></li>
+          </ul>
         </div>
 
-        <div class="hero-btns">
-          <button class="btn-primary" onclick="document.getElementById('work').scrollIntoView({behavior:'smooth'})">
-            View My Work
+        <form class="signal-form" id="signalForm" aria-describedby="signalNote">
+          <div class="field">
+            <input id="fName" name="name" type="text" autocomplete="name" placeholder=" " required>
+            <label for="fName">Your name</label>
+          </div>
+          <div class="field">
+            <input id="fEmail" name="email" type="email" autocomplete="email" placeholder=" " required>
+            <label for="fEmail">Your email</label>
+          </div>
+          <fieldset class="field-chips">
+            <legend>The mission</legend>
+            <label><input type="radio" name="subject" value="Web Experience" checked><span>Website</span></label>
+            <label><input type="radio" name="subject" value="Brand Mark"><span>Logo</span></label>
+            <label><input type="radio" name="subject" value="Campaign Visuals"><span>Campaign</span></label>
+            <label><input type="radio" name="subject" value="AI Brand Film"><span>AI Film</span></label>
+          </fieldset>
+          <div class="field">
+            <textarea id="fMessage" name="message" rows="4" placeholder=" " required></textarea>
+            <label for="fMessage">Tell me about it</label>
+          </div>
+          <button class="signal-send" type="submit" data-lens="Send">
+            <span>Send the signal</span>
+            <svg class="bat" viewBox="0 0 200 100" aria-hidden="true"><use href="#bat"/></svg>
           </button>
-          <button class="btn-outline" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">
-            Get In Touch
-          </button>
-        </div>
-      </div>
-
-      <!-- Scroll indicator -->
-      <div class="scroll-indicator">
-        <span>Scroll</span>
-        <i class="fas fa-chevron-down"></i>
+          <p class="form-note" id="signalNote">Sending opens a prefilled message in your email app. Nothing is stored.</p>
+        </form>
       </div>
     </section>
+  </main>
 
-    <div class="divider-wrap"><div class="divider"></div></div>
-
-    <!-- ============ EDUCATION ============ -->
-    <section class="section" id="education">
-      <div class="section-inner">
-        <div class="section-grid">
-
-          <div class="reveal">
-            <div class="section-label">Background</div>
-            <h2 class="section-title">MY <span>Education</span></h2>
-            <p class="section-desc">
-              Specialized in <strong>Spanish Language &amp; Literature</strong> at
-              Université d'Alger 2 — 3 years of study building strong communication
-              and creative skills that power every digital project.
-            </p>
-          </div>
-
-          <div class="reveal" style="transition-delay:.2s">
-            <div class="edu-card glass-card">
-              <div class="edu-img-wrap">
-                <img src="images/university.jpg" alt="Université d'Alger 2">
-                <div class="edu-img-overlay">UNIVERSITÉ ALGER 2</div>
-              </div>
-              <div class="edu-card-body">
-                <div class="edu-icon"><i class="fas fa-graduation-cap"></i></div>
-                <h3>Université d'Alger 2</h3>
-                <p><span class="text-yellow">Spanish Language &amp; Literature</span><br>
-                  Studied Spanish language and literature</p>
-                <span class="badge">2022 – 2025</span>
-              </div>
-            </div>
-
-            <div class="stats-row">
-              <div class="stat-box">
-                <div class="stat-num" data-target="50">0</div>
-                <div class="stat-label">Projects</div>
-              </div>
-              <div class="stat-box">
-                <div class="stat-num" data-target="30">0</div>
-                <div class="stat-label">Clients</div>
-              </div>
-              <div class="stat-box">
-                <div class="stat-num" data-target="3">0</div>
-                <div class="stat-label">Years Exp</div>
-              </div>
-            </div>
-          </div>
-
-        </div>
-      </div>
-    </section>
-
-    <div class="divider-wrap"><div class="divider"></div></div>
-
-    <!-- ============ SERVICES ============ -->
-    <section class="section" id="services">
-      <div class="section-inner">
-
-        <div class="reveal" style="text-align:center;margin-bottom:50px">
-          <div class="section-label" style="justify-content:center">What I Do</div>
-          <h2 class="section-title">MY <span>Services</span></h2>
-        </div>
-
-        <div class="cards-grid services-showcase-grid">
-
-          <a class="glass-card service-card reveal" href="web-development.html" style="transition-delay:.1s">
-            <div class="service-img-wrap web-service-image">
-              <img src="images/service-web.png" alt="Your website speaks before you do — web development artwork">
-              <div class="service-img-overlay"></div>
-            </div>
-            <div class="service-body">
-              <h3>Web Development</h3>
-              <p>High-converting landing pages and responsive websites — fast, modern, professional.</p>
-              <span class="badge"><i class="fas fa-arrow-right"></i> View Projects</span>
-            </div>
-          </a>
-
-          <a class="glass-card service-card reveal combined-design-card" href="graphic-design.html" style="transition-delay:.2s">
-            <div class="service-img-wrap">
-              <img src="images/graphic-campaigns-cover.png" alt="Design Trends — graphic design and campaign creative">
-            </div>
-            <div class="service-body">
-              <h3>Design Trends · Graphic Design &amp; Campaigns</h3>
-              <p>Campaign visuals first, followed by graphic design work in one curated gallery.</p>
-              <span class="badge"><i class="fas fa-arrow-right"></i> Explore Visual Work</span>
-            </div>
-          </a>
-
-          <a class="glass-card service-card reveal" href="ai-videos.html" style="transition-delay:.3s">
-            <div class="service-visual-art" aria-hidden="true">
-              <span class="visual-orbit orbit-one"></span>
-              <span class="visual-orbit orbit-two"></span>
-              <i class="fas fa-film"></i>
-              <span class="visual-art-label">AI BRAND FILMS</span>
-            </div>
-            <div class="service-body">
-              <h3>AI Video &amp; Brand Identity</h3>
-              <p>AI-crafted brand films and visual storytelling made to give brands a distinctive identity.</p>
-              <span class="badge"><i class="fas fa-arrow-right" aria-hidden="true"></i> Explore Videos</span>
-            </div>
-          </a>
-
-          <a class="glass-card service-card reveal" href="logo-design.html" style="transition-delay:.4s">
-            <div class="service-img-wrap">
-              <img src="images/service-logo.jpg" alt="Logo Design">
-              <div class="service-img-overlay"></div>
-            </div>
-            <div class="service-body">
-              <h3>Logo Design</h3>
-              <p>Unique logos and brand identities that capture your business essence.</p>
-              <span class="badge"><i class="fas fa-arrow-right"></i> View Gallery</span>
-            </div>
-          </a>
-
-
-        </div>
-      </div>
-    </section>
-
-    <div class="divider-wrap"><div class="divider"></div></div>
-
-    <!-- ============ WORK / PROJECTS (simplified landing) ============ -->
-    <section class="section" id="work">
-      <div class="section-inner">
-        <div class="reveal" style="text-align:center; margin-bottom:30px">
-          <div class="section-label">Explore</div>
-          <h2 class="section-title">DEEP-DIVE <span>Services</span></h2>
-          <p class="section-desc">A moving collection of real websites, campaign artwork, logos, and AI brand films.</p>
-        </div>
-
-        <section class="work-exhibition" data-work-exhibition aria-label="Selected portfolio work">
-          <div class="work-exhibition-toolbar">
-            <p class="work-exhibition-hint"><i class="fas fa-hand-pointer" aria-hidden="true"></i> Explore the collection · swipe or use the arrows</p>
-            <div class="work-exhibition-controls">
-              <button class="exhibition-toggle" type="button" aria-pressed="false" aria-label="Pause automatic gallery movement"><i class="fas fa-pause" aria-hidden="true"></i><span>Pause</span></button>
-              <button class="exhibition-arrow previous" type="button" aria-label="Previous project"><i class="fas fa-arrow-left" aria-hidden="true"></i></button>
-              <span class="exhibition-status" aria-live="polite">01 / 09</span>
-              <button class="exhibition-arrow next" type="button" aria-label="Next project"><i class="fas fa-arrow-right" aria-hidden="true"></i></button>
-            </div>
-          </div>
-          <div class="work-exhibition-viewport" tabindex="0" role="region" aria-label="Horizontally scrolling project gallery">
-            <div class="work-exhibition-track"></div>
-          </div>
-          <div class="exhibition-dots" role="group" aria-label="Choose a portfolio project"></div>
-          <p class="sr-only exhibition-announcement" aria-live="polite"></p>
-        </section>
-
-      </div>
-    </section>
-
-    <div class="divider-wrap"><div class="divider"></div></div>
-
-    <!-- ============ CONTACT ============ -->
-    <section class="section" id="contact">
-      <div class="section-inner">
-        <div class="contact-grid">
-
-          <div class="reveal">
-            <div class="section-label">Get In Touch</div>
-            <h2 class="section-title">LET'S<br><span>Connect</span></h2>
-            <p class="section-desc">
-              Ready to launch your next project? Landing page, logo, or social media
-              — let's make it happen.
-            </p>
-            <div class="contact-media">
-              <div class="socials">
-                <a href="https://www.linkedin.com/in/ayoub-chekhab-152750257/" target="_blank" rel="noopener noreferrer" class="social-btn social-art social-linkedin" aria-label="LinkedIn"><span>LinkedIn</span></a>
-                <a href="mailto:CHEKHABAYOUB04@GMAIL.COM" class="social-btn email social-art social-email" aria-label="Email"><span>CHEKHABAYOUB04@GMAIL.COM</span></a>
-                <a href="tel:0658030536" class="social-btn phone social-art social-phone" aria-label="Phone"><span>0658030536</span></a>
-              </div>
-
-              <img src="images/kostume01.JPG" alt="Ayoub Portrait" class="contact-portrait">
-            </div>
-          </div>
-
-          <div class="reveal" style="transition-delay:.2s">
-            <form class="contact-form" id="contactForm" aria-describedby="contactFormNote">
-              <label class="sr-only" for="contactName">Your name</label>
-              <input id="contactName" name="name" class="form-field" type="text" autocomplete="name" placeholder="Your Name" required>
-              <label class="sr-only" for="contactEmail">Your email</label>
-              <input id="contactEmail" name="email" class="form-field" type="email" autocomplete="email" placeholder="Your Email" required>
-              <label class="sr-only" for="contactSubject">Subject</label>
-              <input id="contactSubject" name="subject" class="form-field" type="text" placeholder="Subject">
-              <label class="sr-only" for="contactMessage">Your message</label>
-              <textarea id="contactMessage" name="message" class="form-field" rows="5" placeholder="Your message..." required></textarea>
-              <button class="btn-primary" type="submit">
-                Continue in Email &nbsp;<i class="fas fa-paper-plane"></i>
-              </button>
-              <p class="form-note" id="contactFormNote">Submitting opens a prefilled message in your email app.</p>
-            </form>
-          </div>
-
-        </div>
-      </div>
-    </section>
-
-    <!-- ============ FOOTER ============ -->
-    <footer>
-      <img src="images/batman-logo.png" alt="Batman Logo" class="footer-bat">
-      <span class="footer-copy">© <span id="copyrightYear">2026</span> Ayoub Chekhab — All rights reserved</span>
-      <img src="images/batman-logo.png" alt="Batman Logo" class="footer-bat">
-    </footer>
-
-  </div><!-- /content -->
-
-  <!-- Three.js via importmap -->
-  <script type="importmap">
-    {"imports": {"three": "https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.module.js"}}
-  </script>
+  <!-- ============ FOOTER ============ -->
+  <footer class="footer">
+    <div class="footer-mark" aria-hidden="true">AYOUB CHEKHAB</div>
+    <div class="footer-row">
+      <span>© <span id="year">2026</span> Ayoub Chekhab · Algiers</span>
+      <span class="footer-stack">Hand-built with HTML · CSS · JavaScript · WebGL/GLSL · Python</span>
+      <a href="#top" data-lens="Up">Back to the top <i class="fas fa-arrow-up" aria-hidden="true"></i></a>
+    </div>
+  </footer>
 
   <!-- Scripts -->
-  <script type="module" src="js/three-bg.js"></script>
-  <script src="js/main.js"></script>
-  <script src="js/folder-showcase.js"></script>
-  <script src="js/work-exhibition.js"></script>
-
-  <script src="js/bat-companion.js"></script>
+  <script type="importmap">
+    {"imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
+    }}
+  </script>
+  <script src="js/noir/hero-reveal.js" defer></script>
+  <script type="module" src="js/noir/emblem3d.js"></script>
+  <script src="js/noir/app.js" defer></script>
 </body>
 </html>
