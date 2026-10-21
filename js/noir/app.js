@@ -14,6 +14,22 @@
   const finePointer = matchMedia('(hover: hover) and (pointer: fine)').matches;
   const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
 
+  // ── 0. SMOOTH SCROLL (Lenis, mouse/trackpad only — phones keep native momentum)
+  let lenis = null;
+  if (window.Lenis && finePointer && !reducedMotion) {
+    lenis = new Lenis({ lerp: .1, smoothWheel: true, wheelMultiplier: 1 });
+    if (body.classList.contains('is-loading')) lenis.stop();
+    (function raf(t) { lenis.raf(t); requestAnimationFrame(raf); })(performance.now());
+    document.addEventListener('click', e => {
+      const a = e.target.closest('a[href^="#"]');
+      if (!a || a.getAttribute('href').length < 2) return;
+      const target = document.querySelector(a.getAttribute('href'));
+      if (!target) return;
+      e.preventDefault();
+      lenis.scrollTo(target, { offset: a.getAttribute('href') === '#top' ? 0 : -70, duration: 1.4 });
+    });
+  }
+
   // ── 1. IGNITION ────────────────────────────────────────────
   const count = $('#ignitionCount');
   const started = performance.now();
@@ -28,6 +44,7 @@
     if (shown >= 1 || (reducedMotion && loaded)) {
       body.classList.add('is-ready');
       body.classList.remove('is-loading');
+      lenis?.start();
       return;
     }
     requestAnimationFrame(charge);
@@ -75,6 +92,7 @@
     if (open) drawer.hidden = false;
     requestAnimationFrame(() => drawer.classList.toggle('is-open', open));
     body.style.overflow = open ? 'hidden' : '';
+    if (lenis) open ? lenis.stop() : lenis.start();
     if (!open) setTimeout(() => { if (burger.getAttribute('aria-expanded') === 'false') drawer.hidden = true; }, 700);
   }
   burger.addEventListener('click', () => setDrawer(burger.getAttribute('aria-expanded') !== 'true'));

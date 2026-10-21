@@ -39,6 +39,10 @@
 }
 
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+/* Lenis smooth scroll (desktop) */
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+.lenis.lenis-stopped { overflow: hidden; }
 html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; overflow-x: clip; }
 body {
   background: var(--black); color: var(--text);
@@ -736,9 +740,35 @@ body.is-ready .hero-foot { opacity: 1; transform: none; }
   .chapter-index b { font-size: 1.25rem; }
   .ci-icon { width: 46px; height: 46px; font-size: 1.1rem; border-radius: 13px; }
   .chapter-count, .chapter-head--split p { display: none; }
-  .stack-card { grid-template-columns: 1fr; min-height: 0; position: relative; top: auto; transform: none; filter: none; border-radius: 26px; }
+  /* Phones keep the stack: compact cards that fit the screen, each header peeks above the next */
+  .stack { gap: 18px; }
+  .stack-card { grid-template-columns: 1fr; gap: 14px; min-height: 0; top: 76px; padding: 16px; border-radius: 24px; }
+  .stack-card:nth-child(2) { top: 128px; }
+  .stack-card:nth-child(3) { top: 180px; }
+  .stack-info { gap: 9px; }
+  .stack-info h4 { margin-top: 4px; font-size: 2.3rem; }
+  .stack-info h4 br { display: none; }
+  .stack-meta { font-size: .66rem; }
+  .stack-text { padding-top: 10px; font-size: .9rem; line-height: 1.5; }
+  .stack-foot { display: none; }
+  .stack-cta { padding: 10px 16px; font-size: .82rem; }
+  .stack-stats div { padding: 9px 0; }
+  .stack-stats dd { font-size: 1.8rem; }
+  .tag { padding: 6px 12px; font-size: .64rem; }
+  .browser-bar { padding: 9px 12px; gap: 10px; }
+  .browser-dots i { width: 9px; height: 9px; }
+  .browser-url { font-size: .68rem; padding: 5px 10px; }
+  .poster-stage { padding: 6% 4%; }
+  .mark-grid { gap: 8px; }
+  .mark-grid span { border-radius: 12px; }
+  .reels { gap: 10px; }
+  .reel { border-radius: 16px; }
+  .reel-tag { display: none; }
+  .reel-time { top: 10px; right: 10px; padding: 4px 9px; font-size: .64rem; }
+  .reel figcaption { left: 12px; right: 56px; bottom: 14px; font-size: 1.15rem; }
+  .reel-sound { width: 40px; height: 40px; right: 10px; bottom: 10px; font-size: .85rem; }
   .stack-info h4 { margin-top: 6px; }
-  .browser-view { min-height: 0; aspect-ratio: 4 / 3.4; }
+  .browser-view { min-height: 0; aspect-ratio: 4 / 3; flex: none; }
   .browser-hint { display: none; }
   .reels { grid-template-columns: 1fr 1fr; }
   .hero-night { clip-path: polygon(0 0, calc(var(--wipe) * 1%) 0, calc((var(--wipe) - 40) * 1%) 100%, 0 100%); }
