@@ -524,10 +524,10 @@ body.is-ready .hero-foot { opacity: 1; transform: none; }
 .chapter-head--split b { color: var(--text); }
 
 /* Stacked sticky cards: each pins, the next slides over it (app.js sets --cover) */
-.stack { display: grid; gap: 40px; }
+.stack { --peek: 16px; --top0: 100px; display: grid; gap: 40px; }
 .stack-card {
   --cover: 0;
-  position: sticky; top: 100px;
+  --i: 0; position: sticky; top: calc(var(--top0) + var(--i) * var(--peek));
   display: grid; grid-template-columns: minmax(280px, .72fr) 1.6fr; gap: clamp(24px, 3vw, 44px);
   min-height: min(640px, calc(100vh - 140px)); padding: clamp(22px, 2.6vw, 36px);
   border-radius: 34px; background: linear-gradient(160deg, #1b1a17, #0f0f0e 60%);
@@ -536,8 +536,6 @@ body.is-ready .hero-foot { opacity: 1; transform: none; }
   transform: scale(calc(1 - var(--cover) * .06)); transform-origin: 50% 0;
   filter: brightness(calc(1 - var(--cover) * .45));
 }
-.stack-card:nth-child(2) { top: 116px; }
-.stack-card:nth-child(3) { top: 132px; }
 .stack-info { display: flex; flex-direction: column; gap: 16px; min-width: 0; }
 .stack-top { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
 .tag {
@@ -581,12 +579,13 @@ body.is-ready .hero-foot { opacity: 1; transform: none; }
 
 /* Poster trio on a warm light pool */
 .poster-stage {
-  position: relative; display: grid; grid-template-columns: repeat(3, 1fr); align-items: center; gap: 2.2%;
+  position: relative; display: grid; grid-template-columns: repeat(var(--n, 3), minmax(0, 30%)); align-items: center; justify-content: center; gap: 2.2%;
+  align-self: stretch; align-content: center;
   padding: 7% 5%; border-radius: 22px; overflow: hidden; perspective: 1400px;
   background: radial-gradient(70% 90% at 70% 60%, rgba(255, 176, 0, .55), rgba(120, 70, 0, .25) 45%, #0c0a07 80%);
 }
 .poster-stage--ember { background: radial-gradient(70% 90% at 30% 60%, rgba(255, 120, 40, .45), rgba(110, 40, 0, .25) 45%, #0c0807 80%); }
-.poster { border-radius: 10px; overflow: hidden; aspect-ratio: 9 / 16; box-shadow: 0 30px 50px -20px rgba(0, 0, 0, .8); transition: transform .9s var(--ease); }
+.poster { border-radius: 10px; overflow: hidden; aspect-ratio: var(--ar, 9 / 16); width: 100%; box-shadow: 0 30px 50px -20px rgba(0, 0, 0, .8); transition: transform .9s var(--ease); }
 .poster img { width: 100%; height: 100%; object-fit: cover; }
 .poster-stage:hover .poster:nth-child(1) { transform: translateX(-6%) rotateY(14deg) rotateZ(-3deg); }
 .poster-stage:hover .poster:nth-child(2) { transform: translateY(-5%) scale(1.06); }
@@ -833,9 +832,9 @@ body.is-ready .hero-foot { opacity: 1; transform: none; }
   .chapter-count, .chapter-head--split p { display: none; }
   /* Phones keep the stack: compact cards that fit the screen, each header peeks above the next */
   .stack { gap: 18px; }
-  .stack-card { grid-template-columns: 1fr; gap: 14px; min-height: 0; top: 76px; padding: 16px; border-radius: 24px; }
-  .stack-card:nth-child(2) { top: 128px; }
-  .stack-card:nth-child(3) { top: 180px; }
+  .stack { --top0: 76px; --peek: 52px; }
+  .stack--dense { --peek: 14px; }
+  .stack-card { grid-template-columns: 1fr; gap: 14px; min-height: 0; padding: 16px; border-radius: 24px; }
   .stack-info { gap: 9px; }
   .stack-info h4 { margin-top: 4px; font-size: 2.3rem; }
   .stack-info h4 br { display: none; }
@@ -849,7 +848,7 @@ body.is-ready .hero-foot { opacity: 1; transform: none; }
   .browser-bar { padding: 9px 12px; gap: 10px; }
   .browser-dots i { width: 9px; height: 9px; }
   .browser-url { font-size: .68rem; padding: 5px 10px; }
-  .poster-stage { padding: 6% 4%; }
+  .poster-stage { padding: 6% 4%; grid-template-columns: repeat(var(--n, 3), minmax(0, 1fr)); }
   .mark-grid { gap: 8px; }
   .mark-grid span { border-radius: 12px; }
   .showreel { height: 240vh; }
