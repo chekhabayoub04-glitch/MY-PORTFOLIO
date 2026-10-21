@@ -1,11 +1,12 @@
 /* ============================================================
-   THE EMBLEM — real-time 3D (Three.js r170, ES module)
+   THE EMBLEM — real-time 3D (Three.js r170, ES module), centre of the showreel
    The site's bat path extruded into an obsidian bat on a gold oval,
    lit by a studio environment map plus a "torch" that follows the
    pointer (the shadow-and-light motif in 3D). Scroll turns it.
    Lazy: three.js is only downloaded when the section is near.
 ============================================================ */
-const section = document.getElementById('emblem');
+const section = document.getElementById('reel');
+const holder = document.querySelector('.reel-emblem');
 const canvas = document.getElementById('emblemCanvas');
 const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -103,31 +104,13 @@ async function start() {
   torch.position.set(0, 0, 3.2);
   scene.add(torch);
 
-  // ── Gold dust ──
-  const COUNT = 900;
-  const pos = new Float32Array(COUNT * 3);
-  const speed = new Float32Array(COUNT);
-  for (let i = 0; i < COUNT; i++) {
-    pos[i * 3] = (Math.random() - .5) * 16;
-    pos[i * 3 + 1] = (Math.random() - .5) * 9;
-    pos[i * 3 + 2] = (Math.random() - .5) * 8 - 1;
-    speed[i] = .15 + Math.random() * .35;
-  }
-  const dustGeo = new THREE.BufferGeometry();
-  dustGeo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
-  const dust = new THREE.Points(dustGeo, new THREE.PointsMaterial({
-    color: 0xffd34d, size: .035, transparent: true, opacity: .75,
-    blending: THREE.AdditiveBlending, depthWrite: false, sizeAttenuation: true
-  }));
-  scene.add(dust);
-
   // ── Sizing ──
   function resize() {
     const w = canvas.clientWidth, h = canvas.clientHeight;
     renderer.setSize(w, h, false);
     camera.aspect = w / h;
     // Fit: emblem ≈ 45% of the width on desktop, ≈ 85% on portrait phones
-    const wanted = camera.aspect > 1 ? 10.5 : 5.8;
+    const wanted = camera.aspect > 1 ? 12 : 6.4;
     const fov = 2 * Math.tan(THREE.MathUtils.degToRad(camera.fov / 2));
     camera.position.set(0, 0, Math.max(wanted / (fov * camera.aspect), 6.5));
     camera.updateProjectionMatrix();
@@ -152,7 +135,7 @@ async function start() {
     if (!visible || document.hidden) return;
     const dt = Math.min(clock.getDelta(), .05);
     const t = clock.elapsedTime;
-    const p = +(section.dataset.progress || .5);
+    const p = +(holder.dataset.progress || .5);
 
     const spin = reducedMotion ? 0 : Math.sin((p - .5) * Math.PI) * Math.PI * .34;
     rotY += (spin + pointer.x * .45 - rotY) * .06;
@@ -165,18 +148,10 @@ async function start() {
     torch.position.x += (pointer.x * 4 - torch.position.x) * .1;
     torch.position.y += (pointer.y * 2.4 - torch.position.y) * .1;
 
-    if (!reducedMotion) {
-      for (let i = 0; i < COUNT; i++) {
-        pos[i * 3 + 1] += speed[i] * dt * .4;
-        if (pos[i * 3 + 1] > 4.5) pos[i * 3 + 1] = -4.5;
-      }
-      dustGeo.attributes.position.needsUpdate = true;
-      dust.rotation.y = t * .02;
-    }
     renderer.render(scene, camera);
   });
 
-  section.classList.add('is-live');
+  holder.classList.add('is-live');
 }
 
 if (section && canvas) {

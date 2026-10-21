@@ -99,30 +99,6 @@
   // ── 2b. SHOWREEL ───────────────────────────────────────────
   const reel = $('#reel');
   const reelWall = $('#reelWall');
-  // Faceted prism play-triangle: the triangle is split into n² small facets in gold tones
-  (function buildPrism() {
-    const svg = $('#reelPrismSvg');
-    const A = [8, 4], B = [96, 50], C = [8, 96], n = 5;
-    const lerp = (p, q, t) => [p[0] + (q[0] - p[0]) * t, p[1] + (q[1] - p[1]) * t];
-    const pt = (i, j) => { const a = lerp(A, C, i / n), b = lerp(A, B, i / n); return i === 0 ? A : lerp(a, b, j / i); };
-    const golds = ['#fff3b0', '#ffe066', '#ffd700', '#f5b400', '#d98300', '#ffeb8a'];
-    let html = '', k = 0;
-    for (let i = 1; i <= n; i++) {
-      for (let j = 0; j < i; j++) {
-        const tri = [pt(i - 1, j), pt(i, j), pt(i, j + 1)];
-        const fill = golds[(i * 7 + j * 3 + k) % golds.length];
-        html += `<polygon points="${tri.map(p => p.map(v => v.toFixed(2)).join(',')).join(' ')}" fill="${fill}" style="animation-delay:${(k * .17) % 3.2}s"/>`;
-        k++;
-        if (j < i - 1) {
-          const inv = [pt(i - 1, j), pt(i - 1, j + 1), pt(i, j + 1)];
-          html += `<polygon points="${inv.map(p => p.map(v => v.toFixed(2)).join(',')).join(' ')}" fill="${golds[(i * 5 + j + k) % golds.length]}" style="animation-delay:${(k * .23) % 3.2}s"/>`;
-          k++;
-        }
-      }
-    }
-    svg.innerHTML = html;
-  })();
-
   // Wall films load and play only while the reel is on screen
   const wallVideos = $$('video[data-src]', reelWall);
   let reelVisible = false, reelPaused = false;
@@ -134,6 +110,14 @@
       } else v.pause();
     });
   }
+  // Wall images: the tilted wall fools native lazy-loading, so load them all once the reel is near
+  const wallImages = $$('img[data-src]', reelWall);
+  const preload = new IntersectionObserver(([e]) => {
+    if (!e.isIntersecting) return;
+    wallImages.forEach(img => { img.src = img.dataset.src; });
+    preload.disconnect();
+  }, { rootMargin: '1200px 0px' });
+  preload.observe(reel);
   new IntersectionObserver(([e]) => { reelVisible = e.isIntersecting; syncWall(); }, { rootMargin: '200px' }).observe(reel);
   $('#reelPause').addEventListener('click', e => {
     reelPaused = !reelPaused;
@@ -334,9 +318,9 @@
     caseBar.style.transform = `scaleX(${max ? caseViewport.scrollLeft / max : 0})`;
   }, { passive: true });
 
-  const emblem = $('#emblem');
+  const reelEmblem = $('.reel-emblem');
 
-  // ── Scroll loop (hero, manifesto, emblem, case pin) ────────
+  // ── Scroll loop (hero, manifesto, showreel, case pin) ────────
   let ticking = false;
   function onScroll() {
     if (ticking) return;
@@ -382,11 +366,8 @@
       const rx = clamp((pos - span * .6) / (span * .4));
       reel.style.setProperty('--g', (reducedMotion ? 1 : rg).toFixed(4));
       reel.style.setProperty('--x', (reducedMotion ? 0 : rx * rx * (3 - 2 * rx)).toFixed(4));
+      reelEmblem.dataset.progress = clamp(pos / span).toFixed(4);
 
-      const er = emblem.getBoundingClientRect();
-      const ep = clamp(-er.top / Math.max(1, er.height - vh));
-      emblem.style.setProperty('--ep', ep.toFixed(4));
-      emblem.dataset.progress = ep.toFixed(4);
 
       if (caseSection.classList.contains('is-pinned')) {
         const r = caseSection.getBoundingClientRect();
