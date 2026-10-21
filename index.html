@@ -40,7 +40,7 @@
   <!-- Styles -->
   <link rel="icon" href="images/batman-logo.png">
   <link rel="preload" as="image" href="images/hero/ayoub-shadow.webp">
-  <link rel="stylesheet" href="css/noir.css?v=20261021b">
+  <link rel="stylesheet" href="css/noir.css?v=20261021c">
 
   <!-- Prefetch the deep-dive pages so the jump feels instant -->
   <script type="speculationrules">
@@ -69,8 +69,10 @@
   </div>
 
   <!-- ============ CURSOR · "Lens" ============ -->
-  <div class="lens" id="lens" aria-hidden="true"><span class="lens-label" id="lensLabel"></span></div>
-  <div class="lens-dot" id="lensDot" aria-hidden="true"></div>
+  <div class="lens" id="lens" aria-hidden="true"><span class="lens-glass" id="lensGlass"></span><span class="lens-label" id="lensLabel"></span></div>
+  <div class="lens-bead" aria-hidden="true"></div>
+  <div class="lens-bead" aria-hidden="true"></div>
+  <div class="lens-bead" aria-hidden="true"></div>
 
   <a class="skip-link" href="#manifesto">Skip to content</a>
 
@@ -205,6 +207,50 @@
         <span>Ayoub Chekhab<br><small>Creator · Developer · Designer</small></span>
       </div>
     </section>
+
+    <!-- ============ SHOWREEL ============ -->
+    <section class="showreel" id="reel" aria-label="Showreel">
+      <div class="reel-sticky">
+        <div class="reel-window" id="reelWindow">
+          <div class="reel-wall" id="reelWall" aria-hidden="true">
+            <div class="reel-col" style="--dur:46s;--dir:normal"><figure class="reel-tile reel-tile--site"><img src="images/sites/titan-gym.webp" alt="" loading="lazy" decoding="async"></figure><figure class="reel-tile"><img src="images/opt/april4-800.webp" alt="" loading="lazy" decoding="async"></figure><figure class="reel-tile reel-tile--film"><video data-src="videos/brand-identity/01-clothing-brand.m4v" poster="images/opt/01-clothing-brand-800.webp" muted loop playsinline preload="none"></video></figure><figure class="reel-tile reel-tile--site"><img src="images/sites/dr-badis.webp" alt="" loading="lazy" decoding="async"></figure><figure class="reel-tile"><img src="images/opt/logo3-800.webp" alt="" loading="lazy" decoding="async"></figure><figure class="reel-tile reel-tile--site"><img src="images/sites/titan-gym.webp" alt="" loading="lazy" decoding="async"></figure><figure class="reel-tile"><img src="images/opt/april4-800.webp" alt="" loading="lazy" decoding="async"></figure><figure class="reel-tile reel-tile--film"><video data-src="videos/brand-identity/01-clothing-brand.m4v" poster="images/opt/01-clothing-brand-800.webp" muted loop playsinline preload="none"></video></figure><figure class="reel-tile reel-tile--site"><img src="images/sites/dr-badis.webp" alt="" loading="lazy" decoding="async"></figure><figure class="reel-tile"><img src="images/opt/logo3-800.webp" alt="" loading="lazy" decoding="async"></figure></div>
+            <div class="reel-col" style="--dur:58s;--dir:reverse"><figure class="reel-tile"><img src="images/opt/rozan6-800.webp" alt="" loading="lazy" decoding="async"></figure><figure class="reel-tile reel-tile--site"><img src="images/sites/saida-real-estate.webp" alt="" loading="lazy" decoding="async"></figure><figure class="reel-tile reel-tile--film"><video data-src="videos/brand-identity/02-glass-brand.m4v" poster="images/opt/02-glass-brand-800.webp" muted loop playsinline preload="none"></video></figure><figure class="reel-tile"><img src="images/opt/graphic4-800.webp" alt="" loading="lazy" decoding="async"></figure><figure class="reel-tile reel-tile--site"><img src="images/sites/dr-213.webp" alt="" loading="lazy" decoding="async"></figure><figure class="reel-tile"><img src="images/opt/rozan6-800.webp" alt="" loading="lazy" decoding="async"></figure><figure class="reel-tile reel-tile--site"><img src="images/sites/saida-real-estate.webp" alt="" loading="lazy" decoding="async"></figure><figure class="reel-tile reel-tile--film"><video data-src="videos/brand-identity/02-glass-brand.m4v" poster="images/opt/02-glass-brand-800.webp" muted loop playsinline preload="none"></video></figure><figure class="reel-tile"><img src="images/opt/graphic4-800.webp" alt="" loading="lazy" decoding="async"></figure><figure class="reel-tile reel-tile--site"><img src="images/sites/dr-213.webp" alt="" loading="lazy" decoding="async"></figure></div>
+            <div class="reel-col" style="--dur:40s;--dir:normal"><figure class="reel-tile reel-tile--film"><video data-src="videos/brand-identity/04-car-brand.m4v" poster="images/opt/04-car-brand-800.webp" muted loop playsinline preload="none"></video></figure><figure class="reel-tile reel-tile--site"><img src="images/sites/titan-gym.webp" alt="" loading="lazy" decoding="async"></figure><figure class="reel-tile"><img src="images/opt/rozan8-800.webp" alt="" loading="lazy" decoding="async"></figure><figure class="reel-tile"><img src="images/opt/service-web-800.webp" alt="" loading="lazy" decoding="async"></figure><figure class="reel-tile"><img src="images/opt/logo6-800.webp" alt="" loading="lazy" decoding="async"></figure><figure class="reel-tile reel-tile--film"><video data-src="videos/brand-identity/04-car-brand.m4v" poster="images/opt/04-car-brand-800.webp" muted loop playsinline preload="none"></video></figure><figure class="reel-tile reel-tile--site"><img src="images/sites/titan-gym.webp" alt="" loading="lazy" decoding="async"></figure><figure class="reel-tile"><img src="images/opt/rozan8-800.webp" alt="" loading="lazy" decoding="async"></figure><figure class="reel-tile"><img src="images/opt/service-web-800.webp" alt="" loading="lazy" decoding="async"></figure><figure class="reel-tile"><img src="images/opt/logo6-800.webp" alt="" loading="lazy" decoding="async"></figure></div>
+            <div class="reel-col" style="--dur:62s;--dir:reverse"><figure class="reel-tile reel-tile--site"><img src="images/sites/saida-real-estate.webp" alt="" loading="lazy" decoding="async"></figure><figure class="reel-tile reel-tile--film"><video data-src="videos/brand-identity/03-villa-home-brand.m4v" poster="images/opt/03-villa-home-brand-800.webp" muted loop playsinline preload="none"></video></figure><figure class="reel-tile"><img src="images/opt/april3-800.webp" alt="" loading="lazy" decoding="async"></figure><figure class="reel-tile reel-tile--site"><img src="images/sites/dr-badis.webp" alt="" loading="lazy" decoding="async"></figure><figure class="reel-tile"><img src="images/opt/graphic1-800.webp" alt="" loading="lazy" decoding="async"></figure><figure class="reel-tile reel-tile--site"><img src="images/sites/saida-real-estate.webp" alt="" loading="lazy" decoding="async"></figure><figure class="reel-tile reel-tile--film"><video data-src="videos/brand-identity/03-villa-home-brand.m4v" poster="images/opt/03-villa-home-brand-800.webp" muted loop playsinline preload="none"></video></figure><figure class="reel-tile"><img src="images/opt/april3-800.webp" alt="" loading="lazy" decoding="async"></figure><figure class="reel-tile reel-tile--site"><img src="images/sites/dr-badis.webp" alt="" loading="lazy" decoding="async"></figure><figure class="reel-tile"><img src="images/opt/graphic1-800.webp" alt="" loading="lazy" decoding="async"></figure></div>
+            <div class="reel-col" style="--dur:50s;--dir:normal"><figure class="reel-tile"><img src="images/opt/graphic-campaigns-cover-800.webp" alt="" loading="lazy" decoding="async"></figure><figure class="reel-tile reel-tile--site"><img src="images/sites/dr-213.webp" alt="" loading="lazy" decoding="async"></figure><figure class="reel-tile"><img src="images/opt/rozan7-800.webp" alt="" loading="lazy" decoding="async"></figure><figure class="reel-tile"><img src="images/opt/logo8-800.webp" alt="" loading="lazy" decoding="async"></figure><figure class="reel-tile reel-tile--site"><img src="images/sites/titan-gym.webp" alt="" loading="lazy" decoding="async"></figure><figure class="reel-tile"><img src="images/opt/graphic-campaigns-cover-800.webp" alt="" loading="lazy" decoding="async"></figure><figure class="reel-tile reel-tile--site"><img src="images/sites/dr-213.webp" alt="" loading="lazy" decoding="async"></figure><figure class="reel-tile"><img src="images/opt/rozan7-800.webp" alt="" loading="lazy" decoding="async"></figure><figure class="reel-tile"><img src="images/opt/logo8-800.webp" alt="" loading="lazy" decoding="async"></figure><figure class="reel-tile reel-tile--site"><img src="images/sites/titan-gym.webp" alt="" loading="lazy" decoding="async"></figure></div>
+          </div>
+          <div class="reel-shade" aria-hidden="true"></div>
+        </div>
+
+        <h2 class="reel-word">
+          <span aria-hidden="true">SH</span>
+          <button class="reel-prism" id="reelPlay" type="button" aria-label="Play the full showreel with sound" data-lens="Play">
+            <svg viewBox="0 0 100 100" id="reelPrismSvg" aria-hidden="true"></svg>
+          </button>
+          <span aria-hidden="true">WREEL</span>
+          <span class="sr-only">Showreel</span>
+        </h2>
+        <p class="reel-cta" aria-hidden="true">Play full showreel</p>
+
+        <div class="reel-controls">
+          <button class="reel-pause" id="reelPause" type="button" aria-pressed="false">Pause reel <b aria-hidden="true">II</b></button>
+          <a class="reel-explore" href="#arsenal" data-lens="Scroll">Explore the work <i class="fas fa-arrow-down" aria-hidden="true"></i></a>
+        </div>
+      </div>
+    </section>
+
+    <dialog class="reelfull" id="reelFull" aria-label="Showreel player">
+      <video id="reelFullVideo" playsinline preload="none"></video>
+      <div class="reelfull-bar">
+        <span class="reelfull-title"><b id="reelFullIndex">01</b> / 04 · <span id="reelFullName">Clothing brand</span></span>
+        <div class="reelfull-progress" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+        <div class="reelfull-actions">
+          <button type="button" id="reelFullPrev" aria-label="Previous film"><i class="fas fa-arrow-left" aria-hidden="true"></i></button>
+          <button type="button" id="reelFullNext" aria-label="Next film"><i class="fas fa-arrow-right" aria-hidden="true"></i></button>
+          <button type="button" class="reelfull-close" id="reelFullClose">Close</button>
+        </div>
+      </div>
+    </dialog>
 
     <!-- ============ ARSENAL · the work, in four chapters ============ -->
     <section class="arsenal" id="arsenal" aria-labelledby="arsenalTitle">
@@ -556,8 +602,8 @@
     }}
   </script>
   <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js" defer></script>
-  <script src="js/noir/hero-reveal.js?v=20261021b" defer></script>
-  <script type="module" src="js/noir/emblem3d.js?v=20261021b"></script>
-  <script src="js/noir/app.js?v=20261021b" defer></script>
+  <script src="js/noir/hero-reveal.js?v=20261021c" defer></script>
+  <script type="module" src="js/noir/emblem3d.js?v=20261021c"></script>
+  <script src="js/noir/app.js?v=20261021c" defer></script>
 </body>
 </html>

@@ -91,29 +91,52 @@ body.is-ready .ignition-core { opacity: 0; transform: scale(.9); }
 body.is-ready .ignition { visibility: hidden; transition: visibility 0s 1.2s; }
 @keyframes ignite { from { opacity: .55; transform: scale(.96); } to { opacity: 1; transform: scale(1.04); } }
 
-/* ─── 3. LENS (cursor) ──────────────────────────────────── */
-.lens, .lens-dot {
+/* ─── 3. LENS · liquid glass cursor ─────────────────────── */
+/* A glass droplet that refracts what is under it (backdrop-filter) and
+   stretches with pointer velocity; three beads trail behind it. app.js
+   sets --x/--y (position), --a (angle), --s (stretch). */
+.lens, .lens-bead {
+  --x: -100px; --y: -100px;
   position: fixed; left: 0; top: 0; z-index: 350; pointer-events: none;
-  border-radius: 50%; opacity: 0; transition: opacity .3s ease;
+  transform: translate3d(var(--x), var(--y), 0); opacity: 0; transition: opacity .3s ease;
 }
-.lens {
-  width: 44px; height: 44px; margin: -22px 0 0 -22px;
-  border: 1.5px solid var(--gold); display: grid; place-items: center;
-  transition: opacity .3s ease, width .45s var(--ease), height .45s var(--ease), margin .45s var(--ease),
-              background-color .3s ease, border-color .3s ease;
+body.has-lens .lens, body.has-lens .lens-bead { opacity: 1; }
+.lens { width: 0; height: 0; display: grid; place-items: center; }
+.lens-glass {
+  --size: 46px; --a: 0deg; --s: 0;
+  position: absolute; width: var(--size); height: var(--size); left: calc(var(--size) / -2); top: calc(var(--size) / -2);
+  border-radius: 50%;
+  transform: rotate(var(--a)) scale(calc(1 + var(--s)), calc(1 - var(--s) * .45));
+  -webkit-backdrop-filter: blur(1.2px) saturate(1.9) brightness(1.18) contrast(1.08);
+          backdrop-filter: blur(1.2px) saturate(1.9) brightness(1.18) contrast(1.08);
+  background:
+    radial-gradient(circle at 32% 26%, rgba(255, 255, 255, .7), rgba(255, 255, 255, .12) 20%, transparent 42%),
+    radial-gradient(circle at 70% 78%, rgba(255, 215, 0, .22), transparent 58%);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, .38),
+    inset -7px -9px 14px rgba(0, 0, 0, .28),
+    inset 5px 6px 10px rgba(255, 255, 255, .22),
+    0 8px 22px rgba(0, 0, 0, .3);
+  transition: width .45s var(--ease), height .45s var(--ease), left .45s var(--ease), top .45s var(--ease), background-color .3s ease;
 }
-.lens-dot { width: 6px; height: 6px; margin: -3px 0 0 -3px; background: var(--gold); mix-blend-mode: difference; }
+.lens.is-labelled .lens-glass { --size: 92px; background-color: rgba(255, 215, 0, .88); }
+.lens.on-gold.is-labelled .lens-glass { background-color: rgba(0, 0, 0, .82); }
+.lens.is-reveal .lens-glass { --size: 22px; }
 .lens-label {
-  font-size: .64rem; font-weight: 600; letter-spacing: .18em; text-transform: uppercase;
-  color: var(--black); opacity: 0; transition: opacity .2s ease;
+  position: relative; font-size: .64rem; font-weight: 600; letter-spacing: .18em; text-transform: uppercase;
+  color: var(--black); opacity: 0; transition: opacity .2s ease; white-space: nowrap;
 }
-body.has-lens .lens, body.has-lens .lens-dot { opacity: 1; }
-.lens.is-labelled { width: 86px; height: 86px; margin: -43px 0 0 -43px; background: var(--gold); border-color: var(--gold); }
 .lens.is-labelled .lens-label { opacity: 1; }
-.lens.on-gold { border-color: var(--black); }
-.lens.on-gold.is-labelled { background: var(--black); }
 .lens.on-gold .lens-label { color: var(--gold); }
-.lens.is-reveal { width: 18px; height: 18px; margin: -9px 0 0 -9px; border-color: rgba(255, 246, 218, .8); }
+.lens-bead {
+  width: 14px; height: 14px; margin: -7px 0 0 -7px; border-radius: 50%;
+  -webkit-backdrop-filter: saturate(1.8) brightness(1.2); backdrop-filter: saturate(1.8) brightness(1.2);
+  background: radial-gradient(circle at 35% 30%, rgba(255, 255, 255, .6), transparent 55%);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .3), inset -2px -3px 5px rgba(0, 0, 0, .25);
+}
+.lens-bead:nth-of-type(2) { width: 10px; height: 10px; margin: -5px 0 0 -5px; }
+.lens-bead:nth-of-type(3) { width: 7px; height: 7px; margin: -3.5px 0 0 -3.5px; }
+.lens.is-labelled ~ .lens-bead { opacity: 0; }
 
 /* ─── 4. NAV & DRAWER ───────────────────────────────────── */
 .nav {
@@ -377,6 +400,80 @@ body.is-ready .hero-foot { opacity: 1; transform: none; }
 .hero-scrollcue span { width: 1px; height: 60px; background: currentColor; transform-origin: top; animation: cue 1.8s var(--ease) infinite; }
 @keyframes cue { 0% { transform: scaleY(0); } 50% { transform: scaleY(1); transform-origin: top; } 51% { transform-origin: bottom; } 100% { transform: scaleY(0); transform-origin: bottom; } }
 
+/* ─── SHOWREEL ──────────────────────────────────────────── */
+/* --g (0→1, app.js): the window grows from an inset card to full bleed */
+.showreel { --g: 0; position: relative; height: 220vh; background: var(--black); }
+.reel-sticky { position: sticky; top: 0; height: 100svh; min-height: 560px; overflow: hidden; display: grid; place-items: center; }
+.reel-window {
+  position: absolute; inset: 0; overflow: hidden; background: #050505;
+  clip-path: inset(calc((1 - var(--g)) * 22%) calc((1 - var(--g)) * 26%) round calc((1 - var(--g)) * 34px));
+}
+.reel-wall {
+  position: absolute; left: -30%; right: -30%; top: -40%; bottom: -40%;
+  display: flex; gap: 22px; justify-content: center;
+  transform: perspective(1600px) rotateX(22deg) rotateZ(-13deg) scale(calc(1.18 - var(--g) * .12));
+}
+.reel-col { display: flex; flex-direction: column; gap: 22px; flex: 0 0 clamp(220px, 21vw, 360px); animation: reel-drift var(--dur) linear infinite var(--dir); }
+.showreel.is-paused .reel-col { animation-play-state: paused; }
+@keyframes reel-drift { to { transform: translateY(calc(-50% - 11px)); } }
+.reel-tile { flex: none; aspect-ratio: 16 / 11; border-radius: 14px; overflow: hidden; background: var(--coal); box-shadow: 0 30px 60px -20px rgba(0, 0, 0, .8); }
+.reel-tile img, .reel-tile video { width: 100%; height: 100%; object-fit: cover; }
+.reel-tile--site img { object-position: top; }
+.reel-shade {
+  position: absolute; inset: 0;
+  background: radial-gradient(60% 55% at 50% 50%, rgba(0, 0, 0, .15), rgba(0, 0, 0, .7) 100%), linear-gradient(180deg, rgba(0,0,0,.35), transparent 30%, transparent 70%, rgba(0,0,0,.55));
+}
+.reel-word {
+  position: relative; z-index: 2; display: flex; align-items: center; gap: .02em;
+  font-family: var(--f-display); font-weight: 400; font-size: clamp(5rem, 15vw, 15rem); line-height: .8; color: var(--cream);
+  letter-spacing: .01em; text-shadow: 0 10px 50px rgba(0, 0, 0, .45);
+  transform: scale(calc(.7 + var(--g) * .3)); opacity: calc(.25 + var(--g) * .75);
+}
+.reel-prism {
+  width: .74em; height: .74em; margin: 0 .04em; padding: 0; border: 0; background: none; border-radius: 0;
+  filter: drop-shadow(0 8px 30px rgba(255, 190, 0, .35)); transition: transform .6s var(--ease);
+}
+.reel-prism:hover { transform: scale(1.08); }
+.reel-prism svg { width: 100%; height: 100%; overflow: visible; }
+.reel-prism polygon { transition: opacity .6s ease; animation: facet 3.2s ease-in-out infinite; }
+@keyframes facet { 50% { opacity: .55; } }
+.reel-cta {
+  position: absolute; z-index: 2; left: 0; right: 0; top: calc(50% + clamp(70px, 9vw, 140px)); text-align: center;
+  font-size: .78rem; letter-spacing: .5em; text-transform: uppercase; color: rgba(255, 246, 218, .8); opacity: var(--g);
+}
+.reel-controls {
+  position: absolute; z-index: 3; left: var(--gutter); right: var(--gutter); bottom: 28px;
+  display: flex; justify-content: space-between; align-items: center; opacity: var(--g);
+}
+.reel-pause {
+  display: inline-flex; gap: 10px; align-items: center; padding: 12px 20px; border-radius: 99px;
+  border: 1px solid rgba(255, 246, 218, .4); background: rgba(10, 10, 10, .45); backdrop-filter: blur(10px); color: var(--cream); font-size: .82rem;
+}
+.reel-pause b { font-weight: 600; letter-spacing: .1em; }
+.reel-explore { display: inline-flex; gap: 14px; align-items: center; color: var(--cream); font-size: .85rem; text-shadow: 0 1px 6px #000; }
+.reel-explore i { color: var(--gold); animation: nudge 1.8s var(--ease) infinite; }
+
+/* Full-screen player */
+.reelfull { position: fixed; inset: 0; width: 100%; max-width: none; height: 100dvh; max-height: none; margin: 0; padding: 0; border: 0; background: #000; color: #fff; }
+.reelfull[open] { display: grid; place-items: center; }
+.reelfull::backdrop { background: #000; }
+.reelfull video { width: 100%; height: 100%; object-fit: contain; }
+.reelfull-bar {
+  position: absolute; left: var(--gutter); right: var(--gutter); bottom: 24px;
+  display: flex; align-items: center; gap: 20px; flex-wrap: wrap;
+}
+.reelfull-title { font-family: var(--f-display); font-size: 1.6rem; letter-spacing: .04em; }
+.reelfull-title b { color: var(--gold); font-weight: 400; }
+.reelfull-progress { flex: 1; display: flex; gap: 6px; min-width: 120px; }
+.reelfull-progress i { flex: 1; height: 3px; border-radius: 3px; background: rgba(255, 255, 255, .2); overflow: hidden; position: relative; }
+.reelfull-progress i::after { content: ''; position: absolute; inset: 0; background: var(--gold); transform-origin: 0 50%; transform: scaleX(var(--fill, 0)); }
+.reelfull-actions { display: flex; gap: 8px; }
+.reelfull-actions button {
+  min-width: 46px; height: 46px; padding: 0 16px; border-radius: 99px; border: 1px solid rgba(255, 255, 255, .25);
+  background: rgba(20, 20, 20, .7); color: #fff; font-size: .8rem; letter-spacing: .08em; text-transform: uppercase;
+}
+.reelfull-actions .reelfull-close { background: var(--gold); color: var(--black); border-color: var(--gold); font-weight: 600; }
+
 /* ─── TICKER ────────────────────────────────────────────── */
 .ticker { background: var(--gold); color: var(--black); overflow: hidden; padding: 16px 0; transform: rotate(-1.4deg) scale(1.02); margin-top: -10px; position: relative; z-index: 5; }
 .ticker-track { display: flex; align-items: center; gap: 36px; width: max-content; animation: ticker 32s linear infinite; }
@@ -582,6 +679,8 @@ body.is-ready .hero-foot { opacity: 1; transform: none; }
 }
 .case-files.is-pinned .case { width: clamp(240px, min(24vw, calc((100vh - 330px) * .8)), 380px); }
 .case-files.is-pinned .case-track { transform: translate3d(var(--tx, 0px), 0, 0); will-change: transform; }
+/* Slide bend: while the archive moves, every card bows like a sheet (app.js sets --curve) */
+.case-track.is-bending .case-media { clip-path: var(--curve); }
 
 /* ─── 10. ORIGIN ────────────────────────────────────────── */
 .origin-grid { display: grid; grid-template-columns: 1.05fr 1fr; gap: clamp(40px, 6vw, 100px); align-items: start; }
@@ -761,6 +860,14 @@ body.is-ready .hero-foot { opacity: 1; transform: none; }
   .poster-stage { padding: 6% 4%; }
   .mark-grid { gap: 8px; }
   .mark-grid span { border-radius: 12px; }
+  .showreel { height: 170vh; }
+  .reel-col { flex-basis: 46vw; }
+  .reel-col:nth-child(n+4) { display: none; }
+  .reel-word { font-size: 22vw; }
+  .reel-cta { top: calc(50% + 70px); font-size: .62rem; letter-spacing: .32em; }
+  .reel-pause { padding: 10px 14px; font-size: .72rem; }
+  .reel-explore { font-size: .74rem; }
+  .reelfull-title { font-size: 1.2rem; }
   .reels { gap: 10px; }
   .reel { border-radius: 16px; }
   .reel-tag { display: none; }

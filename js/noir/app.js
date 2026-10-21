@@ -52,34 +52,133 @@
   // Never trap the visitor behind a slow asset
   setTimeout(() => { loaded = true; }, 4000);
 
-  // ── 2. LENS ────────────────────────────────────────────────
-  if (finePointer) {
-    const lens = $('#lens'), dot = $('#lensDot'), label = $('#lensLabel');
-    const hero = $('#top');
-    let mx = innerWidth / 2, my = innerHeight / 2, lx = mx, ly = my;
+  // ── 2. LENS · liquid glass cursor ──────────────────────────
+  // Spring-follows the pointer; velocity stretches the droplet along its
+  // direction of travel and three glass beads trail behind it.
+  if (finePointer && !reducedMotion) {
+    const lens = $('#lens'), glass = $('#lensGlass'), label = $('#lensLabel');
+    const beads = $$('.lens-bead').map((el, i) => ({ el, x: 0, y: 0, k: .3 - i * .07 }));
+    let mx = innerWidth / 2, my = innerHeight / 2, lx = mx, ly = my, vx = 0, vy = 0, stretch = 0, angle = 0;
     body.classList.add('has-lens');
 
-    addEventListener('pointermove', e => {
-      mx = e.clientX; my = e.clientY;
-      dot.style.transform = `translate3d(${mx}px, ${my}px, 0)`;
-    }, { passive: true });
-
+    addEventListener('pointermove', e => { mx = e.clientX; my = e.clientY; }, { passive: true });
     document.addEventListener('pointerover', e => {
-      const target = e.target.closest('[data-lens]');
-      const text = target?.dataset.lens || '';
+      const text = e.target.closest('[data-lens]')?.dataset.lens || '';
       const reveal = text === 'Reveal';
       lens.classList.toggle('is-reveal', reveal);
       lens.classList.toggle('is-labelled', !!text && !reveal);
       label.textContent = reveal ? '' : text;
     });
+    document.addEventListener('pointerleave', () => body.classList.remove('has-lens'));
+    document.addEventListener('pointerenter', () => body.classList.add('has-lens'));
 
     (function follow() {
-      lx += (mx - lx) * .18; ly += (my - ly) * .18;
-      lens.style.transform = `translate3d(${lx}px, ${ly}px, 0)`;
-      lens.classList.toggle('on-gold', body.classList.contains('is-day'));
       requestAnimationFrame(follow);
+      // critically-damped spring → a liquid, slightly elastic follow
+      vx = (vx + (mx - lx) * .22) * .62;
+      vy = (vy + (my - ly) * .22) * .62;
+      lx += vx; ly += vy;
+      const speed = Math.hypot(vx, vy);
+      stretch += (Math.min(speed / 60, .55) - stretch) * .2;
+      if (speed > .4) angle = Math.atan2(vy, vx) * 180 / Math.PI;
+      lens.style.setProperty('--x', `${lx}px`);
+      lens.style.setProperty('--y', `${ly}px`);
+      glass.style.setProperty('--a', `${angle.toFixed(1)}deg`);
+      glass.style.setProperty('--s', (lens.classList.contains('is-labelled') ? stretch * .3 : stretch).toFixed(3));
+      let px = lx, py = ly;
+      beads.forEach(b => {
+        b.x += (px - b.x) * b.k; b.y += (py - b.y) * b.k;
+        b.el.style.setProperty('--x', `${b.x}px`);
+        b.el.style.setProperty('--y', `${b.y}px`);
+        px = b.x; py = b.y;
+      });
+      lens.classList.toggle('on-gold', body.classList.contains('is-day'));
     })();
   }
+
+  // ── 2b. SHOWREEL ───────────────────────────────────────────
+  const reel = $('#reel');
+  const reelWall = $('#reelWall');
+  // Faceted prism play-triangle: the triangle is split into n² small facets in gold tones
+  (function buildPrism() {
+    const svg = $('#reelPrismSvg');
+    const A = [8, 4], B = [96, 50], C = [8, 96], n = 5;
+    const lerp = (p, q, t) => [p[0] + (q[0] - p[0]) * t, p[1] + (q[1] - p[1]) * t];
+    const pt = (i, j) => { const a = lerp(A, C, i / n), b = lerp(A, B, i / n); return i === 0 ? A : lerp(a, b, j / i); };
+    const golds = ['#fff3b0', '#ffe066', '#ffd700', '#f5b400', '#d98300', '#ffeb8a'];
+    let html = '', k = 0;
+    for (let i = 1; i <= n; i++) {
+      for (let j = 0; j < i; j++) {
+        const tri = [pt(i - 1, j), pt(i, j), pt(i, j + 1)];
+        const fill = golds[(i * 7 + j * 3 + k) % golds.length];
+        html += `<polygon points="${tri.map(p => p.map(v => v.toFixed(2)).join(',')).join(' ')}" fill="${fill}" style="animation-delay:${(k * .17) % 3.2}s"/>`;
+        k++;
+        if (j < i - 1) {
+          const inv = [pt(i - 1, j), pt(i - 1, j + 1), pt(i, j + 1)];
+          html += `<polygon points="${inv.map(p => p.map(v => v.toFixed(2)).join(',')).join(' ')}" fill="${golds[(i * 5 + j + k) % golds.length]}" style="animation-delay:${(k * .23) % 3.2}s"/>`;
+          k++;
+        }
+      }
+    }
+    svg.innerHTML = html;
+  })();
+
+  // Wall films load and play only while the reel is on screen
+  const wallVideos = $$('video[data-src]', reelWall);
+  let reelVisible = false, reelPaused = false;
+  function syncWall() {
+    wallVideos.forEach(v => {
+      if (reelVisible && !reelPaused) {
+        if (!v.src) v.src = v.dataset.src;
+        v.play().catch(() => {});
+      } else v.pause();
+    });
+  }
+  new IntersectionObserver(([e]) => { reelVisible = e.isIntersecting; syncWall(); }, { rootMargin: '200px' }).observe(reel);
+  $('#reelPause').addEventListener('click', e => {
+    reelPaused = !reelPaused;
+    reel.classList.toggle('is-paused', reelPaused);
+    e.currentTarget.setAttribute('aria-pressed', String(reelPaused));
+    e.currentTarget.innerHTML = reelPaused ? 'Play reel <b aria-hidden="true">▷</b>' : 'Pause reel <b aria-hidden="true">II</b>';
+    syncWall();
+  });
+
+  // Full-screen showreel: the four films in sequence, with sound
+  const films = [
+    { name: 'Clothing brand', src: 'videos/brand-identity/01-clothing-brand.m4v' },
+    { name: 'Glass brand', src: 'videos/brand-identity/02-glass-brand.m4v' },
+    { name: 'Villa & home', src: 'videos/brand-identity/03-villa-home-brand.m4v' },
+    { name: 'Car brand', src: 'videos/brand-identity/04-car-brand.m4v' }
+  ];
+  const full = $('#reelFull'), fullVideo = $('#reelFullVideo');
+  const fullBars = $$('.reelfull-progress i', full);
+  let filmIndex = 0;
+  function playFilm(i) {
+    filmIndex = (i + films.length) % films.length;
+    fullVideo.src = films[filmIndex].src;
+    $('#reelFullIndex').textContent = String(filmIndex + 1).padStart(2, '0');
+    $('#reelFullName').textContent = films[filmIndex].name;
+    fullBars.forEach((b, k) => b.style.setProperty('--fill', k < filmIndex ? 1 : 0));
+    fullVideo.play().catch(() => {});
+  }
+  fullVideo.addEventListener('timeupdate', () => {
+    if (fullVideo.duration) fullBars[filmIndex].style.setProperty('--fill', (fullVideo.currentTime / fullVideo.duration).toFixed(3));
+  });
+  fullVideo.addEventListener('ended', () => { if (filmIndex < films.length - 1) playFilm(filmIndex + 1); else full.close(); });
+  $('#reelPlay').addEventListener('click', () => {
+    full.showModal();
+    lenis?.stop();
+    reelPaused = true; syncWall();
+    playFilm(0);
+  });
+  $('#reelFullNext').addEventListener('click', () => playFilm(filmIndex + 1));
+  $('#reelFullPrev').addEventListener('click', () => playFilm(filmIndex - 1));
+  $('#reelFullClose').addEventListener('click', () => full.close());
+  full.addEventListener('close', () => {
+    fullVideo.pause();
+    lenis?.start();
+    reelPaused = reel.classList.contains('is-paused'); syncWall();
+  });
 
   // ── 3. NAV & DRAWER ────────────────────────────────────────
   const nav = $('#nav');
@@ -243,7 +342,31 @@
   pinQuery.addEventListener('change', layoutCases);
   addEventListener('resize', layoutCases, { passive: true });
   addEventListener('load', layoutCases, { once: true });
+  // Slide bend: card edges bow in proportion to how fast the archive moves
+  let lastPos = null, bend = 0, bendLoop = 0;
+  function curve(amp) {
+    const top = [], bottom = [];
+    for (let i = 0; i <= 12; i++) {
+      const x = i / 12, d = amp * (1 - (2 * x - 1) ** 2);
+      top.push(`${(x * 100).toFixed(1)}% ${Math.max(0, d).toFixed(1)}px`);
+      bottom.unshift(`${(x * 100).toFixed(1)}% calc(100% - ${Math.max(0, -d).toFixed(1)}px)`);
+    }
+    return `polygon(${top.join(',')},${bottom.join(',')})`;
+  }
+  function bendBy(pos) {
+    if (reducedMotion) return;
+    if (lastPos !== null) bend += (clamp((pos - lastPos) * .35, -34, 34) - bend) * .5;
+    lastPos = pos;
+    if (!bendLoop) bendLoop = requestAnimationFrame(function relax() {
+      bend *= .86;
+      const on = Math.abs(bend) > .4;
+      track.classList.toggle('is-bending', on);
+      if (on) track.style.setProperty('--curve', curve(bend));
+      bendLoop = on ? requestAnimationFrame(relax) : 0;
+    });
+  }
   caseViewport.addEventListener('scroll', () => {
+    if (!caseSection.classList.contains('is-pinned')) bendBy(-caseViewport.scrollLeft);
     const max = caseViewport.scrollWidth - caseViewport.clientWidth;
     caseBar.style.transform = `scaleX(${max ? caseViewport.scrollLeft / max : 0})`;
   }, { passive: true });
@@ -289,6 +412,10 @@
 
       coverStacks();
 
+      const rr = reel.getBoundingClientRect();
+      const rg = clamp(-rr.top / Math.max(1, (rr.height - vh) * .6));
+      reel.style.setProperty('--g', (reducedMotion ? 1 : rg).toFixed(4));
+
       const er = emblem.getBoundingClientRect();
       const ep = clamp(-er.top / Math.max(1, er.height - vh));
       emblem.style.setProperty('--ep', ep.toFixed(4));
@@ -298,6 +425,7 @@
         const r = caseSection.getBoundingClientRect();
         const cp = clamp(-r.top / (r.height - vh));
         track.style.setProperty('--tx', `${-cp * pinDistance}px`);
+        bendBy(-cp * pinDistance);
         caseBar.style.transform = `scaleX(${cp})`;
       }
     });
