@@ -143,43 +143,6 @@
     syncWall();
   });
 
-  // Full-screen showreel: the four films in sequence, with sound
-  const films = [
-    { name: 'Clothing brand', src: 'videos/brand-identity/01-clothing-brand.m4v' },
-    { name: 'Glass brand', src: 'videos/brand-identity/02-glass-brand.m4v' },
-    { name: 'Villa & home', src: 'videos/brand-identity/03-villa-home-brand.m4v' },
-    { name: 'Car brand', src: 'videos/brand-identity/04-car-brand.m4v' }
-  ];
-  const full = $('#reelFull'), fullVideo = $('#reelFullVideo');
-  const fullBars = $$('.reelfull-progress i', full);
-  let filmIndex = 0;
-  function playFilm(i) {
-    filmIndex = (i + films.length) % films.length;
-    fullVideo.src = films[filmIndex].src;
-    $('#reelFullIndex').textContent = String(filmIndex + 1).padStart(2, '0');
-    $('#reelFullName').textContent = films[filmIndex].name;
-    fullBars.forEach((b, k) => b.style.setProperty('--fill', k < filmIndex ? 1 : 0));
-    fullVideo.play().catch(() => {});
-  }
-  fullVideo.addEventListener('timeupdate', () => {
-    if (fullVideo.duration) fullBars[filmIndex].style.setProperty('--fill', (fullVideo.currentTime / fullVideo.duration).toFixed(3));
-  });
-  fullVideo.addEventListener('ended', () => { if (filmIndex < films.length - 1) playFilm(filmIndex + 1); else full.close(); });
-  $('#reelPlay').addEventListener('click', () => {
-    full.showModal();
-    lenis?.stop();
-    reelPaused = true; syncWall();
-    playFilm(0);
-  });
-  $('#reelFullNext').addEventListener('click', () => playFilm(filmIndex + 1));
-  $('#reelFullPrev').addEventListener('click', () => playFilm(filmIndex - 1));
-  $('#reelFullClose').addEventListener('click', () => full.close());
-  full.addEventListener('close', () => {
-    fullVideo.pause();
-    lenis?.start();
-    reelPaused = reel.classList.contains('is-paused'); syncWall();
-  });
-
   // ── 3. NAV & DRAWER ────────────────────────────────────────
   const nav = $('#nav');
   const burger = $('#burger');
@@ -412,9 +375,13 @@
 
       coverStacks();
 
+      // Showreel: grow to full bleed (--g), hold, then turn away like a page (--x)
       const rr = reel.getBoundingClientRect();
-      const rg = clamp(-rr.top / Math.max(1, (rr.height - vh) * .6));
+      const span = Math.max(1, rr.height - vh), pos = -rr.top;
+      const rg = clamp(pos / (span * .45));
+      const rx = clamp((pos - span * .6) / (span * .4));
       reel.style.setProperty('--g', (reducedMotion ? 1 : rg).toFixed(4));
+      reel.style.setProperty('--x', (reducedMotion ? 0 : rx * rx * (3 - 2 * rx)).toFixed(4));
 
       const er = emblem.getBoundingClientRect();
       const ep = clamp(-er.top / Math.max(1, er.height - vh));

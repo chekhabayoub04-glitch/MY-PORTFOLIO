@@ -402,11 +402,25 @@ body.is-ready .hero-foot { opacity: 1; transform: none; }
 
 /* ─── SHOWREEL ──────────────────────────────────────────── */
 /* --g (0→1, app.js): the window grows from an inset card to full bleed */
-.showreel { --g: 0; position: relative; height: 220vh; background: var(--black); }
+.showreel { --g: 0; --x: 0; position: relative; height: 300vh; background: var(--black); }
+.reel-sticky { perspective: 3200px; perspective-origin: 30% 50%; }
 .reel-sticky { position: sticky; top: 0; height: 100svh; min-height: 560px; overflow: hidden; display: grid; place-items: center; }
 .reel-window {
   position: absolute; inset: 0; overflow: hidden; background: #050505;
-  clip-path: inset(calc((1 - var(--g)) * 22%) calc((1 - var(--g)) * 26%) round calc((1 - var(--g)) * 34px));
+  clip-path: inset(calc((1 - var(--g)) * 22%) calc((1 - var(--g)) * 26%) round calc((1 - var(--g)) * 34px + var(--x) * 28px));
+  /* Page turn: the sheet lifts off its left spine and turns away */
+  transform-origin: 0% 50%;
+  transform: scale(calc(1 - var(--x) * .3)) rotateY(calc(var(--x) * -98deg)) skewY(calc(var(--x) * -3deg));
+  backface-visibility: hidden;
+  box-shadow: 0 0 calc(var(--x) * 140px) rgba(0, 0, 0, calc(var(--x) * .9));
+  will-change: transform, clip-path;
+}
+/* Light that sweeps across the paper as it bends */
+.reel-fold {
+  position: absolute; inset: 0; pointer-events: none; opacity: calc(var(--x) * 1.6);
+  background:
+    linear-gradient(90deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0) calc(70% - var(--x) * 70%), rgba(255, 246, 218, .35) calc(80% - var(--x) * 60%), rgba(0,0,0,.75) 100%),
+    linear-gradient(90deg, rgba(0,0,0,.55), transparent 22%);
 }
 .reel-wall {
   position: absolute; left: -30%; right: -30%; top: -40%; bottom: -40%;
@@ -427,23 +441,22 @@ body.is-ready .hero-foot { opacity: 1; transform: none; }
   position: relative; z-index: 2; display: flex; align-items: center; gap: .02em;
   font-family: var(--f-display); font-weight: 400; font-size: clamp(5rem, 15vw, 15rem); line-height: .8; color: var(--cream);
   letter-spacing: .01em; text-shadow: 0 10px 50px rgba(0, 0, 0, .45);
-  transform: scale(calc(.7 + var(--g) * .3)); opacity: calc(.25 + var(--g) * .75);
+  transform: translateX(calc(var(--x) * -18vw)) scale(calc(.7 + var(--g) * .3 - var(--x) * .25)); opacity: calc((.25 + var(--g) * .75) * (1 - var(--x) * 1.4));
 }
 .reel-prism {
-  width: .74em; height: .74em; margin: 0 .04em; padding: 0; border: 0; background: none; border-radius: 0;
-  filter: drop-shadow(0 8px 30px rgba(255, 190, 0, .35)); transition: transform .6s var(--ease);
+  display: inline-block; width: .74em; height: .74em; margin: 0 .04em;
+  filter: drop-shadow(0 8px 30px rgba(255, 190, 0, .35));
 }
-.reel-prism:hover { transform: scale(1.08); }
 .reel-prism svg { width: 100%; height: 100%; overflow: visible; }
 .reel-prism polygon { transition: opacity .6s ease; animation: facet 3.2s ease-in-out infinite; }
 @keyframes facet { 50% { opacity: .55; } }
 .reel-cta {
   position: absolute; z-index: 2; left: 0; right: 0; top: calc(50% + clamp(70px, 9vw, 140px)); text-align: center;
-  font-size: .78rem; letter-spacing: .5em; text-transform: uppercase; color: rgba(255, 246, 218, .8); opacity: var(--g);
+  font-size: .78rem; letter-spacing: .5em; text-transform: uppercase; color: rgba(255, 246, 218, .8); opacity: calc(var(--g) - var(--x) * 2);
 }
 .reel-controls {
   position: absolute; z-index: 3; left: var(--gutter); right: var(--gutter); bottom: 28px;
-  display: flex; justify-content: space-between; align-items: center; opacity: var(--g);
+  display: flex; justify-content: space-between; align-items: center; opacity: calc(var(--g) - var(--x) * 2);
 }
 .reel-pause {
   display: inline-flex; gap: 10px; align-items: center; padding: 12px 20px; border-radius: 99px;
@@ -452,27 +465,6 @@ body.is-ready .hero-foot { opacity: 1; transform: none; }
 .reel-pause b { font-weight: 600; letter-spacing: .1em; }
 .reel-explore { display: inline-flex; gap: 14px; align-items: center; color: var(--cream); font-size: .85rem; text-shadow: 0 1px 6px #000; }
 .reel-explore i { color: var(--gold); animation: nudge 1.8s var(--ease) infinite; }
-
-/* Full-screen player */
-.reelfull { position: fixed; inset: 0; width: 100%; max-width: none; height: 100dvh; max-height: none; margin: 0; padding: 0; border: 0; background: #000; color: #fff; }
-.reelfull[open] { display: grid; place-items: center; }
-.reelfull::backdrop { background: #000; }
-.reelfull video { width: 100%; height: 100%; object-fit: contain; }
-.reelfull-bar {
-  position: absolute; left: var(--gutter); right: var(--gutter); bottom: 24px;
-  display: flex; align-items: center; gap: 20px; flex-wrap: wrap;
-}
-.reelfull-title { font-family: var(--f-display); font-size: 1.6rem; letter-spacing: .04em; }
-.reelfull-title b { color: var(--gold); font-weight: 400; }
-.reelfull-progress { flex: 1; display: flex; gap: 6px; min-width: 120px; }
-.reelfull-progress i { flex: 1; height: 3px; border-radius: 3px; background: rgba(255, 255, 255, .2); overflow: hidden; position: relative; }
-.reelfull-progress i::after { content: ''; position: absolute; inset: 0; background: var(--gold); transform-origin: 0 50%; transform: scaleX(var(--fill, 0)); }
-.reelfull-actions { display: flex; gap: 8px; }
-.reelfull-actions button {
-  min-width: 46px; height: 46px; padding: 0 16px; border-radius: 99px; border: 1px solid rgba(255, 255, 255, .25);
-  background: rgba(20, 20, 20, .7); color: #fff; font-size: .8rem; letter-spacing: .08em; text-transform: uppercase;
-}
-.reelfull-actions .reelfull-close { background: var(--gold); color: var(--black); border-color: var(--gold); font-weight: 600; }
 
 /* ─── TICKER ────────────────────────────────────────────── */
 .ticker { background: var(--gold); color: var(--black); overflow: hidden; padding: 16px 0; transform: rotate(-1.4deg) scale(1.02); margin-top: -10px; position: relative; z-index: 5; }
@@ -860,14 +852,13 @@ body.is-ready .hero-foot { opacity: 1; transform: none; }
   .poster-stage { padding: 6% 4%; }
   .mark-grid { gap: 8px; }
   .mark-grid span { border-radius: 12px; }
-  .showreel { height: 170vh; }
+  .showreel { height: 240vh; }
   .reel-col { flex-basis: 46vw; }
   .reel-col:nth-child(n+4) { display: none; }
   .reel-word { font-size: 22vw; }
   .reel-cta { top: calc(50% + 70px); font-size: .62rem; letter-spacing: .32em; }
   .reel-pause { padding: 10px 14px; font-size: .72rem; }
   .reel-explore { font-size: .74rem; }
-  .reelfull-title { font-size: 1.2rem; }
   .reels { gap: 10px; }
   .reel { border-radius: 16px; }
   .reel-tag { display: none; }

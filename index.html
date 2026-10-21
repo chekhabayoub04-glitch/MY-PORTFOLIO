@@ -40,7 +40,7 @@
   <!-- Styles -->
   <link rel="icon" href="images/batman-logo.png">
   <link rel="preload" as="image" href="images/hero/ayoub-shadow.webp">
-  <link rel="stylesheet" href="css/noir.css?v=20261021c">
+  <link rel="stylesheet" href="css/noir.css?v=20261021d">
 
   <!-- Prefetch the deep-dive pages so the jump feels instant -->
   <script type="speculationrules">
@@ -220,17 +220,18 @@
             <div class="reel-col" style="--dur:50s;--dir:normal"><figure class="reel-tile"><img src="images/opt/graphic-campaigns-cover-800.webp" alt="" loading="lazy" decoding="async"></figure><figure class="reel-tile reel-tile--site"><img src="images/sites/dr-213.webp" alt="" loading="lazy" decoding="async"></figure><figure class="reel-tile"><img src="images/opt/rozan7-800.webp" alt="" loading="lazy" decoding="async"></figure><figure class="reel-tile"><img src="images/opt/logo8-800.webp" alt="" loading="lazy" decoding="async"></figure><figure class="reel-tile reel-tile--site"><img src="images/sites/titan-gym.webp" alt="" loading="lazy" decoding="async"></figure><figure class="reel-tile"><img src="images/opt/graphic-campaigns-cover-800.webp" alt="" loading="lazy" decoding="async"></figure><figure class="reel-tile reel-tile--site"><img src="images/sites/dr-213.webp" alt="" loading="lazy" decoding="async"></figure><figure class="reel-tile"><img src="images/opt/rozan7-800.webp" alt="" loading="lazy" decoding="async"></figure><figure class="reel-tile"><img src="images/opt/logo8-800.webp" alt="" loading="lazy" decoding="async"></figure><figure class="reel-tile reel-tile--site"><img src="images/sites/titan-gym.webp" alt="" loading="lazy" decoding="async"></figure></div>
           </div>
           <div class="reel-shade" aria-hidden="true"></div>
+          <div class="reel-fold" aria-hidden="true"></div>
         </div>
 
         <h2 class="reel-word">
           <span aria-hidden="true">SH</span>
-          <button class="reel-prism" id="reelPlay" type="button" aria-label="Play the full showreel with sound" data-lens="Play">
-            <svg viewBox="0 0 100 100" id="reelPrismSvg" aria-hidden="true"></svg>
-          </button>
+          <span class="reel-prism" aria-hidden="true">
+            <svg viewBox="0 0 100 100" id="reelPrismSvg"></svg>
+          </span>
           <span aria-hidden="true">WREEL</span>
           <span class="sr-only">Showreel</span>
         </h2>
-        <p class="reel-cta" aria-hidden="true">Play full showreel</p>
+        <p class="reel-cta" aria-hidden="true">Selected work · 2023 — 2026</p>
 
         <div class="reel-controls">
           <button class="reel-pause" id="reelPause" type="button" aria-pressed="false">Pause reel <b aria-hidden="true">II</b></button>
@@ -238,19 +239,6 @@
         </div>
       </div>
     </section>
-
-    <dialog class="reelfull" id="reelFull" aria-label="Showreel player">
-      <video id="reelFullVideo" playsinline preload="none"></video>
-      <div class="reelfull-bar">
-        <span class="reelfull-title"><b id="reelFullIndex">01</b> / 04 · <span id="reelFullName">Clothing brand</span></span>
-        <div class="reelfull-progress" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
-        <div class="reelfull-actions">
-          <button type="button" id="reelFullPrev" aria-label="Previous film"><i class="fas fa-arrow-left" aria-hidden="true"></i></button>
-          <button type="button" id="reelFullNext" aria-label="Next film"><i class="fas fa-arrow-right" aria-hidden="true"></i></button>
-          <button type="button" class="reelfull-close" id="reelFullClose">Close</button>
-        </div>
-      </div>
-    </dialog>
 
     <!-- ============ ARSENAL · the work, in four chapters ============ -->
     <section class="arsenal" id="arsenal" aria-labelledby="arsenalTitle">
@@ -602,8 +590,8 @@
     }}
   </script>
   <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js" defer></script>
-  <script src="js/noir/hero-reveal.js?v=20261021c" defer></script>
-  <script type="module" src="js/noir/emblem3d.js?v=20261021c"></script>
-  <script src="js/noir/app.js?v=20261021c" defer></script>
+  <script src="js/noir/hero-reveal.js?v=20261021d" defer></script>
+  <script type="module" src="js/noir/emblem3d.js?v=20261021d"></script>
+  <script src="js/noir/app.js?v=20261021d" defer></script>
 </body>
 </html>
