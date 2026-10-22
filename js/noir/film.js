@@ -1,12 +1,17 @@
 /* ============================================================
    FILM — the cinematic hero
    The scroll scrubs Ayoub's walk-in film (frames made by
-   tools/build_film.py) and drives the layers on top of it:
-     0.06 → 0.38  PORTFOLIO, letter by letter, in gold
-     0.36 → 0.66  tools and languages fly in and orbit him
-     0.64 → 0.86  his websites slide in beside him
-     0.88 → 1     the last frame (his smile), the name and the way in
-   No frames yet → the portrait stands in and steps into the light.
+   tools/build_film.py) and drives the layers on top of it.
+   With the film (cues match the clip: the gold PORTFOLIO neon
+   lights at ~33%, the glasses come off at ~70%, the smile ends it):
+     0.06 → 0.33  tools and languages fly in and orbit him,
+                  then scatter as the neon lights up
+     0.38 → 0.66  his websites slide in beside him
+     0.88 → 1     the smile, the name and the way in
+   Without frames the portrait stands in, and our own gold
+   PORTFOLIO title plays the neon's part (STILL timeline).
+   A vertical clip on a wide screen becomes a tall centre panel
+   over a blurred, ambient copy of itself (.is-panel).
 ============================================================ */
 (() => {
   const film = document.getElementById('top');
@@ -16,27 +21,34 @@
   const ease = t => 1 - Math.pow(1 - t, 3);
   const span = (p, a, b) => ease(clamp((p - a) / (b - a)));
 
-  const sticky = film.querySelector('.film-sticky');
   const canvas = document.getElementById('filmCanvas');
   const ctx = canvas.getContext('2d');
+  const ambient = document.getElementById('filmAmbient');
+  const actx = ambient.getContext('2d');
   const letters = $$('.film-title span');
   const title = film.querySelector('.film-title');
   const tools = $$('.film-tools li');
   const sites = $$('.film-site');
   const caption = document.getElementById('filmCaption');
+  const timecode = document.getElementById('filmTime');
   const small = () => innerWidth <= 820;
 
+  const STILL = { tools: [.36, .58], cap: [.42, .58], sites: [.64, .8], end: .88 };
+  const FILM = { tools: [.06, .28], cap: [.1, .27], sites: [.38, .6], end: .88 };
+  let T = STILL;
+
   // ── Frames ────────────────────────────────────────────────
-  let frames = [], current = -1, wanted = 0;
+  let frames = [], meta = null, current = -1, wanted = 0, shown = 0, gliding = 0;
   fetch('images/film/film.json', { cache: 'no-cache' })
     .then(r => (r.ok ? r.json() : Promise.reject()))
-    .then(meta => {
+    .then(m => {
+      meta = m;
       const set = small() && innerHeight > innerWidth ? 'mobile' : 'desktop';
-      frames = Array.from({ length: meta.frames }, () => null);
+      frames = Array.from({ length: m.frames }, () => null);
       // Load the first frame, then a coarse pass, then fill the gaps: scrubbing works early
       const order = [];
-      for (const step of [Math.ceil(meta.frames / 8), 4, 1])
-        for (let i = 0; i < meta.frames; i += step) if (!order.includes(i)) order.push(i);
+      for (const step of [Math.ceil(m.frames / 8), 4, 1])
+        for (let i = 0; i < m.frames; i += step) if (!order.includes(i)) order.push(i);
       let next = 0;
       const pump = () => {
         if (next >= order.length) return;
@@ -44,7 +56,7 @@
         img.decoding = 'async';
         img.onload = () => {
           frames[i] = img;
-          if (i === 0) { film.classList.add('has-frames'); size(); }
+          if (i === 0) { T = FILM; film.classList.add('has-frames'); layout(); update(); }
           current = -1; draw();
           pump();
         };
@@ -56,19 +68,24 @@
     .catch(() => {});   // no film yet: the stand-in portrait stays
 
   function size() {
+    // A vertical film on a wide screen stands as a tall panel in the middle
+    const panel = !!meta?.portrait && innerWidth / innerHeight > .8;
+    film.classList.toggle('is-panel', panel);
     const dpr = Math.min(devicePixelRatio || 1, 2);
-    canvas.width = Math.round(sticky.clientWidth * dpr);
-    canvas.height = Math.round(sticky.clientHeight * dpr);
+    canvas.width = Math.round(canvas.clientWidth * dpr);
+    canvas.height = Math.round(canvas.clientHeight * dpr);
+    ambient.width = 48; ambient.height = 27;
     current = -1; draw();
   }
   function draw() {
     if (!frames.length) return;
-    // nearest loaded frame to the one the scroll asks for
-    let i = wanted, d = 0;
+    // nearest loaded frame to the one we want to show
+    const target = Math.round(shown);
+    let i = target, d = 0;
     while (!frames[i]) {
       d++;
-      if (frames[wanted - d]) { i = wanted - d; break; }
-      if (frames[wanted + d]) { i = wanted + d; break; }
+      if (frames[target - d]) { i = target - d; break; }
+      if (frames[target + d]) { i = target + d; break; }
       if (d > frames.length) return;
     }
     if (i === current) return;
@@ -77,6 +94,21 @@
     const s = Math.max(cw / img.width, ch / img.height);
     const w = img.width * s, h = img.height * s;
     ctx.drawImage(img, (cw - w) / 2, (ch - h) * .35, w, h);
+    if (film.classList.contains('is-panel')) {
+      const a = Math.max(48 / img.width, 27 / img.height);
+      actx.drawImage(img, (48 - img.width * a) / 2, (27 - img.height * a) / 2, img.width * a, img.height * a);
+    }
+    if (meta) {
+      const t = i / Math.max(1, frames.length - 1) * meta.duration;
+      timecode.textContent = `00:${String(Math.floor(t)).padStart(2, '0')}:${String(Math.floor((t % 1) * 24)).padStart(2, '0')}`;
+    }
+  }
+  // The film eases towards the scroll position instead of jumping: it glides
+  function glide() {
+    shown += (wanted - shown) * .22;
+    if (Math.abs(wanted - shown) < .3) shown = wanted;
+    draw();
+    gliding = shown !== wanted ? requestAnimationFrame(glide) : 0;
   }
 
   // ── Orbit layout for the tools ────────────────────────────
@@ -107,17 +139,18 @@
     const set = (el, k, v) => el.style.setProperty(k, typeof v === 'number' ? v.toFixed(4) : v);
 
     set(film, '--p', p);
-    set(film, '--intro', 1 - span(p, 0, .06));
+    set(film, '--intro', 1 - span(p, 0, .05));
     set(film, '--lit', span(p, .8, .95));
 
     letters.forEach((l, i) => set(l, '--k', span(p, .06 + i * .012, .14 + i * .012)));
     set(title, '--out', span(p, .3, .38));
 
-    const turn = (p - .5) * .5;   // both arcs drift, mirrored, while on screen
+    const [ti, to] = T.tools;
+    const turn = (p - (ti + to) / 2) * .5;   // both arcs drift, mirrored, while on screen
     tools.forEach((li, i) => {
       const { a, rx, ry, dir } = orbit[i];
-      const tin = span(p, .36 + i * .006, .44 + i * .006);
-      const tout = span(p, .58 + i * .003, .66);
+      const tin = span(p, ti + i * .005, ti + .08 + i * .005);
+      const tout = span(p, to + i * .002, to + .06);
       const ang = a + turn * dir;
       const reach = 1 + (1 - tin) * 1.6 + tout * .9;
       const x = Math.cos(ang) * rx * reach, y = Math.sin(ang) * ry * reach;
@@ -125,11 +158,12 @@
       li.style.transform = `translate3d(${x.toFixed(1)}px, ${y.toFixed(1)}px, ${z.toFixed(1)}px)`;
       li.style.opacity = (tin * (1 - tout)).toFixed(3);
     });
-    set(caption, '--cap', span(p, .42, .48) * (1 - span(p, .58, .63)));
+    set(caption, '--cap', span(p, T.cap[0], T.cap[0] + .06) * (1 - span(p, T.cap[1], T.cap[1] + .05)));
 
+    const [si, so] = T.sites;
     sites.forEach((el, j) => {
-      const tin = span(p, .64 + j * .03, .71 + j * .03);
-      const tout = span(p, .8, .86);
+      const tin = span(p, si + j * .03, si + .07 + j * .03);
+      const tout = span(p, so, so + .06);
       const side = j === 0 ? -1 : 1;
       const lift = small() ? 0 : (j === 2 ? 34 : j === 1 ? -40 : 0);
       const x = side * ((1 - tin) * 70 + tout * 40);
@@ -137,13 +171,13 @@
       el.style.opacity = (tin * (1 - tout)).toFixed(3);
     });
 
-    const end = span(p, .88, .95);
+    const end = span(p, T.end, T.end + .07);
     set(film, '--end', end);
     film.classList.toggle('is-end', end > .5);
 
     if (frames.length) {
-      wanted = Math.round(p * (frames.length - 1));
-      draw();
+      wanted = p * (frames.length - 1);
+      if (!gliding) gliding = requestAnimationFrame(glide);
     }
   }
   const onScroll = () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } };

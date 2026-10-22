@@ -39,7 +39,7 @@
 
   <!-- Styles -->
   <link rel="icon" href="images/batman-logo.png">
-  <link rel="stylesheet" href="css/noir.css?v=20261022a">
+  <link rel="stylesheet" href="css/noir.css?v=20261022b">
 
   <!-- Prefetch the deep-dive pages so the jump feels instant -->
   <script type="speculationrules">
@@ -105,6 +105,7 @@
     <!-- ============ FILM · the cinematic hero (scroll scrubs the film) ============ -->
     <section class="film" id="top" aria-label="Introduction">
       <div class="film-sticky">
+        <canvas class="film-ambient" id="filmAmbient" aria-hidden="true"></canvas>
         <canvas class="film-canvas" id="filmCanvas" aria-hidden="true"></canvas>
         <!-- Stand-in until videos/film/ has a clip (see videos/film/README.md) -->
         <div class="film-still" aria-hidden="true">
@@ -112,6 +113,12 @@
           <img class="is-light" src="images/hero/ayoub-cutout.webp" alt="" width="1142" height="1148">
         </div>
         <div class="film-vignette" aria-hidden="true"></div>
+        <div class="film-grain" aria-hidden="true"></div>
+        <div class="film-bars" aria-hidden="true"></div>
+        <div class="film-hud" aria-hidden="true">
+          <span><i></i>Ayoub Chekhab · Portfolio 2026</span>
+          <span>SC.01 — <b id="filmTime">00:00:00</b></span>
+        </div>
 
         <p class="film-kicker"><i></i>Ayoub Chekhab · Algiers</p>
 
@@ -565,7 +572,7 @@
 
   <!-- Scripts -->
   <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js" defer></script>
-  <script src="js/noir/film.js?v=20261022a" defer></script>
-  <script src="js/noir/app.js?v=20261022a" defer></script>
+  <script src="js/noir/film.js?v=20261022b" defer></script>
+  <script src="js/noir/app.js?v=20261022b" defer></script>
 </body>
 </html>
