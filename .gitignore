@@ -4,4 +4,5 @@
 
 .venv-tools/
 images/sites/raw/
-.claude/
+.claude/*
+!.claude/skills/
