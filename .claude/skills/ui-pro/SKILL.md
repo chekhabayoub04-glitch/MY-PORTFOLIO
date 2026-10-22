@@ -24,7 +24,7 @@ Run all commands from the project root.
 
 1. Check whether `mcp__21st__*` tools are in your tool list (load them with ToolSearch `+21st`).
    - Available → use the full workflow below.
-   - Not available or failing → continue with ui-ux-pro-max only, and tell the user in one line that 21st is offline and why (the network does not allow `21st.dev`, or `API_KEY_21ST` is not set). Never invent 21st results.
+   - Not available or failing → continue with ui-ux-pro-max only, and tell the user in one line that 21st is offline and why (the network does not allow `21st.dev`, or the `x-api-key` network secret for `21st.dev` is missing in the environment settings). Never invent 21st results.
 
 ## Pick the mode
 
