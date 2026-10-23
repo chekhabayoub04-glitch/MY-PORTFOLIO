@@ -162,11 +162,13 @@
 
     const [si, so] = T.sites;
     sites.forEach((el, j) => {
-      const tin = span(p, si + j * .03, si + .07 + j * .03);
+      const tin = span(p, si + j * .025, si + .07 + j * .025);
       const tout = span(p, so, so + .06);
-      // two per side: top pair first, then the lower pair
-      const side = j % 2 ? 1 : -1, low = j > 1;
-      const lift = small() ? 0 : (low ? 34 : -40);
+      // alternate sides, then fan each side's cards from top to bottom
+      const side = j % 2 ? 1 : -1, k = j >> 1;
+      const n = side < 0 ? Math.ceil(sites.length / 2) : sites.length >> 1;
+      const low = k > 0 && k === n - 1;
+      const lift = small() || n < 2 ? 0 : (n > 2 ? -74 + k * 67 : low ? 34 : -40);
       const x = side * ((1 - tin) * 70 + tout * 40);
       el.style.transform = `translate(${x.toFixed(2)}vw, ${small() ? `${(j * -9).toFixed(0)}%` : `calc(-50% + ${lift}%)`}) rotate(${(side * (1 - tin) * 8 + side * (low ? 4 : -3)).toFixed(2)}deg)`;
       el.style.opacity = (tin * (1 - tout)).toFixed(3);

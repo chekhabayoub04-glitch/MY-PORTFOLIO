@@ -350,6 +350,7 @@ body.has-lens .lens, body.has-lens .lens-bead { opacity: 1; }
 .film-site:nth-child(2) { right: 5%; }
 .film-site:nth-child(3) { left: 9%; }
 .film-site:nth-child(4) { right: 9%; }
+.film-site:nth-child(5) { left: 3%; }
 
 /* The last shot: his smile, and the way in */
 .film-end {
@@ -711,6 +712,7 @@ body.has-lens .lens, body.has-lens .lens-bead { opacity: 1; }
   .film-site:nth-child(2) { right: 3%; }
   .film-site:nth-child(3) { left: 12%; }
   .film-site:nth-child(4) { right: 12%; }
+  .film-site:nth-child(5) { left: 19%; }
   .film-end { flex-direction: column; align-items: flex-start; gap: 16px; }
   .film-end h1 { font-size: 3.3rem; }
   .film-end h1 em { font-size: .5em; margin-top: 4px; }
