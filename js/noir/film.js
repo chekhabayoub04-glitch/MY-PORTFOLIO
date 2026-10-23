@@ -164,10 +164,11 @@
     sites.forEach((el, j) => {
       const tin = span(p, si + j * .03, si + .07 + j * .03);
       const tout = span(p, so, so + .06);
-      const side = j === 0 ? -1 : 1;
-      const lift = small() ? 0 : (j === 2 ? 34 : j === 1 ? -40 : 0);
+      // two per side: top pair first, then the lower pair
+      const side = j % 2 ? 1 : -1, low = j > 1;
+      const lift = small() ? 0 : (low ? 34 : -40);
       const x = side * ((1 - tin) * 70 + tout * 40);
-      el.style.transform = `translate(${x.toFixed(2)}vw, ${small() ? `${(j * -9).toFixed(0)}%` : `calc(-50% + ${lift}%)`}) rotate(${(side * (1 - tin) * 8 + side * (j === 2 ? 4 : -3)).toFixed(2)}deg)`;
+      el.style.transform = `translate(${x.toFixed(2)}vw, ${small() ? `${(j * -9).toFixed(0)}%` : `calc(-50% + ${lift}%)`}) rotate(${(side * (1 - tin) * 8 + side * (low ? 4 : -3)).toFixed(2)}deg)`;
       el.style.opacity = (tin * (1 - tout)).toFixed(3);
     });
 
