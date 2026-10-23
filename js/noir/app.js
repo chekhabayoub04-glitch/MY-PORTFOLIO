@@ -1,10 +1,9 @@
 /* ============================================================
    SHADOW & LIGHT — app.js
    1. Ignition (preloader)   6. Spotlight surfaces
-   2. Lens (cursor)          7. Case Files (pinned scroll)
-   3. Nav & drawer           8. Counters & rise-in
-   4. Hero scroll            9. Signal beam & form
-   5. Manifesto words
+   2. Lens (cursor)          8. Counters & rise-in
+   3. Nav & drawer           9. Signal beam & form
+   The cinematic hero lives in film.js.
 ============================================================ */
 (() => {
   const $ = (s, root = document) => root.querySelector(s);
@@ -92,43 +91,10 @@
         b.el.style.setProperty('--y', `${b.y}px`);
         px = b.x; py = b.y;
       });
-      lens.classList.toggle('on-gold', body.classList.contains('is-day'));
     })();
   }
 
-  // ── 2b. SHOWREEL ───────────────────────────────────────────
-  const reel = $('#reel');
-  const reelWall = $('#reelWall');
-  // Wall films load and play only while the reel is on screen
-  const wallVideos = $$('video[data-src]', reelWall);
-  let reelVisible = false, reelPaused = false;
-  function syncWall() {
-    wallVideos.forEach(v => {
-      if (reelVisible && !reelPaused) {
-        if (!v.src) v.src = v.dataset.src;
-        v.play().catch(() => {});
-      } else v.pause();
-    });
-  }
-  // Wall images: the tilted wall fools native lazy-loading, so load them all once the reel is near
-  const wallImages = $$('img[data-src]', reelWall);
-  const preload = new IntersectionObserver(([e]) => {
-    if (!e.isIntersecting) return;
-    wallImages.forEach(img => { img.src = img.dataset.src; });
-    preload.disconnect();
-  }, { rootMargin: '1200px 0px' });
-  preload.observe(reel);
-  new IntersectionObserver(([e]) => { reelVisible = e.isIntersecting; syncWall(); }, { rootMargin: '200px' }).observe(reel);
-  $('#reelPause').addEventListener('click', e => {
-    reelPaused = !reelPaused;
-    reel.classList.toggle('is-paused', reelPaused);
-    e.currentTarget.setAttribute('aria-pressed', String(reelPaused));
-    e.currentTarget.innerHTML = reelPaused ? 'Play reel <b aria-hidden="true">▷</b>' : 'Pause reel <b aria-hidden="true">II</b>';
-    syncWall();
-  });
-
   // ── 3. NAV & DRAWER ────────────────────────────────────────
-  const nav = $('#nav');
   const burger = $('#burger');
   const drawer = $('#drawer');
 
@@ -144,24 +110,6 @@
   burger.addEventListener('click', () => setDrawer(burger.getAttribute('aria-expanded') !== 'true'));
   $$('a', drawer).forEach(a => a.addEventListener('click', () => setDrawer(false)));
   addEventListener('keydown', e => { if (e.key === 'Escape' && !drawer.hidden) setDrawer(false); });
-
-  // ── 4. HERO SCROLL ─────────────────────────────────────────
-  const heroSection = $('#top');
-  const heroStage = $('#heroStage');
-  const heroNight = $('#heroNight');
-  const heroBeam = $('#heroBeam');
-  const nightItems = $$('.night-list li');
-
-  // ── 5. MANIFESTO WORDS ─────────────────────────────────────
-  const manifesto = $('[data-words]');
-  const goldWords = new Set(['attention.', 'switched', 'on', 'look', 'away']);
-  manifesto.innerHTML = manifesto.textContent.trim().split(/\s+/)
-    .map(w => `<span class="w${goldWords.has(w) ? ' is-gold-word' : ''}">${w}</span>`).join(' ');
-  const words = $$('.w', manifesto);
-
-  // Responsive WebP copies made by tools/optimize_images.py
-  const opt = (src, w) => `images/opt/${src.split('/').pop().replace(/\.[^.]+$/, '').toLowerCase().replace(/[^a-z0-9]+/g, '-')}-${w}.webp`;
-  const esc = s => s.replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 
   // ── 6b. ARSENAL · chapters ─────────────────────────────────
   // Stacked cards: the card being covered shrinks and dims (--cover 0→1)
@@ -229,154 +177,12 @@
     });
   });
 
-  // ── 7. CASE FILES ──────────────────────────────────────────
-  const cases = [
-    { type: 'Website', title: 'Titan Gym', cat: 'Fitness', text: 'Bold digital presence for a modern training space.', img: 'images/titangym.jpg', url: 'https://chekhabayoub04-glitch.github.io/titan-gym/', external: true },
-    { type: 'Campaign', title: 'Souq Al Sayarat', cat: 'Automotive', text: 'A desert-toned story inviting customers to book a test drive.', img: 'images/april4.png', url: 'graphic-design.html' },
-    { type: 'Website', title: 'Dr. Badis Clinic', cat: 'Healthcare', text: 'A welcoming clinic experience built around patient trust.', img: 'images/project-drbadis.jpg', url: 'https://chekhabayoub11-ops.github.io/dr.badis/', external: true },
-    { type: 'Campaign', title: 'Scent in Check', cat: 'Beauty & Product', text: 'A dramatic fragrance concept of contrast, texture and reflection.', img: 'images/rozan6.jpg', url: 'graphic-design.html' },
-    { type: 'AI Film', title: 'Car Brand Film', cat: 'Automotive', text: 'An atmospheric automotive identity, in motion.', img: 'videos/posters/04-car-brand.png', video: 'videos/brand-identity/04-car-brand.m4v', url: 'ai-videos.html' },
-    { type: 'Website', title: 'Saïda Real Estate', cat: 'Architecture', text: 'An architectural project told as a polished promotional story.', img: 'images/Modern promotional website.jpg', url: 'https://chekhabayoub04-glitch.github.io/new-vession-promition-/', external: true },
-    { type: 'Brand Mark', title: 'Strength & Form', cat: 'Fitness', text: 'A bold emblem built around power, motion and athletic character.', img: 'images/logo3.jpg', url: 'logo-design.html' },
-    { type: 'Graphic', title: 'Automotive System', cat: 'Black & Gold', text: 'A coordinated campaign in a striking black and yellow palette.', img: 'images/graphic4.jpg', url: 'graphic-design.html' },
-    { type: 'AI Film', title: 'Clothing Brand Film', cat: 'Fashion', text: 'A cinematic fashion identity, in motion.', img: 'videos/posters/01-clothing-brand.png', video: 'videos/brand-identity/01-clothing-brand.m4v', url: 'ai-videos.html' }
-  ];
-  const track = $('#caseTrack');
-  track.innerHTML = cases.map((c, i) => `
-    <li class="case">
-      <a href="${esc(c.url)}" data-tilt data-lens="${c.video ? 'Play' : c.external ? 'Live' : 'Open'}"${c.external ? ' target="_blank" rel="noopener noreferrer"' : ''}>
-        <div class="case-media">
-          <span class="case-type">${esc(c.type)}</span>
-          <img src="${opt(c.img, 800)}" srcset="${opt(c.img, 800)} 800w, ${opt(c.img, 1600)} 1600w" sizes="(max-width: 820px) 80vw, 26vw" alt="${esc(c.title)}" loading="lazy" decoding="async">
-          ${c.video ? `<video src="${esc(c.video)}" muted loop playsinline preload="none" aria-hidden="true"></video>` : ''}
-          <span class="case-index">${String(i + 1).padStart(2, '0')}</span>
-        </div>
-        <span class="case-cat">${esc(c.cat)}</span>
-        <h3>${esc(c.title)}</h3>
-        <p>${esc(c.text)}</p>
-      </a>
-    </li>`).join('') + `
-    <li class="case case--archive">
-      <a href="graphic-design.html" data-lens="Enter">
-        <div class="case-media">
-          <svg class="bat" viewBox="0 0 200 100" aria-hidden="true"><use href="#bat"/></svg>
-          <strong>The full<br>archive</strong>
-          <span>Web Experiences <i class="fas fa-arrow-right" aria-hidden="true"></i></span>
-          <span>Campaign Visuals <i class="fas fa-arrow-right" aria-hidden="true"></i></span>
-          <span>Brand Marks <i class="fas fa-arrow-right" aria-hidden="true"></i></span>
-          <span>AI Brand Films <i class="fas fa-arrow-right" aria-hidden="true"></i></span>
-        </div>
-        <span class="case-cat">40+ files</span>
-        <h3>Open the vault</h3>
-        <p>Every project, filterable by discipline.</p>
-      </a>
-    </li>`;
-
-  const caseSection = $('#case-files');
-  const caseViewport = $('#caseViewport');
-  const caseBar = $('#caseBar');
-  const pinQuery = matchMedia('(min-width: 1101px) and (hover: hover)');
-  let pinDistance = 0;
-
-  function layoutCases() {
-    const pinned = pinQuery.matches && !reducedMotion;
-    caseSection.classList.toggle('is-pinned', pinned);
-    if (!pinned) { caseSection.style.removeProperty('--pin-h'); track.style.removeProperty('--tx'); return; }
-    pinDistance = Math.max(0, track.scrollWidth - caseViewport.clientWidth);
-    caseSection.style.setProperty('--pin-h', `${innerHeight + pinDistance}px`);
-  }
-  layoutCases();
-  pinQuery.addEventListener('change', layoutCases);
-  addEventListener('resize', layoutCases, { passive: true });
-  addEventListener('load', layoutCases, { once: true });
-  // Slide bend: card edges bow in proportion to how fast the archive moves
-  let lastPos = null, bend = 0, bendLoop = 0;
-  function curve(amp) {
-    const top = [], bottom = [];
-    for (let i = 0; i <= 12; i++) {
-      const x = i / 12, d = amp * (1 - (2 * x - 1) ** 2);
-      top.push(`${(x * 100).toFixed(1)}% ${Math.max(0, d).toFixed(1)}px`);
-      bottom.unshift(`${(x * 100).toFixed(1)}% calc(100% - ${Math.max(0, -d).toFixed(1)}px)`);
-    }
-    return `polygon(${top.join(',')},${bottom.join(',')})`;
-  }
-  function bendBy(pos) {
-    if (reducedMotion) return;
-    if (lastPos !== null) bend += (clamp((pos - lastPos) * .35, -34, 34) - bend) * .5;
-    lastPos = pos;
-    if (!bendLoop) bendLoop = requestAnimationFrame(function relax() {
-      bend *= .86;
-      const on = Math.abs(bend) > .4;
-      track.classList.toggle('is-bending', on);
-      if (on) track.style.setProperty('--curve', curve(bend));
-      bendLoop = on ? requestAnimationFrame(relax) : 0;
-    });
-  }
-  caseViewport.addEventListener('scroll', () => {
-    if (!caseSection.classList.contains('is-pinned')) bendBy(-caseViewport.scrollLeft);
-    const max = caseViewport.scrollWidth - caseViewport.clientWidth;
-    caseBar.style.transform = `scaleX(${max ? caseViewport.scrollLeft / max : 0})`;
-  }, { passive: true });
-
-  const reelEmblem = $('.reel-emblem');
-
-  // ── Scroll loop (hero, manifesto, showreel, case pin) ────────
+  // ── Scroll loop ────────────────────────────────────────────
   let ticking = false;
   function onScroll() {
     if (ticking) return;
     ticking = true;
-    requestAnimationFrame(() => {
-      ticking = false;
-      const vh = innerHeight;
-
-      // Hero timeline: day → light beam wipe → night scene with services
-      const hp = clamp(scrollY / Math.max(1, heroSection.offsetHeight - vh));
-      const ease = t => t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
-      const b = ease(clamp((hp - .06) / .42));
-      const n = clamp((hp - .4) / .34);
-      const slope = innerWidth <= 820 ? .40 : .22;
-      heroStage.style.setProperty('--p', (reducedMotion ? 0 : hp).toFixed(4));
-      heroStage.dataset.covered = b >= 1 ? '1' : '';
-      heroNight.style.setProperty('--wipe', (-30 + b * (130 + slope * 100)).toFixed(2));
-      heroNight.style.setProperty('--n', n.toFixed(3));
-      heroBeam.style.setProperty('--wipe', (-30 + b * (130 + slope * 100)).toFixed(2));
-      heroBeam.style.setProperty('--beam', Math.min(1, Math.sin(b * Math.PI) * 3).toFixed(3));
-      heroBeam.style.setProperty('--skew', `${-Math.atan(slope * innerWidth / vh) * 180 / Math.PI}deg`);
-      heroSection.style.setProperty('--p', hp.toFixed(4));
-      nightItems.forEach((li, i) => li.classList.toggle('is-on', n > .12 + i * .14));
-
-      const day = scrollY < heroSection.offsetHeight - vh * .5 && b < .3;
-      body.classList.toggle('is-day', day);
-      nav.classList.toggle('is-night', !day);
-
-      const mr = manifesto.getBoundingClientRect();
-      const mp = clamp((vh * .82 - mr.top) / (mr.height + vh * .3));
-      const lit = Math.round(mp * words.length);
-      words.forEach((w, i) => {
-        w.classList.toggle('is-lit', i < lit);
-        w.classList.toggle('is-gold', i < lit && w.classList.contains('is-gold-word'));
-      });
-
-      coverStacks();
-
-      // Showreel: grow to full bleed (--g), hold, then turn away like a page (--x)
-      const rr = reel.getBoundingClientRect();
-      const span = Math.max(1, rr.height - vh), pos = -rr.top;
-      const rg = clamp(pos / (span * .45));
-      const rx = clamp((pos - span * .6) / (span * .4));
-      reel.style.setProperty('--g', (reducedMotion ? 1 : rg).toFixed(4));
-      reel.style.setProperty('--x', (reducedMotion ? 0 : rx * rx * (3 - 2 * rx)).toFixed(4));
-      reelEmblem.dataset.progress = clamp(pos / span).toFixed(4);
-
-
-      if (caseSection.classList.contains('is-pinned')) {
-        const r = caseSection.getBoundingClientRect();
-        const cp = clamp(-r.top / (r.height - vh));
-        track.style.setProperty('--tx', `${-cp * pinDistance}px`);
-        bendBy(-cp * pinDistance);
-        caseBar.style.transform = `scaleX(${cp})`;
-      }
-    });
+    requestAnimationFrame(() => { ticking = false; coverStacks(); });
   }
   addEventListener('scroll', onScroll, { passive: true });
   addEventListener('resize', onScroll, { passive: true });
@@ -393,7 +199,7 @@
 
   // 3D tilt + glare: pointer position → rotateX/Y, smoothed by CSS transition
   if (finePointer && !reducedMotion) {
-    $$('.step, .origin-card').forEach(el => el.classList.add('tilt-body'));
+    $$('.origin-card').forEach(el => el.classList.add('tilt-body'));
     const MAX = 9;
     document.addEventListener('pointermove', e => {
       const el = e.target.closest?.('[data-tilt]');
@@ -415,16 +221,8 @@
     });
   }
 
-  // Hover-to-play films (Arsenal + Case Files)
-  $$('.gadget, .case').forEach(card => {
-    const video = $('video', card);
-    if (!video || !finePointer) return;
-    card.addEventListener('pointerenter', () => { video.play().then(() => card.classList.add('is-playing')).catch(() => {}); });
-    card.addEventListener('pointerleave', () => { video.pause(); card.classList.remove('is-playing'); });
-  });
-
   // ── 8. COUNTERS & RISE-IN ──────────────────────────────────
-  $$('.section-head, .gadget, .intel-cell, .signal-copy, .signal-form, .manifesto-sign').forEach(el => el.classList.add('rise'));
+  $$('.section-head, .service, .intel-cell, .toolkit, .signal-copy, .signal-form').forEach(el => el.classList.add('rise'));
 
   const io = new IntersectionObserver(entries => entries.forEach(entry => {
     if (!entry.isIntersecting) return;

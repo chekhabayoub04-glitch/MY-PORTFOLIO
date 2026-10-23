@@ -6,3 +6,9 @@
 images/sites/raw/
 .claude/*
 !.claude/skills/
+
+# hero film source clips (frames in images/film/ are published instead)
+videos/film/*.mp4
+videos/film/*.mov
+videos/film/*.m4v
+videos/film/*.webm
