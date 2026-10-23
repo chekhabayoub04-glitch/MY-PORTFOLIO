@@ -2,6 +2,7 @@
 # Installs the ui-pro and ui-ux-pro-max skills for every project on this computer
 # and registers the 21st.dev MCP server with your API key.
 # Run: bash <(curl -fsSL https://raw.githubusercontent.com/chekhabayoub04-glitch/MY-PORTFOLIO/main/.claude/skills/ui-pro/install.sh)
+# Add --new-key to replace a saved key.
 set -euo pipefail
 
 REPO=https://github.com/chekhabayoub04-glitch/MY-PORTFOLIO.git
@@ -20,8 +21,11 @@ echo "    Installed to ~/.claude/skills/ui-pro and ~/.claude/skills/ui-ux-pro-ma
 echo "2/3 21st.dev API key"
 rc=~/.zshrc
 touch "$rc"
-# Reuse a key saved by an earlier run instead of asking again.
-KEY=$(sed -n 's/^export API_KEY_21ST="\(.*\)"$/\1/p' "$rc" | tail -1)
+# Reuse a key saved by an earlier run unless --new-key is passed.
+KEY=""
+if [[ ${1:-} != --new-key ]]; then
+  KEY=$(sed -n 's/^export API_KEY_21ST="\(.*\)"$/\1/p' "$rc" | tail -1)
+fi
 if [[ -n $KEY ]]; then
   echo "    Using the key already saved in $rc"
 else
@@ -29,10 +33,15 @@ else
   read -rs KEY </dev/tty
   echo
 fi
-if [[ $KEY != 21st_sk_* ]]; then
-  echo "    The key must start with 21st_sk_. Copy it from https://21st.dev/settings/security and run again."
+# Drop spaces, line breaks and other stray characters picked up while pasting.
+KEY=$(printf %s "$KEY" | LC_ALL=C tr -cd 'A-Za-z0-9_')
+if [[ ! $KEY =~ ^21st_sk_[A-Za-z0-9]{20,}$ ]] || [[ ${KEY:8} == *21st_sk_* ]]; then
+  echo "    That does not look like one 21st key (got ${#KEY} characters)."
+  echo "    Copy it with the copy icon at https://21st.dev/settings/security, paste it once, and run:"
+  echo "      bash <(curl -fsSL <this installer URL>) --new-key"
   exit 1
 fi
+echo "    Key looks valid: ${#KEY} characters, ends with ...${KEY: -4}"
 
 # Keep the key in the shell profile so project .mcp.json files can read API_KEY_21ST.
 grep -v '^export API_KEY_21ST=' "$rc" > "$tmp/rc" || true
