@@ -43,7 +43,7 @@
     .then(r => (r.ok ? r.json() : Promise.reject()))
     .then(m => {
       meta = m;
-      const set = small() && innerHeight > innerWidth ? 'mobile' : 'desktop';
+      const set = m.sets?.[small() && innerHeight > innerWidth ? 'mobile' : 'desktop'] || 'desktop';
       frames = Array.from({ length: m.frames }, () => null);
       // Load the first frame, then a coarse pass, then fill the gaps: scrubbing works early
       const order = [];
@@ -71,7 +71,7 @@
     // A vertical film on a wide screen stands as a tall panel in the middle
     const panel = !!meta?.portrait && innerWidth / innerHeight > .8;
     film.classList.toggle('is-panel', panel);
-    const dpr = Math.min(devicePixelRatio || 1, 2);
+    const dpr = Math.min(devicePixelRatio || 1, 3);   // phones at 3× keep the HD frames crisp
     canvas.width = Math.round(canvas.clientWidth * dpr);
     canvas.height = Math.round(canvas.clientHeight * dpr);
     ambient.width = 48; ambient.height = 27;

@@ -3,6 +3,12 @@ Hero film builder: turns Ayoub's walk-in video into scroll-scrubbed frames.
 
 Drop the edited video in videos/film/ (any of .mp4 .mov .m4v .webm), then run:
   .venv-tools/bin/python tools/build_film.py [--frames 120] [--focus 0.5]
+                                             [--upscale path/to/realesrgan-ncnn-vulkan]
+
+--upscale runs every frame through Real-ESRGAN (realesrgan-x4plus, models in a
+models/ folder next to the binary; ~40 s a frame on an M1) and writes one sharp
+1080×1920 "hd" set that phones and desktops share. Use it when the clip is
+below 1080p; a 4K clip doesn't need it.
 
 A landscape clip becomes images/film/desktop/NNN.webp (16:9) and
 images/film/mobile/NNN.webp (9:16), centre-cropped around --focus
@@ -26,6 +32,7 @@ SRC_DIR = ROOT / "videos/film"
 OUT = ROOT / "images/film"
 LANDSCAPE = {"desktop": (1280, 720, 70), "mobile": (540, 960, 68)}   # width, height, webp quality
 PORTRAIT = {"desktop": (720, 1280, 72), "mobile": (540, 960, 68)}
+HD = {"hd": (1080, 1920, 82)}   # upscaled vertical clip, one set for every screen
 
 
 def find_source() -> Path:
@@ -47,6 +54,7 @@ def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--frames", type=int, default=0, help="default: every frame, up to 240")
     ap.add_argument("--focus", type=float, default=.5)
+    ap.add_argument("--upscale", type=Path, help="realesrgan-ncnn-vulkan binary")
     args = ap.parse_args()
 
     src = find_source()
@@ -63,6 +71,15 @@ def main() -> None:
         first = Image.open(stills[0])
         portrait = first.height > first.width
         targets = PORTRAIT if portrait else LANDSCAPE
+        if args.upscale:
+            big = Path(tmp) / "x4"
+            big.mkdir()
+            print(f"Upscaling {len(stills)} frames with Real-ESRGAN…")
+            subprocess.run([str(args.upscale), "-i", tmp, "-o", str(big), "-n", "realesrgan-x4plus",
+                            "-m", str(args.upscale.parent / "models"), "-f", "png"],
+                           check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+            stills = sorted(big.glob("*.png"))
+            targets = HD if portrait else {"desktop": (1920, 1080, 82), "mobile": (1080, 1920, 82)}
         if OUT.exists():
             shutil.rmtree(OUT)
         for name, (w, h, q) in targets.items():
@@ -77,6 +94,7 @@ def main() -> None:
         "frames": len(stills),
         "duration": round(duration, 2),
         "portrait": portrait,
+        "sets": {"desktop": "hd", "mobile": "hd"} if "hd" in targets else {"desktop": "desktop", "mobile": "mobile"},
     }))
     print("✓ images/film/film.json — bump ?v= in index.html and deploy")
 
