@@ -42,7 +42,7 @@ The search script lives inside this skill's own directory, not the project direc
 python ".claude/skills/ui-ux-pro-max/scripts/search.py" "<query>" --domain <domain>
 ```
 
-If `python` is not found, try `python3`, then `py -3`. Requires Python 3.x, no external dependencies (see README for install instructions if Python is missing).
+If `python` is not found, try `python3`, then `py -3`. If the skill is installed globally instead of in the project, replace `.claude/skills/ui-ux-pro-max/` with `~/.claude/skills/ui-ux-pro-max/` in every command. Requires Python 3.x, no external dependencies (see README for install instructions if Python is missing).
 
 ## Workflow
 
