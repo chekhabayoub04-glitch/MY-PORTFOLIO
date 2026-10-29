@@ -2,15 +2,17 @@ import { cpSync, existsSync, mkdirSync, readFileSync, writeFileSync } from 'node
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { defineConfig } from 'vite';
+import { createRenderer } from './src/site/render.mjs';
+import { LANGS, SITE, carousel, loadProjects, portalBlocks, portalPath, portalVars, sitemap, todoReport } from './src/site/work.mjs';
 
 const root = dirname(fileURLToPath(import.meta.url));
 const r = (...p) => resolve(root, ...p);
+const render = createRenderer(root);
 
-// The home page exists in three languages. src/pages/home.html is rendered
-// with src/i18n/<lang>.json into index.html (en), fr/index.html and
-// ar/index.html; those generated files are what Vite builds.
-const LANGS = { en: '', fr: 'fr/', ar: 'ar/' };
-const SITE = 'https://ayoubchekhab-dev.is-a.dev/';
+// Generated pages (don't edit them, edit the sources):
+//   src/pages/home.html + src/i18n/<lang>.json      → index.html, fr/, ar/
+//   src/pages/work.html + src/data/projects.json    → work/<slug>/, fr/work/<slug>/, ar/work/<slug>/
+//   sitemap.xml                                     → public/sitemap.xml
 
 // Pages and folders that are published as they are (the subpages keep
 // their own CSS/JS until they are restyled).
@@ -21,51 +23,58 @@ const STATIC = [
 ];
 const NOT_PUBLISHED = ['videos/source-originals', 'videos/film', 'images/film', 'images/sites/raw'];
 
-const escape = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
-
-function render(lang) {
-  const t = JSON.parse(readFileSync(r(`src/i18n/${lang}.json`), 'utf8'));
-  const get = key => key.split('.').reduce((o, k) => o?.[k], t);
-  let html = readFileSync(r('src/pages/home.html'), 'utf8');
-  // {{> name}} includes src/partials/name.html
-  for (let i = 0; i < 3; i++) html = html.replace(/\{\{>\s*([\w-]+)\s*\}\}/g, (_, n) => readFileSync(r(`src/partials/${n}.html`), 'utf8'));
-  const vars = {
-    lang, dir: lang === 'ar' ? 'rtl' : 'ltr', base: `/${LANGS[lang]}`, url: SITE + LANGS[lang],
-    wa: `https://wa.me/213658030536?text=${encodeURIComponent(t.wa.text)}`,
-  };
-  return html
-    // /images/ and /videos/ are published as they are (see STATIC): don't hash copies of them
-    .replace(/<(img|video|source|link)\b(?=[^>]*="\/(?:images|videos)\/)/g, '<$1 vite-ignore')
-    // {{=name}} is a page variable, {{json:key}} a JSON string for scripts
-    .replace(/\{\{=(\w+)\}\}/g, (_, k) => escape(vars[k]))
-    .replace(/\{\{json:([\w.]+)\}\}/g, (_, k) => JSON.stringify(get(k)).replace(/</g, '\\u003c'))
-    // {{#ar}}…{{/ar}} only renders on that language; {{key.path}} is a translated string
-    .replace(/\{\{#(en|fr|ar)\}\}([\s\S]*?)\{\{\/\1\}\}/g, (_, l, body) => (l === lang ? body : ''))
-    .replace(/\{\{([\w.]+)\}\}/g, (m, k) => {
-      const v = get(k);
-      if (v == null) throw new Error(`Missing "${k}" in src/i18n/${lang}.json`);
-      return escape(v);
-    });
+const pages = [];
+function writePage(file, html, banner) {
+  mkdirSync(dirname(r(file)), { recursive: true });
+  writeFileSync(r(file), html.replace(/^<!DOCTYPE html>\n/i, m => `${m}<!-- Generated from ${banner}. Edit those, not this file. -->\n`));
+  pages.push(file);
 }
 
 function writePages() {
+  pages.length = 0;
+  const projects = loadProjects(root);
   for (const [lang, dir] of Object.entries(LANGS)) {
-    if (dir) mkdirSync(r(dir), { recursive: true });
-    const banner = `<!-- Generated from src/pages/home.html + src/i18n/${lang}.json. Edit those, not this file. -->\n`;
-    writeFileSync(r(dir, 'index.html'), render(lang).replace(/^<!DOCTYPE html>\n/i, m => m + banner));
+    const t = JSON.parse(readFileSync(r(`src/i18n/${lang}.json`), 'utf8'));
+    const common = { lang, dir: lang === 'ar' ? 'rtl' : 'ltr', base: `/${dir}` };
+
+    writePage(`${dir}index.html`, render('src/pages/home.html', {
+      lang, t,
+      vars: {
+        ...common, url: SITE + dir, href_en: '/', href_fr: '/fr/', href_ar: '/ar/',
+        wa: `https://wa.me/213658030536?text=${encodeURIComponent(t.wa.text)}`,
+      },
+      blocks: { carousel: carousel(projects, lang, t) },
+    }), `src/pages/home.html + src/i18n/${lang}.json`);
+
+    projects.forEach((p, i) => {
+      const next = projects[(i + 1) % projects.length];
+      writePage(portalPath(p.slug, lang).slice(1) + 'index.html', render('src/pages/work.html', {
+        lang, t,
+        vars: { ...common, ...portalVars(p, lang, t) },
+        blocks: portalBlocks(p, next, lang, t),
+      }), `src/pages/work.html + src/data/projects.json (${p.slug}) + src/i18n/${lang}.json`);
+    });
   }
+  writeFileSync(r('public/sitemap.xml'), sitemap(projects));
+  const todo = todoReport(projects);
+  if (todo) console.log(`\nProjects still waiting for Ayoub's copy (blocks hidden):\n${todo}\n`);
 }
 
-const i18nPages = () => ({
-  name: 'i18n-pages',
-  config() { writePages(); },
+const generatedPages = () => ({
+  name: 'generated-pages',
+  // every generated page is a build entry
+  config() {
+    writePages();
+    const input = Object.fromEntries(pages.map(f => [f.replace(/index\.html$/, '') || 'home', r(f)]));
+    return { build: { rollupOptions: { input } } };
+  },
   configureServer(server) {
-    server.watcher.add([r('src/pages'), r('src/partials'), r('src/i18n')]);
+    const sources = /src\/(pages|partials|i18n|data|site)\/|public\/work\/[^/]+\/manifest\.json/;
+    server.watcher.add([r('src/pages'), r('src/partials'), r('src/i18n'), r('src/data'), r('src/site')]);
     server.watcher.on('change', file => {
-      if (/src\/(pages|partials|i18n)\//.test(file)) {
-        writePages();
-        server.ws.send({ type: 'full-reload' });
-      }
+      if (!sources.test(file)) return;
+      try { writePages(); } catch (err) { console.error(err.message); return; }
+      server.ws.send({ type: 'full-reload' });
     });
   },
 });
@@ -86,11 +95,6 @@ const copyStatic = () => ({
 });
 
 export default defineConfig({
-  plugins: [i18nPages(), copyStatic()],
-  build: {
-    target: 'es2020',
-    rollupOptions: {
-      input: Object.fromEntries(Object.entries(LANGS).map(([l, d]) => [l, r(d, 'index.html')])),
-    },
-  },
+  plugins: [generatedPages(), copyStatic()],
+  build: { target: 'es2020' },
 });

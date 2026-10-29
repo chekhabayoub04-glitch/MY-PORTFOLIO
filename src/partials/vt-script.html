@@ -1,0 +1,27 @@
+  <!-- Portal transition: the clicked phone morphs into the portal's phone (cross-document
+       View Transitions). Inline so pagereveal is caught before the first frame. -->
+  <script>
+    (function () {
+      var slugOf = function (url) { var m = url && new URL(url, location.href).pathname.match(/\/work\/([^/]+)\/$/); return m && m[1]; };
+      var name = function (el, slug, vt) {
+        if (!el || el.style.viewTransitionName) return;
+        el.style.viewTransitionName = 'shot-' + slug;
+        vt.finished.finally(function () { el.style.viewTransitionName = ''; });
+      };
+      // Leaving: name the phone that was clicked (carousel card or "next project")
+      addEventListener('pageswap', function (e) {
+        var slug = e.viewTransition && slugOf(e.activation && e.activation.entry && e.activation.entry.url);
+        if (slug) name(document.querySelector('[data-slug="' + slug + '"] .phone-shot'), slug, e.viewTransition);
+      });
+      // Arriving: the gold light opens the door; back on the home page, the
+      // project we came from morphs back into its card
+      addEventListener('pagereveal', function (e) {
+        if (!e.viewTransition) return;
+        var root = document.documentElement;
+        root.classList.add('is-arriving');
+        e.viewTransition.finished.finally(function () { root.classList.remove('is-arriving'); });
+        var from = window.navigation && navigation.activation && navigation.activation.from && slugOf(navigation.activation.from.url);
+        if (from) name(document.querySelector('.phone-card[data-slug="' + from + '"] .phone-shot'), from, e.viewTransition);
+      });
+    })();
+  </script>

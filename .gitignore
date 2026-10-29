@@ -15,3 +15,10 @@ videos/film/*.webm
 
 node_modules/
 dist/
+
+# generated pages (vite.config.js writes them from src/)
+/index.html
+/fr/
+/ar/
+/work/
+/public/sitemap.xml

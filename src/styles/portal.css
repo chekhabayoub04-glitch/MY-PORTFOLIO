@@ -1,0 +1,162 @@
+/* ============================================================
+   Project portal: the site on a laptop and a phone, scrolling by
+   itself, then facts, gallery, WhatsApp and the next project.
+============================================================ */
+
+.portal-page main { padding-top: var(--nav-h); }
+.portal-page .site-nav { gap: clamp(12px, 2vw, 28px); }
+.portal-page .back-link { margin-inline-start: auto; }
+
+/* ── Device stage ─────────────────────────────────────────── */
+.portal-stage { position: relative; max-width: 1400px; margin: 0 auto; padding: clamp(28px, 5vh, 56px) var(--gutter) 8px; }
+.portal-stage::before {
+  content: ""; position: absolute; left: 50%; top: 56%; z-index: -1; pointer-events: none;
+  width: min(1100px, 140vw); aspect-ratio: 1.6; translate: -50% -50%;
+  background: radial-gradient(closest-side, rgba(255, 210, 63, .16), rgba(242, 163, 58, .05) 55%, transparent);
+}
+.portal-head h1 { font: 800 var(--h2)/.95 var(--f-display); color: var(--fog); }
+:lang(ar) .portal-head h1 { font-weight: 600; line-height: 1.25; }
+.portal-head p { margin-top: 10px; color: var(--ash); }
+.portal-city:not(:empty)::before { content: ", "; }
+:lang(ar) .portal-city:not(:empty)::before { content: "، "; }
+
+.devices { position: relative; margin: clamp(28px, 4vh, 48px) auto 0; max-width: 1080px; padding-bottom: 7%; }
+.laptop { width: 82%; margin-inline: 0 auto; }
+.laptop-screen {
+  position: relative; aspect-ratio: 16 / 10; overflow: hidden; container-type: size;
+  border: 12px solid #16181c; border-bottom-width: 18px; border-radius: 18px 18px 0 0; background: var(--asphalt);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, .07), 0 40px 90px rgba(0, 0, 0, .55);
+}
+.laptop-base {
+  height: 16px; margin-inline: -7%; border-radius: 0 0 16px 16px;
+  background: linear-gradient(#30333a, #121418); box-shadow: 0 18px 40px rgba(0, 0, 0, .5);
+}
+/* the phone stands in front, on the right (on the left in RTL) */
+.phone--portal { position: absolute; z-index: 2; bottom: 0; inset-inline-end: 0; width: 23%; }
+.phone--portal .phone-screen { container-type: size; }
+
+/* Auto-scroll: the full page glides top → bottom → top, compositor only */
+.scroll-shot { position: absolute; inset: 0; }
+.scroll-shot img { display: block; width: 100%; }
+.scroll-shot > picture img { height: 100%; object-fit: cover; object-position: top; }
+.scroll-shot .full { position: absolute; top: 0; left: 0; height: auto; opacity: 0; transition: opacity .6s var(--ease); }
+.scroll-shot.is-scrolling .full { opacity: 1; animation: page-scroll var(--dur, 30s) ease-in-out 1.2s infinite alternate; }
+.scroll-shot.is-scrolling:hover .full, .devices:focus-within .scroll-shot .full { animation-play-state: paused; }
+@keyframes page-scroll { to { transform: translateY(calc(-100% + 100cqh)); } }
+
+/* Try it live: the real site inside the phone */
+.phone-screen iframe { position: absolute; top: 0; left: 0; border: 0; transform-origin: 0 0; background: #fff; }
+.phone--portal.is-live .scroll-shot { visibility: hidden; }
+.live-failed { margin-top: 14px; text-align: center; color: var(--ash); }
+
+/* Desktop / Mobile / Both */
+.devices[data-view="desktop"] .phone--portal { display: none; }
+.devices[data-view="desktop"] .laptop { width: 100%; }
+.devices[data-view="mobile"] .laptop { display: none; }
+.devices[data-view="mobile"] { padding-bottom: 0; }
+.devices[data-view="mobile"] .phone--portal { position: relative; width: min(320px, 72vw); margin: 0 auto; inset: auto; }
+
+.stage-controls { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-top: clamp(24px, 4vh, 40px); }
+.device-switch, .try-live { display: none; }
+.js .device-switch { display: inline-flex; gap: 4px; padding: 4px; border: 1px solid var(--line); border-radius: 999px; }
+.js .try-live { display: inline-flex; }
+.device-switch button {
+  min-height: 40px; padding: 0 16px; border: 0; border-radius: 999px; cursor: pointer;
+  background: none; color: var(--ash); font: 500 .9375rem/1 var(--f-body); transition: color .2s, background-color .2s;
+}
+.device-switch button:hover { color: var(--fog); }
+.device-switch button[aria-pressed="true"] { background: var(--fog); color: var(--abyss); }
+.try-live[aria-pressed="true"] { border-color: var(--signal); color: var(--signal); }
+
+/* ── Body ─────────────────────────────────────────────────── */
+.portal-body { max-width: 1180px; margin: 0 auto; padding: 0 var(--gutter); }
+.portal-stage, .portal-body { overflow-x: clip; }
+.facts {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 1px; margin: clamp(48px, 8vh, 80px) 0 0;
+  background: var(--line); border: 1px solid var(--line); border-radius: 18px; overflow: hidden;
+}
+.facts > div { background: var(--abyss); padding: 20px 22px; }
+.facts dt { color: var(--ash); font-size: .875rem; }
+.facts dd { margin: 6px 0 0; color: var(--fog); font-weight: 500; }
+
+.portal-block { margin-top: clamp(64px, 10vh, 104px); }
+.portal-block h2, .portal-cta h2 { font: 800 var(--h2)/.98 var(--f-display); color: var(--fog); text-wrap: balance; }
+:lang(ar) .portal-block h2, :lang(ar) .portal-cta h2 { font-weight: 600; line-height: 1.3; }
+.problem-list { display: grid; gap: 14px; margin: 24px 0 0; padding: 0; list-style: none; max-width: 40em; }
+.problem-list li { padding-inline-start: 22px; position: relative; }
+.problem-list li::before { content: ""; position: absolute; inset-inline-start: 0; top: .62em; width: 8px; height: 8px; border-radius: 50%; background: var(--signal); }
+.built-grid, .results-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 16px; margin: 28px 0 0; padding: 0; list-style: none; }
+.built-card { padding: 26px; border: 1px solid var(--line); border-radius: 20px; background: var(--asphalt); color: var(--fog); transition: color .2s, border-color .2s; }
+.built-card svg { width: 30px; height: 30px; }
+.built-card:hover { color: var(--signal); border-color: rgba(255, 210, 63, .4); }
+.built-card h3 { margin-top: 16px; font: 600 1.125rem/1.3 var(--f-body); color: var(--fog); }
+.built-card p { margin-top: 6px; color: var(--ash); }
+.results-grid li { padding: 26px; border-radius: 20px; background: var(--asphalt); }
+.results-grid strong { display: block; font: 800 3rem/1 var(--f-display); color: var(--signal); }
+.results-grid span { color: var(--ash); }
+.quote blockquote { margin: 0; font: 500 clamp(1.375rem, 1rem + 1.2vw, 2rem)/1.35 var(--f-body); color: var(--fog); max-width: 32em; }
+.quote figcaption { display: flex; align-items: center; gap: 14px; margin-top: 22px; color: var(--ash); }
+.quote figcaption img { border-radius: 50%; }
+.quote figcaption strong { display: block; color: var(--fog); }
+
+/* Gallery + lightbox */
+.gallery { display: grid; grid-template-columns: repeat(12, 1fr); gap: 16px; margin: 28px 0 0; padding: 0; list-style: none; align-items: start; }
+.gallery-item--desktop { grid-column: span 12; }
+.gallery-item--mobile { grid-column: span 4; }
+@media (min-width: 1024px) {
+  .gallery-item--desktop { grid-column: span 6; }
+  .gallery-item--mobile { grid-column: span 2; }
+}
+.gallery a { display: block; overflow: hidden; border-radius: 14px; border: 1px solid var(--line); background: var(--asphalt); transition: border-color .2s; }
+.gallery a:hover { border-color: rgba(255, 210, 63, .5); }
+.gallery-item--desktop a { aspect-ratio: 16 / 10; }
+.gallery-item--mobile a { aspect-ratio: 390 / 844; }
+.gallery img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: top; }
+.lightbox { max-width: min(96vw, 1200px); max-height: 96vh; padding: 0; border: 0; background: transparent; color: var(--fog); overflow: visible; }
+.lightbox::backdrop { background: rgba(0, 0, 0, .9); }
+.lightbox img { display: block; max-width: 100%; max-height: 84vh; margin: 0 auto; border-radius: 12px; object-fit: contain; }
+.lightbox-controls { display: flex; justify-content: center; gap: 10px; margin-top: 14px; }
+
+/* WhatsApp + next project */
+.portal-cta {
+  margin-top: clamp(72px, 11vh, 112px); padding: clamp(32px, 6vw, 72px) clamp(20px, 5vw, 64px); text-align: center; border-radius: 28px;
+  background: radial-gradient(80% 120% at 50% 0%, rgba(255, 210, 63, .16), transparent 60%), var(--asphalt);
+}
+.portal-cta p { max-width: 34em; margin: 14px auto 0; color: var(--ash); }
+.portal-cta-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-top: 28px; }
+
+.next-card {
+  display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 28px;
+  margin: 40px 0 clamp(72px, 10vh, 112px); padding: clamp(24px, 4vw, 48px); overflow: hidden;
+  border: 1px solid var(--line); border-radius: 28px; color: inherit; text-decoration: none; transition: border-color .25s;
+}
+.next-card:hover, .next-card:focus-visible { border-color: rgba(255, 210, 63, .55); }
+.next-text { display: grid; gap: 6px; }
+.next-label { color: var(--ash); }
+.next-name { font: 800 var(--h2)/.95 var(--f-display); color: var(--fog); }
+:lang(ar) .next-name { font-weight: 600; line-height: 1.25; }
+.next-type { color: var(--ash); }
+.phone--next { width: clamp(110px, 16vw, 180px); padding: 6px; border-radius: 26px; }
+.phone--next::after { top: 11px; height: 11px; }
+.phone--next .phone-screen { border-radius: 20px; }
+
+.portal-footer { padding: 28px var(--gutter) 32px; text-align: center; color: var(--ash); border-top: 1px solid var(--line); }
+.portal-footer a { color: inherit; }
+
+@media (max-width: 767px) {
+  .laptop { width: 88%; }
+  .laptop-base { margin-inline: -4%; }
+  .phone--portal { width: 30%; }
+  .devices { padding-bottom: 14%; }
+}
+@media (max-width: 1023px) {
+  .portal-footer { padding-bottom: calc(96px + env(safe-area-inset-bottom)); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .scroll-shot.is-scrolling .full { animation: none; }
+}
+
+/* Phones: the bat alone stands for the brand, so the way back and the languages fit */
+@media (max-width: 599px) {
+  .portal-page .site-brand span { display: none; }
+}

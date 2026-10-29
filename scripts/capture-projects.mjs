@@ -3,7 +3,7 @@
 //   npm run capture                 all projects
 //   npm run capture -- dr-213 ...   only these
 // Writes public/work/<slug>/:
-//   desktop-first, desktop-full (1440×900 @2x, max 1600 px wide)
+//   desktop-first, desktop-full (1440×900 @2x, max 1600 px wide; -sm = half width)
 //   mobile-first,  mobile-full  (390×844 @2x, max 780 px wide)
 //   (full pages are WebP only, cropped to the first 6000 px: they only feed the
 //    auto-scroll preview; everything else is AVIF + WebP)
@@ -103,10 +103,14 @@ async function save(buffer, out, maxWidth, manifest, key, { full = false } = {})
       h = FULL_MAX;
     }
     await img.webp({ quality: 80, effort: 5 }).toFile(`${out}.webp`);
+    manifest[key] = { w, h };
   } else {
+    // full size + a half-width copy (-sm) for srcset
     await encode(img, out);
+    const sw = Math.round(w / 2), sh = Math.round(h / 2);
+    await encode(sharp(buffer, { limitInputPixels: false }).resize(sw, sh), `${out}-sm`);
+    manifest[key] = { w, h, sm: { w: sw, h: sh } };
   }
-  manifest[key] = { w, h };
 }
 
 async function og(browser, dir, project) {

@@ -75,7 +75,13 @@ html.lenis, html.lenis body { height: auto; }
 .lenis.lenis-smooth iframe { pointer-events: none; }
 .lenis.lenis-autoToggle { transition-property: overflow; transition-duration: 1ms; transition-behavior: allow-discrete; }
 
-html { background: var(--abyss); overflow-x: clip; }
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+a { color: inherit; text-decoration: none; }
+img, video, canvas { display: block; max-width: 100%; }
+ul, ol { list-style: none; }
+button, input, textarea, select { font: inherit; color: inherit; }
+
+html { background: var(--abyss); overflow-x: clip; -webkit-text-size-adjust: 100%; }
 body {
   background: var(--abyss);
   color: var(--fog);
@@ -87,7 +93,11 @@ body {
 :focus-visible { outline: 2px solid var(--signal); outline-offset: 3px; border-radius: 6px; }
 ::selection { background: var(--signal); color: var(--abyss); }
 
-.skip-link { inset-inline-start: 16px; left: auto; background: var(--signal); color: var(--abyss); }
+.skip-link {
+  position: fixed; top: -60px; inset-inline-start: 16px; z-index: 300;
+  padding: 10px 16px; border-radius: 999px; background: var(--signal); color: var(--abyss); font-weight: 600;
+}
+.skip-link:focus { top: 16px; }
 
 /* Older sections: no italic accent words, no bracketed eyebrows */
 .display em, .signal-title em, .footer em { font-style: normal; color: inherit; font-family: inherit; }

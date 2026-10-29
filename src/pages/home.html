@@ -78,6 +78,7 @@
     })();
     document.documentElement.classList.add('js');
   </script>
+{{> vt-script}}
 
   {{#en}}<link rel="preload" href="/fonts/big-shoulders-display-latin.woff2" as="font" type="font/woff2" crossorigin>{{/en}}
   {{#fr}}<link rel="preload" href="/fonts/big-shoulders-display-latin.woff2" as="font" type="font/woff2" crossorigin>{{/fr}}
@@ -103,6 +104,7 @@
   </svg>
 
   <a class="skip-link" href="#main">{{skip}}</a>
+  <div class="door-light" aria-hidden="true"></div>
 
   <header class="site-nav" id="nav">
     <a class="site-brand" href="{{=base}}" aria-label="{{nav.home}}">
@@ -115,11 +117,7 @@
       <a href="#origin">{{nav.about}}</a>
       <a href="#signal">{{nav.contact}}</a>
     </nav>
-    <nav class="lang-switch" aria-label="{{nav.language}}">
-      <a href="/" hreflang="en" lang="en" data-lang="en" {{#en}}aria-current="page"{{/en}}>EN</a>
-      <a href="/fr/" hreflang="fr" lang="fr" data-lang="fr" {{#fr}}aria-current="page"{{/fr}}>FR</a>
-      <a href="/ar/" hreflang="ar" lang="ar" data-lang="ar" {{#ar}}aria-current="page"{{/ar}}>عربي</a>
-    </nav>
+{{> lang-switch}}
     <a class="btn btn--signal btn--small site-cta" href="{{=wa}}" target="_blank" rel="noopener">
       <svg aria-hidden="true"><use href="#i-whatsapp"/></svg><span>{{cta.whatsapp}}</span>
     </a>
@@ -191,12 +189,6 @@
         <div class="work-head">
           <h2 class="display" id="workTitle">{{work.title}}</h2>
           <p class="lede">{{work.lede}}</p>
-          <nav class="chapter-index" aria-label="Chapters">
-            <a href="#ch-web"><span class="ci-icon"><i class="fas fa-code" aria-hidden="true"></i></span><span><b>Web Development</b><small>6 live sites</small></span></a>
-            <a href="#ch-design"><span class="ci-icon"><i class="fas fa-pen-nib" aria-hidden="true"></i></span><span><b>Graphic Design</b><small>7 industries</small></span></a>
-            <a href="#ch-films"><span class="ci-icon"><i class="fas fa-film" aria-hidden="true"></i></span><span><b>AI Brand Films</b><small>4 films</small></span></a>
-            <a href="#ch-marks"><span class="ci-icon"><i class="fas fa-shapes" aria-hidden="true"></i></span><span><b>Brand Marks</b><small>Logos &amp; identities</small></span></a>
-          </nav>
         </div>
         <figure class="reel-card">
           <button class="reel-open" type="button" aria-haspopup="dialog" aria-controls="reelDialog">
@@ -205,6 +197,15 @@
           </button>
           <figcaption>{{work.signature}}</figcaption>
         </figure>
+      </div>
+
+      <div class="carousel" id="carousel" data-ambient="off">
+        <ul class="carousel-track" aria-label="{{work.carousel}}">{{@carousel}}
+        </ul>
+        <div class="carousel-nav">
+          <button class="carousel-arrow" type="button" data-dir="-1" aria-label="{{work.prev}}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
+          <button class="carousel-arrow" type="button" data-dir="1" aria-label="{{work.next}}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
+        </div>
       </div>
 {{> legacy-chapters}}
     </section>

@@ -1,0 +1,101 @@
+/* ============================================================
+   Shared page chrome: buttons, nav, phone thumb bar, WhatsApp.
+   Used by the home page and the project portals.
+============================================================ */
+
+/* ── Buttons ─────────────────────────────────────────────── */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  min-height: 52px; padding: 0 24px; border-radius: 999px;
+  font: 500 1rem/1.2 var(--f-body); white-space: nowrap;
+  border: 1px solid transparent; cursor: pointer;
+  transition: background-color .25s var(--ease), border-color .25s var(--ease), color .25s var(--ease);
+}
+.btn svg { width: 20px; height: 20px; flex: none; }
+.btn--signal { background: var(--signal); color: var(--abyss); }
+.btn--signal:hover { background: #ffe07a; }
+.btn--ghost { border-color: rgba(236, 234, 229, .32); color: var(--fog); background: rgba(0, 0, 0, .35); }
+.btn--ghost:hover { border-color: var(--signal); color: var(--signal); }
+.btn--small { min-height: 44px; padding: 0 18px; font-size: .9375rem; }
+
+/* ── Nav ─────────────────────────────────────────────────── */
+.site-nav {
+  position: fixed; inset: 0 0 auto; z-index: 50; height: var(--nav-h);
+  display: flex; align-items: center; gap: clamp(16px, 2.4vw, 36px);
+  padding-inline: var(--gutter);
+  background: linear-gradient(to bottom, rgba(0, 0, 0, .82), rgba(0, 0, 0, .55));
+  -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);
+}
+.site-brand { display: inline-flex; align-items: center; gap: 10px; font: 600 1.0625rem/1 var(--f-body); color: var(--fog); white-space: nowrap; }
+.site-brand .bat { width: 34px; height: 17px; fill: var(--signal); }
+.site-links { display: flex; gap: clamp(14px, 2vw, 28px); margin-inline-start: auto; }
+.site-links a, .lang-switch a { color: var(--ash); font-size: .9375rem; transition: color .2s; }
+.site-links a:hover, .lang-switch a:hover { color: var(--fog); }
+.lang-switch { display: flex; gap: 4px; padding: 4px; border: 1px solid var(--line); border-radius: 999px; }
+.lang-switch a { min-width: 40px; min-height: 32px; display: grid; place-items: center; padding: 0 8px; border-radius: 999px; font-size: .8125rem; }
+.lang-switch a[aria-current="page"] { background: var(--fog); color: var(--abyss); }
+.nav-burger { display: none; }
+
+@media (max-width: 1023px) {
+  .site-nav { gap: 12px; }
+  .site-brand { font-size: .9375rem; gap: 8px; }
+  .site-links, .site-cta { display: none; }
+  .lang-switch { margin-inline-start: auto; }
+  .lang-switch a { min-width: 34px; min-height: 30px; padding: 0 6px; }
+  .js .nav-burger {
+    display: grid; place-content: center; gap: 6px; width: 44px; height: 44px;
+    background: none; border: 1px solid var(--line); border-radius: 50%; cursor: pointer;
+  }
+  .nav-burger span { display: block; width: 18px; height: 1.5px; background: var(--fog); transition: transform .3s var(--ease); }
+  .nav-burger[aria-expanded="true"] span:first-child { transform: translateY(3.75px) rotate(45deg); }
+  .nav-burger[aria-expanded="true"] span:last-child { transform: translateY(-3.75px) rotate(-45deg); }
+}
+.drawer a small { display: none; }
+
+/* ── Thumb bar (phones) and floating WhatsApp (wider screens) ── */
+.thumb-bar {
+  position: fixed; inset: auto 0 0; z-index: 50;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
+  padding: 10px 16px calc(10px + env(safe-area-inset-bottom));
+  background: rgba(0, 0, 0, .82); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);
+  border-top: 1px solid var(--line);
+}
+.thumb-bar .btn { min-height: 52px; padding: 0 10px; gap: 8px; font-size: .875rem; }
+.wa-float { display: none; }
+@media (min-width: 1024px) {
+  .thumb-bar { display: none; }
+  .wa-float {
+    display: grid; place-items: center; position: fixed; z-index: 40;
+    inset-inline-end: 24px; bottom: 24px; width: 56px; height: 56px; border-radius: 50%;
+    background: var(--signal); color: var(--abyss); box-shadow: 0 8px 28px rgba(0, 0, 0, .45);
+    transition: transform .25s var(--ease);
+  }
+  .wa-float:hover { transform: scale(1.06); }
+  .wa-float svg { width: 28px; height: 28px; }
+}
+@media (max-width: 1023px) {
+  .footer { padding-bottom: calc(96px + env(safe-area-inset-bottom)); }
+}
+
+/* Portal nav: the way back to the work; helpers */
+.back-link { display: inline-flex; align-items: center; gap: 6px; color: var(--ash); font-size: .9375rem; transition: color .2s; }
+.back-link:hover { color: var(--fog); }
+.back-link svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+[dir="rtl"] .back-link svg { transform: scaleX(-1); }
+.visually-hidden { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+
+/* ── Page transitions (cross-document View Transitions) ─── */
+@view-transition { navigation: auto; }
+@media (prefers-reduced-motion: reduce) { @view-transition { navigation: none; } }
+::view-transition-old(root), ::view-transition-new(root) { animation-duration: .3s; }
+::view-transition-group(*) { animation-duration: .52s; animation-timing-function: cubic-bezier(.22, 1, .36, 1); }
+/* The gold light from the hero opens a door as the new page arrives (≤ 600 ms) */
+.door-light {
+  position: fixed; inset: 0; z-index: 90; pointer-events: none; opacity: 0;
+  background: radial-gradient(40% 80% at 50% 50%, rgba(255, 210, 63, .38), rgba(242, 163, 58, .1) 45%, transparent 72%);
+}
+.is-arriving .door-light { animation: door .56s cubic-bezier(.22, 1, .36, 1) both; }
+@keyframes door { 0% { opacity: .9; transform: scaleX(.06); } 40% { opacity: .75; } 100% { opacity: 0; transform: scaleX(2.6); } }
+/* Browsers without View Transitions: a 250 ms fade, never a blank page */
+.fade-in body { animation: page-in .25s ease-out both; }
+@keyframes page-in { from { opacity: 0; } }
