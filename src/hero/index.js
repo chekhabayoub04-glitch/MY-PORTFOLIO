@@ -1,13 +1,14 @@
 // Hero entry: pick a path for this device, then run everything from one
-// GSAP ticker (light, frame draw, ring, shader, Lenis).
-//   cinema  ≥1024px, mouse, motion OK: the walk plays on its own, then holds on
-//           the smile; scrolling pins the hero for the beats (2D, then WebGL if capable)
-//   lite    phones, tablets, touch screens: muted loop + drifting light, no pin
+// GSAP ticker (light, ring, shader, Lenis). On every path but "still", the
+// walk is a muted video that starts when the page opens, loops for as long
+// as the hero is on screen, and pauses when it isn't.
+//   cinema  ≥1024px, mouse, motion OK: the light follows the cursor and opens
+//           with each walk; scrolling pins the hero for the beats (2D, then WebGL)
+//   lite    phones, tablets, touch screens: drifting light, no pin
 //   still   reduced motion: poster in full light, everything static
 import gsap from 'gsap';
 import { SplitText } from 'gsap/SplitText';
 import { createAmbient } from './ambient.js';
-import { createDrawer, createFrames } from './frames.js';
 import { applyLight, createSpotlight } from './spotlight.js';
 
 gsap.registerPlugin(SplitText);
@@ -17,7 +18,7 @@ const $ = (s, el = document) => el.querySelector(s);
 const $$ = (s, el = document) => [...el.querySelectorAll(s)];
 const rtl = root.dir === 'rtl';
 const CINEMA = '(min-width: 1024px) and (hover: hover) and (pointer: fine)';
-const WALK_MS = 6000;   // the walk, from the dark street to the smile
+const FRAMES = 120;   // the walk as graded (scripts/prepare-film.sh), for the depth maps
 const easeInOut = t => (t < .5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2);
 
 // After the poster (LCP) has painted and the main thread is quiet
@@ -58,6 +59,31 @@ function revealHeadline(reduce) {
   });
 }
 
+// The walk: graded, 5.5 s, crossfaded into itself at the loop point. It plays
+// from the first moment, loops, and pauses only while the hero is off screen
+// or the tab is hidden. The poster stays underneath until the first frame.
+function heroVideo(stage, watch) {
+  const video = Object.assign(document.createElement('video'), {
+    className: 'stage-video', muted: true, loop: true, playsInline: true, autoplay: true,
+    preload: 'auto', src: '/hero/walk-720.mp4',
+  });
+  video.setAttribute('aria-hidden', 'true');
+  video.setAttribute('disablepictureinpicture', '');
+  video.addEventListener('playing', () => stage.classList.add('has-video'), { once: true });
+  $('.stage-media', stage).append(video);
+
+  let inView = true;
+  const sync = () => (inView && !document.hidden ? video.play().catch(() => {}) : video.pause());
+  new IntersectionObserver(([e]) => { inView = e.isIntersecting; sync(); }).observe(watch);
+  document.addEventListener('visibilitychange', sync);
+  sync();
+  return video;
+}
+
+// Where the loop is in the walk, 0 (far, in the dark) → 1 (the smile).
+// The file starts .5 s into the 6 s walk and its last .5 s fades back to it.
+const walkPhase = video => Math.min(1, (video.currentTime + .5) / 6);
+
 // ── Desktop: the cinema ─────────────────────────────────────
 async function startCinema({ hero, saveData, onLenis }) {
   const [{ ScrollTrigger }, { default: Lenis }, { createTimeline, createRing }] = await Promise.all([
@@ -75,12 +101,11 @@ async function startCinema({ hero, saveData, onLenis }) {
   const stage = $('#stage');
   const media = $('.stage-media', stage);
   const blur = $('.hero-blur', hero);
+  const blurCtx = blur.getContext('2d', { alpha: false });
   const progress = $('.hero-progress', hero);
   stage.classList.add('has-light');
 
-  const frames = createFrames();
-  const drawer = createDrawer($('.stage-canvas', stage));
-  const blurDrawer = createDrawer(blur, { dprCap: 1 });
+  const video = heroVideo(stage, hero);
   const light = createSpotlight({ mode: 'cursor', rtl });
   const ring = createRing($$('.tool', hero));
   const tl = createTimeline({
@@ -90,58 +115,44 @@ async function startCinema({ hero, saveData, onLenis }) {
   });
   createAmbient({ hero, still: saveData });
 
-  let gl = null, lastFrame = -1, dirty = true, visible = null, playFrom = 0;
-  // The walk starts by itself once a quarter of the frames are in (every 4th),
-  // so it never stutters; the missing ones fill in while it plays.
-  frames.onLoad = () => {
-    dirty = true;
-    if (!playFrom && frames.loaded >= Math.ceil(frames.count / 4)) playFrom = performance.now();
-  };
+  let gl = null, visible = null, open = 0, tick = 0;
 
   function layout() {
     const { rest } = tl.geo;
-    drawer.resize(rest.w, rest.h);
     blur.width = 54; blur.height = 96;
     hero.style.setProperty('--stage-w', `${rest.w}px`);
     hero.style.setProperty('--blur-x', `${rest.x + rest.w / 2}px`);
     gl?.resize(rest.w, rest.h);
-    dirty = true;
   }
   ScrollTrigger.addEventListener('refresh', layout);
   layout();
 
   gsap.ticker.add((time, deltaMs) => {
     const dt = Math.min(deltaMs, 100) / 1000;
-    const scroll = lenis.scroll;
-    const r = tl.stageRect(scroll);
+    const r = tl.stageRect(lenis.scroll);
 
     // The film panel: still while pinned, then it leaves with the hero
     const nowVisible = r.y < innerHeight + 40 && r.y + r.h > -40;
     if (nowVisible !== visible) {
       visible = nowVisible;
-      stage.style.visibility = visible ? 'visible' : 'hidden';
       stage.classList.toggle('is-off', !visible);
     }
     if (!visible) return;
 
-    // The light, in the panel's coordinates
-    const s = light.update(time * 1000, dt, { x: r.x, y: r.y, w: r.w, h: r.h });
-    // The walk plays once and holds on the smile; the light opens as he comes
-    const walk = playFrom ? Math.min(1, (performance.now() - playFrom) / WALK_MS) : 0;
-    const open = Math.max(tl.open, easeInOut(walk));
+    // The light follows the cursor and opens as he walks into it, every loop
+    const s = light.update(time * 1000, dt, r);
+    const phase = video.readyState >= 2 ? walkPhase(video) : 0;
+    const target = Math.max(tl.open, easeInOut(Math.min(1, phase / .9)));
+    open += (target - open) * (1 - Math.pow(1 - .08, dt * 60));
     const rest = tl.geo.rest;
-    const f = walk * (frames.count - 1);
-    const img = frames.nearest(f);
+
     if (gl) {
-      gl.render(img, f, s, open, time);
+      gl.render(phase * (FRAMES - 1), s, open, time);
     } else {
       applyLight(stage, s, rest, open);
-      if (img && (Math.round(f) !== lastFrame || dirty)) {
-        if (drawer.draw(img)) stage.classList.add('has-canvas');
-        blurDrawer.draw(img);
-        lastFrame = Math.round(f); dirty = false;
-      }
     }
+    // the blurred copy around the panel, a few times a second is plenty
+    if (video.readyState >= 2 && (tick++ & 3) === 0) blurCtx.drawImage(video, 0, 0, 54, 96);
 
     // Beat 1's tool ring, and the scene's progress line
     const { vis, turn } = tl.ring;
@@ -150,24 +161,20 @@ async function startCinema({ hero, saveData, onLenis }) {
     progress.style.setProperty('--pv', tl.state.p >= .999 ? 0 : 1);
   });
 
-  // Frames only after the poster has painted; WebGL after the coarse pass
-  afterLoad(() => {
-    frames.start();
-    if (saveData) return;
-    import('./webgl.js').then(async ({ webglCapable, createGL }) => {
-      if (!webglCapable()) return;
-      try {
-        const g = await createGL(media);
-        g.resize(tl.geo.rest.w, tl.geo.rest.h);
-        gl = g;
-        stage.classList.remove('has-light', 'has-canvas');
-        stage.classList.add('is-gl');
-        root.classList.add('is-webgl');
-      } catch (err) {
-        console.warn('Hero: staying on the 2D path.', err);
-      }
-    });
-  });
+  // WebGL (depth parallax) once the page is up, on capable machines
+  if (!saveData) afterLoad(() => import('./webgl.js').then(async ({ webglCapable, createGL }) => {
+    if (!webglCapable()) return;
+    try {
+      const g = await createGL(media, video);
+      g.resize(tl.geo.rest.w, tl.geo.rest.h);
+      gl = g;
+      stage.classList.remove('has-light');
+      stage.classList.add('is-gl');
+      root.classList.add('is-webgl');
+    } catch (err) {
+      console.warn('Hero: staying on the 2D path.', err);
+    }
+  }));
 
   // Fonts change line heights → re-measure once they land
   document.fonts?.ready.then(() => ScrollTrigger.refresh());
@@ -177,15 +184,15 @@ async function startCinema({ hero, saveData, onLenis }) {
 function startLite({ hero, saveData }) {
   root.classList.add('is-lite');
   const stage = $('#stage');
-  const media = $('.stage-media', stage);
   const torch = $('.stage-torch', stage);
   stage.classList.add('has-torch');
   const light = createSpotlight({ mode: 'drift', rtl });
   createAmbient({ hero, still: saveData, small: innerWidth < 768 });
+  heroVideo(stage, stage);
 
   // The light is a fixed-size gradient layer that only translates: sized once
   // here (one repaint), then every frame is a compositor-only transform.
-  let rect = { x: 0, y: 0, w: 1, h: 1 }, half = 0;
+  let rect = { x: 0, y: 0, w: 1, h: 1 }, half = 0, inView = true;
   const measure = () => {
     const b = stage.getBoundingClientRect();
     rect = { x: b.left, y: b.top + scrollY, w: b.width, h: b.height };
@@ -196,26 +203,7 @@ function startLite({ hero, saveData }) {
   };
   measure();
   addEventListener('resize', measure, { passive: true });
-
-  let inView = true, video = null;
-  new IntersectionObserver(([e]) => {
-    inView = e.isIntersecting;
-    if (video) inView && !document.hidden ? video.play().catch(() => {}) : video.pause();
-  }).observe(stage);
-  document.addEventListener('visibilitychange', () => {
-    if (video) !document.hidden && inView ? video.play().catch(() => {}) : video.pause();
-  });
-
-  if (!saveData) afterLoad(() => {
-    video = Object.assign(document.createElement('video'), {
-      className: 'stage-video', muted: true, loop: true, playsInline: true, autoplay: true,
-      preload: 'auto', src: '/hero/walk-720.mp4',
-    });
-    video.setAttribute('aria-hidden', 'true');
-    video.addEventListener('playing', () => stage.classList.add('has-video'), { once: true });
-    media.append(video);
-    video.play().catch(() => {});
-  });
+  new IntersectionObserver(([e]) => { inView = e.isIntersecting; }).observe(stage);
 
   gsap.ticker.add((time, deltaMs) => {
     if (!inView) return;

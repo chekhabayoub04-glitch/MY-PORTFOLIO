@@ -1,11 +1,12 @@
-// The capable-desktop path: the current film frame on a full-panel plane with
+// The capable-desktop path: the walking video on a full-panel plane with
 // one fragment shader that does a 2.5D depth parallax (the street moves more
 // than Ayoub), the light, the sodium edge, film grain and a vignette.
-// Depth comes from a 4x4 atlas of maps (scrub frames 0, 8, ..., 112, 119);
-// the shader blends the two nearest maps so the parallax never jumps.
+// Depth comes from a 4x4 atlas of maps (walk frames 0, 8, ..., 112, 119);
+// the shader blends the two nearest maps for where the video is in the walk,
+// so the parallax never jumps.
 import {
   Mesh, NoColorSpace, OrthographicCamera, PlaneGeometry, Scene, ShaderMaterial,
-  Texture, Vector2, Vector3, WebGLRenderer,
+  Texture, Vector2, Vector3, VideoTexture, WebGLRenderer,
 } from 'three';
 
 const KEYS = [0, 8, 16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 119];
@@ -72,7 +73,7 @@ const loadImage = url => new Promise((res, rej) => {
 });
 
 /** Resolves to the GL renderer, or rejects (missing depth atlas, no WebGL) so the 2D path stays. */
-export async function createGL(mount) {
+export async function createGL(mount, video) {
   const atlasImg = await loadImage('/hero/depth-atlas.webp');
 
   const renderer = new WebGLRenderer({ antialias: false, alpha: false, powerPreference: 'high-performance' });
@@ -80,7 +81,7 @@ export async function createGL(mount) {
   renderer.domElement.className = 'stage-gl';
   renderer.domElement.setAttribute('aria-hidden', 'true');
 
-  const frame = new Texture();
+  const frame = new VideoTexture(video);
   frame.colorSpace = NoColorSpace;
   const depth = new Texture(atlasImg);
   depth.colorSpace = NoColorSpace;
@@ -104,7 +105,7 @@ export async function createGL(mount) {
   if (gl.isContextLost()) throw new Error('WebGL context lost');
   mount.append(renderer.domElement);
 
-  let current = null, w = 1, h = 1;
+  let w = 1, h = 1;
   return {
     resize(width, height) {
       w = width; h = height;
@@ -113,14 +114,12 @@ export async function createGL(mount) {
       uniforms.uRes.value.set(width, height);
     },
     /**
-     * @param img   current film frame (HTMLImageElement)
-     * @param f     frame index 0..119 (for the depth blend)
+     * @param f     where the video is in the walk, as a frame 0..119 (for the depth blend)
      * @param light spotlight state (stage-normalised x/y, mouse -1..1, on)
      * @param open  0..1 light fully open
      */
-    render(img, f, light, open, time) {
-      if (!img) return;
-      if (img !== current) { frame.image = img; frame.needsUpdate = true; current = img; }
+    render(f, light, open, time) {
+      if (video.readyState < 2) return;
       let a = 0;
       while (a < KEYS.length - 2 && KEYS[a + 1] <= f) a++;
       uniforms.uTileA.value = a;

@@ -64,8 +64,8 @@
 }
 .stage-media, .stage-media > * { position: absolute; inset: 0; width: 100%; height: 100%; }
 .stage-poster, .stage-video { object-fit: cover; object-position: 50% 30%; }
-.stage-canvas, .stage-video, .stage-gl { opacity: 0; transition: opacity .6s var(--ease); }
-.stage.has-canvas .stage-canvas, .stage.has-video .stage-video, .stage.is-gl .stage-gl { opacity: 1; }
+.stage-video, .stage-gl { opacity: 0; transition: opacity .6s var(--ease); }
+.stage.has-video .stage-video, .stage.is-gl .stage-gl { opacity: 1; }
 .stage-sodium, .stage-grain, .stage-torch { position: absolute; pointer-events: none; display: none; }
 
 .hero-progress { display: none; }
@@ -85,7 +85,7 @@
   animation: grain .9s steps(6) infinite;
 }
 .stage.is-gl .stage-media { -webkit-mask-image: none; mask-image: none; }
-.stage.is-gl .stage-sodium, .stage.is-gl .stage-grain, .stage.is-gl .stage-canvas, .stage.is-gl .stage-poster { display: none; }
+.stage.is-gl .stage-sodium, .stage.is-gl .stage-grain, .stage.is-gl .stage-poster { display: none; }
 .stage.is-off .stage-grain { animation-play-state: paused; }
 @keyframes grain {
   0% { transform: translate(0, 0); } 20% { transform: translate(-6%, 4%); } 40% { transform: translate(5%, -7%); }

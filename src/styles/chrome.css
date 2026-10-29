@@ -39,7 +39,7 @@
 @media (max-width: 1023px) {
   .site-nav { gap: 12px; }
   .site-brand { font-size: .9375rem; gap: 8px; }
-  .site-links, .site-cta { display: none; }
+  .site-links { display: none; }
   .lang-switch { margin-inline-start: auto; }
   .lang-switch a { min-width: 34px; min-height: 30px; padding: 0 6px; }
   .js .nav-burger {

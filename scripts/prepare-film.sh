@@ -9,10 +9,9 @@
 # --stage S      render (Remotion only), encode (ffmpeg + depth only) or all (default)
 #
 # Writes to public/hero/:
-#   frames/f_001..f_120.webp  scroll-scrub frames (graded, 720x1280, no upscaling)
 #   poster-{360,540,720}.webp, poster-depth.webp
-#   depth-atlas.webp          4x4 depth maps of scrub frames 0,8,..,112,119
-#   walk-720.mp4              mobile hero loop (no audio, 0.5 s crossfade at the loop point)
+#   depth-atlas.webp          4x4 depth maps of walk frames 0,8,..,112,119 (WebGL parallax)
+#   walk-720.mp4              the hero walk loop (no audio, 0.5 s crossfade at the loop point)
 #   ambient.webm, ambient.mp4 desktop background loop (full clip, graded, crossfaded)
 #   ambient-540.mp4           phone background loop
 set -euo pipefail
@@ -42,7 +41,7 @@ TOTAL=$(printf '%.0f' "$(echo "$DURATION * 24" | bc)")
 # (ffmpeg -i without an output exits 1, so don't let pipefail stop here)
 FULL="$({ "$FF" -i "$INPUT" 2>&1 || true; } | sed -n 's/.*Duration: \([0-9:.]*\).*/\1/p' | awk -F: '{print $1*3600+$2*60+$3}')"
 WALK="{\"start\":$START,\"duration\":$DURATION}"
-mkdir -p "$OUT/frames"
+mkdir -p "$OUT"
 cd "$FILM"
 
 render() {
@@ -74,37 +73,27 @@ encode() {
   "$PY" "$ROOT/scripts/depth.py" "$png" "$OUT/poster-depth.webp"
   [ "$PREVIEW" = 1 ] && return
 
-  # 1) Graded walk sampled down to $FRAMES WebP frames (q80 keeps the grain, so no banding).
-  rm -f "$OUT/frames"/*.webp
+  # The graded walk, sampled down to $FRAMES frames for the depth atlas
   ls out/walk/*.png > out/walk.txt
   local n; n=$(wc -l < out/walk.txt)
   pick() { sed -n "$(( $1 * (n - 1) / (FRAMES - 1) + 1 ))p" out/walk.txt; }
-  # A frame over 45 KB steps down to q76, then q72.
-  for i in $(seq 0 $((FRAMES - 1))); do
-    local f; f="$OUT/frames/f_$(printf %03d $((i + 1))).webp"
-    for q in 80 76 72; do
-      "$FF" -v error -y -i "$(pick "$i")" -c:v libwebp -quality "$q" -preset photo -compression_level 6 "$f"
-      [ "$(wc -c < "$f")" -le 46080 ] && break
-    done
-  done
 
-  # 2) Depth atlas for the scrub: every 8th frame + the last.
+  # Depth atlas for the WebGL parallax: every 8th frame + the last.
   local atlas=""
   for k in 0 8 16 24 32 40 48 56 64 72 80 88 96 104 112 119; do atlas="$atlas $(pick "$k")"; done
   "$PY" "$ROOT/scripts/depth.py" --atlas "$OUT/depth-atlas.webp" $atlas
 
-  # 3) Mobile loop from the same graded frames.
+  # The hero loop from the same graded frames.
   "$FF" -v error -y -framerate 24 -pattern_type glob -i 'out/walk/*.png' -c:v libx264 -crf 12 -pix_fmt yuv420p out/walk-master.mp4
   loop out/walk-master.mp4 "$(echo "$n / 24" | bc -l)" "" -c:v libx264 -preset slow -crf 28 -pix_fmt yuv420p -movflags +faststart "$OUT/walk-720.mp4"
 
-  # 4) Ambient loop: the whole clip, graded, no audio.
+  # Ambient loop: the whole clip, graded, no audio.
   local amb; amb="$(echo "$(printf '%.0f' "$(echo "$FULL * 24" | bc)") / 24" | bc -l)"
   loop out/ambient-master.mp4 "$amb" "" -c:v libvpx-vp9 -b:v 0 -crf 42 -row-mt 1 "$OUT/ambient.webm"
   loop out/ambient-master.mp4 "$amb" "" -c:v libx264 -preset slow -crf 30 -pix_fmt yuv420p -movflags +faststart "$OUT/ambient.mp4"
   loop out/ambient-master.mp4 "$amb" "scale=540:-2," -c:v libx264 -preset slow -crf 31 -pix_fmt yuv420p -movflags +faststart "$OUT/ambient-540.mp4"
 
   du -h "$OUT"/*.* | sort -k2
-  echo "frames: $(ls "$OUT/frames" | wc -l | tr -d ' ') ($(du -sh "$OUT/frames" | cut -f1)), largest $(ls -S "$OUT/frames" | head -1) $(du -k "$OUT/frames/$(ls -S "$OUT/frames" | head -1)" | cut -f1) KB"
 }
 
 case "$STAGE" in
