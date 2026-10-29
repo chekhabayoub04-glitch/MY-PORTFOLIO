@@ -1,0 +1,49 @@
+{
+  "meta": {
+    "title": "Ayoub Chekhab | Websites, ads and AI films that bring clients",
+    "description": "Websites, ads and AI films that bring clients to your business. Ayoub Chekhab, digital creator in Algeria: web design, ad visuals, AI brand films, logos, Meta Ads and SEO.",
+    "locale": "en_US",
+    "ogAlt": "Ayoub Chekhab, digital creator in Algeria: websites, ads and AI films"
+  },
+  "skip": "Skip to content",
+  "nav": {
+    "label": "Main",
+    "home": "Ayoub Chekhab, home",
+    "work": "Work",
+    "services": "Services",
+    "about": "About",
+    "contact": "Contact",
+    "menu": "Open menu",
+    "language": "Language"
+  },
+  "hero": {
+    "h1": "Websites, ads and AI films that bring clients to your business.",
+    "sub": "I'm Ayoub, a digital creator in Algeria. I design, build and promote brands that are ready to be seen.",
+    "poster": "Ayoub Chekhab in a black suit, smiling, under a gold light",
+    "beats": [
+      { "title": "Websites that book clients", "proof": "6 live sites, from clinics and gyms to real estate." },
+      { "title": "Ads and visuals that stop the scroll", "proof": "Campaign visuals for 7 industries, from car care to streetwear." },
+      { "title": "AI films for a fraction of a shoot", "proof": "Brand films for clothing, glass, villa and car brands, with no film crew." }
+    ],
+    "tools": "Tools I build with"
+  },
+  "cta": {
+    "whatsapp": "Talk on WhatsApp",
+    "work": "See the work"
+  },
+  "wa": {
+    "text": "Hi Ayoub, I saw your portfolio and I'd like to talk about a project."
+  },
+  "work": {
+    "title": "The work",
+    "lede": "Live websites, campaign visuals, AI films and logos, made for real businesses.",
+    "reel": "Watch the 10-second film",
+    "signature": "Out of the shadow, into the light."
+  },
+  "reel": {
+    "label": "Ayoub's film",
+    "close": "Close",
+    "soundOn": "Turn sound on",
+    "soundOff": "Turn sound off"
+  }
+}

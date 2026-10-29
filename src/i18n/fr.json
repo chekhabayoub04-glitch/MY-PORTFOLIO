@@ -1,0 +1,49 @@
+{
+  "meta": {
+    "title": "Ayoub Chekhab | Sites, pubs et films IA qui amènent des clients",
+    "description": "Des sites, des pubs et des films IA qui amènent des clients à votre entreprise. Ayoub Chekhab, créateur digital en Algérie : sites web, visuels publicitaires, films de marque IA, logos, Meta Ads et SEO.",
+    "locale": "fr_FR",
+    "ogAlt": "Ayoub Chekhab, créateur digital en Algérie : sites, pubs et films IA"
+  },
+  "skip": "Aller au contenu",
+  "nav": {
+    "label": "Principale",
+    "home": "Ayoub Chekhab, accueil",
+    "work": "Projets",
+    "services": "Services",
+    "about": "À propos",
+    "contact": "Contact",
+    "menu": "Ouvrir le menu",
+    "language": "Langue"
+  },
+  "hero": {
+    "h1": "Des sites, des pubs et des films IA qui amènent des clients à votre entreprise.",
+    "sub": "Je suis Ayoub, créateur digital en Algérie. Je conçois, développe et fais connaître les marques.",
+    "poster": "Ayoub Chekhab en costume noir, souriant, sous une lumière dorée",
+    "beats": [
+      { "title": "Des sites qui ramènent des clients", "proof": "6 sites en ligne, des cliniques et salles de sport à l'immobilier." },
+      { "title": "Des pubs et des visuels qui arrêtent le scroll", "proof": "Des visuels de campagne pour 7 secteurs, de l'entretien auto au streetwear." },
+      { "title": "Des films IA pour une fraction d'un tournage", "proof": "Des films de marque pour la mode, le verre, l'immobilier et l'automobile, sans équipe de tournage." }
+    ],
+    "tools": "Mes outils"
+  },
+  "cta": {
+    "whatsapp": "Discuter sur WhatsApp",
+    "work": "Voir les projets"
+  },
+  "wa": {
+    "text": "Bonjour Ayoub, j'ai vu votre portfolio et j'aimerais parler d'un projet."
+  },
+  "work": {
+    "title": "Les projets",
+    "lede": "Sites en ligne, visuels de campagne, films IA et logos, réalisés pour de vraies entreprises.",
+    "reel": "Voir le film de 10 secondes",
+    "signature": "De l'ombre à la lumière."
+  },
+  "reel": {
+    "label": "Le film d'Ayoub",
+    "close": "Fermer",
+    "soundOn": "Activer le son",
+    "soundOff": "Couper le son"
+  }
+}
