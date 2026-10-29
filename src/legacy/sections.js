@@ -160,7 +160,7 @@ export function initSections() {
       const end = +num.dataset.count, t0 = performance.now(), dur = reducedMotion ? 1 : 1600;
       (function tick(now) {
         const k = clamp((now - t0) / dur);
-        num.textContent = Math.round(end * (1 - Math.pow(1 - k, 4)));
+        num.textContent = Math.max(1, Math.round(end * (1 - Math.pow(1 - k, 4))));   // never shows 0
         if (k < 1) requestAnimationFrame(tick);
       })(t0);
     }
