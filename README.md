@@ -90,7 +90,7 @@ Portfolio images are stored in the `images/` folder. Keep the filenames used by 
 | `service-logo.jpg` | Logo design service image |
 | `service-social.jpg` | Social media service image |
 | `project-drbadis.jpg` | Dr. Badis project thumbnail |
-| `project-dr213.jpg` | Dr. 213 thumbnail |
+| `project-dr213.jpg` | Dr Yahia thumbnail |
 | `project-deutsch.jpg` | Deutsch project thumbnail |
 | `project-coffee.jpg` | Coffee Break DZ thumbnail |
 | `logo1.jpg` – `logo13.jpg` | Logo design gallery |
