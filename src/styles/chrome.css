@@ -49,6 +49,11 @@
   .nav-burger span { display: block; width: 18px; height: 1.5px; background: var(--fog); transition: transform .3s var(--ease); }
   .nav-burger[aria-expanded="true"] span:first-child { transform: translateY(3.75px) rotate(45deg); }
   .nav-burger[aria-expanded="true"] span:last-child { transform: translateY(-3.75px) rotate(-45deg); }
+  .nav-burger { flex-shrink: 0; }
+}
+/* Narrow phones: four languages and the menu need the room, the bat stays as the home link */
+@media (max-width: 479px) {
+  .site-brand span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
 }
 .drawer a small { display: none; }
 
