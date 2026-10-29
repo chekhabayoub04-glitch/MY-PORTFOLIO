@@ -12,3 +12,6 @@ videos/film/*.mp4
 videos/film/*.mov
 videos/film/*.m4v
 videos/film/*.webm
+
+node_modules/
+dist/
