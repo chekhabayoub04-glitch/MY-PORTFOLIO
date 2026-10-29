@@ -109,7 +109,7 @@ document.getElementById('contactForm')?.addEventListener('submit', event => {
     '',
     String(data.get('message') || '')
   ].join('\n');
-  window.location.href = `mailto:CHEKHABAYOUB04@GMAIL.COM?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  window.location.href = `mailto:chekhabayoub11@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 });
 
 const copyrightYear = document.getElementById('copyrightYear');
