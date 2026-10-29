@@ -1,0 +1,60 @@
+{
+  "url": "https://chekhabayoub11-ops.github.io/we-can-speak-deutsch/",
+  "captured": "2026-10-29",
+  "images": {
+    "desktop-first": {
+      "w": 1600,
+      "h": 1000
+    },
+    "desktop-full": {
+      "w": 1600,
+      "h": 4004
+    },
+    "gallery-1": {
+      "w": 1600,
+      "h": 708
+    },
+    "mobile-first": {
+      "w": 780,
+      "h": 1688
+    },
+    "mobile-full": {
+      "w": 780,
+      "h": 5599
+    },
+    "gallery-2": {
+      "w": 780,
+      "h": 2848
+    },
+    "gallery-3": {
+      "w": 780,
+      "h": 1526
+    },
+    "gallery-4": {
+      "w": 780,
+      "h": 1688
+    }
+  },
+  "gallery": [
+    {
+      "file": "gallery-1",
+      "kind": "levels",
+      "viewport": "desktop"
+    },
+    {
+      "file": "gallery-2",
+      "kind": "levels",
+      "viewport": "mobile"
+    },
+    {
+      "file": "gallery-3",
+      "kind": "resources",
+      "viewport": "mobile"
+    },
+    {
+      "file": "gallery-4",
+      "kind": "gallery",
+      "viewport": "mobile"
+    }
+  ]
+}

@@ -1,0 +1,180 @@
+{
+  "_readme": [
+    "One entry per website. Pages, cards, sitemap and screenshots are generated from this file.",
+    "Add a project: add an entry, then run `npm run capture -- <slug>` and `npm run build`.",
+    "Any value \"TODO\" counts as missing: its block is hidden and the build lists it.",
+    "Copy fields are { en, fr, ar }. Problem, solution, results and testimonial are written by Ayoub only.",
+    "capture: what scripts/capture-projects.mjs shoots for the gallery (mobile unless viewport says otherwise).",
+    "  scrollTo: a CSS selector to shoot as a section; click: a selector to tap first (e.g. the mobile menu)."
+  ],
+  "projects": [
+    {
+      "slug": "dr-213",
+      "url": "https://chekhabayoub11-ops.github.io/dr.213/",
+      "personal": false,
+      "showClientName": "TODO",
+      "name": { "en": "Dr 213", "fr": "Dr 213", "ar": "Dr 213" },
+      "type": { "en": "Dental clinic", "fr": "Cabinet dentaire", "ar": "عيادة أسنان" },
+      "city": { "en": "Ben Aknoun, Algiers", "fr": "Ben Aknoun, Alger", "ar": "بن عكنون، الجزائر العاصمة" },
+      "year": "TODO",
+      "deliveryTime": { "en": "TODO", "fr": "TODO", "ar": "TODO" },
+      "services": ["website"],
+      "accent": "TODO",
+      "problem": { "en": ["TODO", "TODO", "TODO"], "fr": ["TODO", "TODO", "TODO"], "ar": ["TODO", "TODO", "TODO"] },
+      "solution": [
+        { "icon": "calendar", "title": { "en": "TODO", "fr": "TODO", "ar": "TODO" }, "text": { "en": "TODO", "fr": "TODO", "ar": "TODO" } },
+        { "icon": "phone", "title": { "en": "TODO", "fr": "TODO", "ar": "TODO" }, "text": { "en": "TODO", "fr": "TODO", "ar": "TODO" } },
+        { "icon": "language", "title": { "en": "TODO", "fr": "TODO", "ar": "TODO" }, "text": { "en": "TODO", "fr": "TODO", "ar": "TODO" } },
+        { "icon": "search", "title": { "en": "TODO", "fr": "TODO", "ar": "TODO" }, "text": { "en": "TODO", "fr": "TODO", "ar": "TODO" } }
+      ],
+      "results": [],
+      "testimonial": null,
+      "capture": [
+        { "kind": "services", "scrollTo": "#services" },
+        { "kind": "booking", "scrollTo": "#book" },
+        { "kind": "menu", "click": ".menu-btn" },
+        { "kind": "services", "viewport": "desktop", "scrollTo": "#services" }
+      ]
+    },
+    {
+      "slug": "dr-sofian-clinic",
+      "url": "https://chekhabayoub11-ops.github.io/dr-sofian-clinic/",
+      "personal": false,
+      "showClientName": "TODO",
+      "name": { "en": "Dr Sofiane Clinic", "fr": "Clinique Dr Sofiane", "ar": "عيادة الدكتور سفيان" },
+      "type": { "en": "Gastroenterology clinic", "fr": "Cabinet de gastro-entérologie", "ar": "عيادة أمراض الجهاز الهضمي" },
+      "city": { "en": "Algiers", "fr": "Alger", "ar": "الجزائر العاصمة" },
+      "year": "TODO",
+      "deliveryTime": { "en": "TODO", "fr": "TODO", "ar": "TODO" },
+      "services": ["website"],
+      "accent": "TODO",
+      "problem": { "en": ["TODO", "TODO", "TODO"], "fr": ["TODO", "TODO", "TODO"], "ar": ["TODO", "TODO", "TODO"] },
+      "solution": [
+        { "icon": "calendar", "title": { "en": "TODO", "fr": "TODO", "ar": "TODO" }, "text": { "en": "TODO", "fr": "TODO", "ar": "TODO" } },
+        { "icon": "phone", "title": { "en": "TODO", "fr": "TODO", "ar": "TODO" }, "text": { "en": "TODO", "fr": "TODO", "ar": "TODO" } },
+        { "icon": "map", "title": { "en": "TODO", "fr": "TODO", "ar": "TODO" }, "text": { "en": "TODO", "fr": "TODO", "ar": "TODO" } },
+        { "icon": "search", "title": { "en": "TODO", "fr": "TODO", "ar": "TODO" }, "text": { "en": "TODO", "fr": "TODO", "ar": "TODO" } }
+      ],
+      "results": [],
+      "testimonial": null,
+      "capture": [
+        { "kind": "services", "scrollTo": "#services" },
+        { "kind": "booking", "scrollTo": "#contact" },
+        { "kind": "menu", "click": ".menu-toggle" },
+        { "kind": "services", "viewport": "desktop", "scrollTo": "#endoscopy" }
+      ]
+    },
+    {
+      "slug": "dr-badis",
+      "url": "https://chekhabayoub11-ops.github.io/dr.badis/",
+      "personal": false,
+      "showClientName": "TODO",
+      "name": { "en": "Dr Badis Clinic", "fr": "Clinique Dr Badis", "ar": "عيادة الدكتور باديس" },
+      "type": { "en": "Family medicine clinic", "fr": "Cabinet de médecine générale", "ar": "عيادة الطب العام" },
+      "city": { "en": "TODO", "fr": "TODO", "ar": "TODO" },
+      "year": "TODO",
+      "deliveryTime": { "en": "TODO", "fr": "TODO", "ar": "TODO" },
+      "services": ["website"],
+      "accent": "TODO",
+      "problem": { "en": ["TODO", "TODO", "TODO"], "fr": ["TODO", "TODO", "TODO"], "ar": ["TODO", "TODO", "TODO"] },
+      "solution": [
+        { "icon": "calendar", "title": { "en": "TODO", "fr": "TODO", "ar": "TODO" }, "text": { "en": "TODO", "fr": "TODO", "ar": "TODO" } },
+        { "icon": "phone", "title": { "en": "TODO", "fr": "TODO", "ar": "TODO" }, "text": { "en": "TODO", "fr": "TODO", "ar": "TODO" } },
+        { "icon": "heart", "title": { "en": "TODO", "fr": "TODO", "ar": "TODO" }, "text": { "en": "TODO", "fr": "TODO", "ar": "TODO" } },
+        { "icon": "search", "title": { "en": "TODO", "fr": "TODO", "ar": "TODO" }, "text": { "en": "TODO", "fr": "TODO", "ar": "TODO" } }
+      ],
+      "results": [],
+      "testimonial": null,
+      "capture": [
+        { "kind": "services", "scrollTo": ".services-overview" },
+        { "kind": "booking", "scrollTo": ".emergency-contact" },
+        { "kind": "about", "scrollTo": ".about-preview" },
+        { "kind": "services", "viewport": "desktop", "scrollTo": ".services-overview" }
+      ]
+    },
+    {
+      "slug": "titan-gym",
+      "url": "https://chekhabayoub04-glitch.github.io/titan-gym/",
+      "personal": false,
+      "showClientName": "TODO",
+      "name": { "en": "Titan Gym", "fr": "Titan Gym", "ar": "Titan Gym" },
+      "type": { "en": "Gym", "fr": "Salle de sport", "ar": "قاعة رياضة" },
+      "city": { "en": "Algiers", "fr": "Alger", "ar": "الجزائر العاصمة" },
+      "year": "TODO",
+      "deliveryTime": { "en": "TODO", "fr": "TODO", "ar": "TODO" },
+      "services": ["website"],
+      "accent": "TODO",
+      "problem": { "en": ["TODO", "TODO", "TODO"], "fr": ["TODO", "TODO", "TODO"], "ar": ["TODO", "TODO", "TODO"] },
+      "solution": [
+        { "icon": "calendar", "title": { "en": "TODO", "fr": "TODO", "ar": "TODO" }, "text": { "en": "TODO", "fr": "TODO", "ar": "TODO" } },
+        { "icon": "phone", "title": { "en": "TODO", "fr": "TODO", "ar": "TODO" }, "text": { "en": "TODO", "fr": "TODO", "ar": "TODO" } },
+        { "icon": "chart", "title": { "en": "TODO", "fr": "TODO", "ar": "TODO" }, "text": { "en": "TODO", "fr": "TODO", "ar": "TODO" } },
+        { "icon": "search", "title": { "en": "TODO", "fr": "TODO", "ar": "TODO" }, "text": { "en": "TODO", "fr": "TODO", "ar": "TODO" } }
+      ],
+      "results": [],
+      "testimonial": null,
+      "capture": [
+        { "kind": "pricing", "scrollTo": "#pricing" },
+        { "kind": "booking", "scrollTo": "#contact" },
+        { "kind": "menu", "click": ".hamburger" },
+        { "kind": "schedule", "viewport": "desktop", "scrollTo": "#schedule" }
+      ]
+    },
+    {
+      "slug": "saida-real-estate",
+      "url": "https://chekhabayoub04-glitch.github.io/new-vession-promition-/",
+      "personal": false,
+      "showClientName": "TODO",
+      "name": { "en": "Saïda Real Estate", "fr": "Saïda Immobilier", "ar": "Saïda Real Estate" },
+      "type": { "en": "Real estate promotion", "fr": "Promotion immobilière", "ar": "ترقية عقارية" },
+      "city": { "en": "TODO", "fr": "TODO", "ar": "TODO" },
+      "year": "TODO",
+      "deliveryTime": { "en": "TODO", "fr": "TODO", "ar": "TODO" },
+      "services": ["website"],
+      "accent": "TODO",
+      "problem": { "en": ["TODO", "TODO", "TODO"], "fr": ["TODO", "TODO", "TODO"], "ar": ["TODO", "TODO", "TODO"] },
+      "solution": [
+        { "icon": "building", "title": { "en": "TODO", "fr": "TODO", "ar": "TODO" }, "text": { "en": "TODO", "fr": "TODO", "ar": "TODO" } },
+        { "icon": "phone", "title": { "en": "TODO", "fr": "TODO", "ar": "TODO" }, "text": { "en": "TODO", "fr": "TODO", "ar": "TODO" } },
+        { "icon": "map", "title": { "en": "TODO", "fr": "TODO", "ar": "TODO" }, "text": { "en": "TODO", "fr": "TODO", "ar": "TODO" } },
+        { "icon": "search", "title": { "en": "TODO", "fr": "TODO", "ar": "TODO" }, "text": { "en": "TODO", "fr": "TODO", "ar": "TODO" } }
+      ],
+      "results": [],
+      "testimonial": null,
+      "capture": [
+        { "kind": "listings", "scrollTo": "#properties" },
+        { "kind": "booking", "scrollTo": "#contact" },
+        { "kind": "menu", "click": ".nav-toggle" },
+        { "kind": "listings", "viewport": "desktop", "scrollTo": "#properties" }
+      ]
+    },
+    {
+      "slug": "we-can-speak-deutsch",
+      "url": "https://chekhabayoub11-ops.github.io/we-can-speak-deutsch/",
+      "personal": true,
+      "showClientName": true,
+      "name": { "en": "We Can Speak Deutsch", "fr": "We Can Speak Deutsch", "ar": "We Can Speak Deutsch" },
+      "type": { "en": "Language school", "fr": "École de langues", "ar": "مدرسة لغات" },
+      "city": { "en": "TODO", "fr": "TODO", "ar": "TODO" },
+      "year": "TODO",
+      "deliveryTime": { "en": "TODO", "fr": "TODO", "ar": "TODO" },
+      "services": ["website"],
+      "accent": "TODO",
+      "problem": { "en": ["TODO", "TODO", "TODO"], "fr": ["TODO", "TODO", "TODO"], "ar": ["TODO", "TODO", "TODO"] },
+      "solution": [
+        { "icon": "language", "title": { "en": "TODO", "fr": "TODO", "ar": "TODO" }, "text": { "en": "TODO", "fr": "TODO", "ar": "TODO" } },
+        { "icon": "phone", "title": { "en": "TODO", "fr": "TODO", "ar": "TODO" }, "text": { "en": "TODO", "fr": "TODO", "ar": "TODO" } },
+        { "icon": "image", "title": { "en": "TODO", "fr": "TODO", "ar": "TODO" }, "text": { "en": "TODO", "fr": "TODO", "ar": "TODO" } },
+        { "icon": "search", "title": { "en": "TODO", "fr": "TODO", "ar": "TODO" }, "text": { "en": "TODO", "fr": "TODO", "ar": "TODO" } }
+      ],
+      "results": [],
+      "testimonial": null,
+      "capture": [
+        { "kind": "levels", "scrollTo": "#levels" },
+        { "kind": "resources", "scrollTo": "#resources" },
+        { "kind": "gallery", "scrollTo": "#places-gallery" },
+        { "kind": "levels", "viewport": "desktop", "scrollTo": "#levels" }
+      ]
+    }
+  ]
+}

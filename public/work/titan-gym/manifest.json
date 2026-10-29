@@ -1,0 +1,60 @@
+{
+  "url": "https://chekhabayoub04-glitch.github.io/titan-gym/",
+  "captured": "2026-10-29",
+  "images": {
+    "desktop-first": {
+      "w": 1600,
+      "h": 1000
+    },
+    "desktop-full": {
+      "w": 1600,
+      "h": 6000
+    },
+    "gallery-1": {
+      "w": 1600,
+      "h": 1234
+    },
+    "mobile-first": {
+      "w": 780,
+      "h": 1688
+    },
+    "mobile-full": {
+      "w": 780,
+      "h": 6000
+    },
+    "gallery-2": {
+      "w": 780,
+      "h": 1688
+    },
+    "gallery-3": {
+      "w": 780,
+      "h": 1688
+    },
+    "gallery-4": {
+      "w": 780,
+      "h": 1688
+    }
+  },
+  "gallery": [
+    {
+      "file": "gallery-1",
+      "kind": "schedule",
+      "viewport": "desktop"
+    },
+    {
+      "file": "gallery-2",
+      "kind": "pricing",
+      "viewport": "mobile"
+    },
+    {
+      "file": "gallery-3",
+      "kind": "booking",
+      "viewport": "mobile"
+    },
+    {
+      "file": "gallery-4",
+      "kind": "menu",
+      "viewport": "mobile"
+    }
+  ]
+}
