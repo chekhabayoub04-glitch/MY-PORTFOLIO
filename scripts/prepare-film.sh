@@ -15,7 +15,6 @@
 #   walk-720.mp4              mobile hero loop (no audio, 0.5 s crossfade at the loop point)
 #   ambient.webm, ambient.mp4 desktop background loop (full clip, graded, crossfaded)
 #   ambient-540.mp4           phone background loop
-#   reel.mp4                  the original clip with sound, for the reel modal
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
@@ -103,9 +102,6 @@ encode() {
   loop out/ambient-master.mp4 "$amb" "" -c:v libvpx-vp9 -b:v 0 -crf 42 -row-mt 1 "$OUT/ambient.webm"
   loop out/ambient-master.mp4 "$amb" "" -c:v libx264 -preset slow -crf 30 -pix_fmt yuv420p -movflags +faststart "$OUT/ambient.mp4"
   loop out/ambient-master.mp4 "$amb" "scale=540:-2," -c:v libx264 -preset slow -crf 31 -pix_fmt yuv420p -movflags +faststart "$OUT/ambient-540.mp4"
-
-  # 5) The reel modal plays the untouched original, with sound.
-  "$FF" -v error -y -i "$INPUT" -c copy -movflags +faststart "$OUT/reel.mp4"
 
   du -h "$OUT"/*.* | sort -k2
   echo "frames: $(ls "$OUT/frames" | wc -l | tr -d ' ') ($(du -sh "$OUT/frames" | cut -f1)), largest $(ls -S "$OUT/frames" | head -1) $(du -k "$OUT/frames/$(ls -S "$OUT/frames" | head -1)" | cut -f1) KB"

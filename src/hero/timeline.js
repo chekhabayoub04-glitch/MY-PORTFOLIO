@@ -1,36 +1,30 @@
-// Scroll choreography for the desktop hero.
-//   Act 2  the hero is pinned (CSS sticky, 250vh): the walk scrubs, the light
-//          widens, three beats replace each other, the tool ring orbits beat 1.
-//   Act 3  after the pin, the film panel flies into the reel card at the top
-//          of the Work section and then rides along with it.
+// Scroll choreography for the desktop hero: the hero is pinned (CSS sticky,
+// 250vh) while three beats replace each other, the tool ring orbits beat 1
+// and the light widens; then it scrolls away as one piece. (The walk itself
+// plays on its own when the page opens: see index.js.)
 // Layout is measured only on ScrollTrigger refresh; ticks do math only.
 
 const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
 const smooth = (a, b, v) => { const t = clamp((v - a) / (b - a)); return t * t * (3 - 2 * t); };
-const easeInOut = t => (t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
 
 // Scroll ranges (fractions of the pin) for each beat
 const BEATS = [[.08, .30], [.33, .55], [.58, 1.01]];
-const WALK_END = .86;   // the walk ends here; the rest holds the smile in full light
 
-export function createTimeline({ gsap, ScrollTrigger, hero, pin, slot, card, sub, beats }) {
-  const state = { p: 0, t: 0 };
-  const geo = { rest: { x: 0, y: 0, w: 1, h: 1 }, card: { x: 0, y: 0, w: 1, h: 1 }, vh: innerHeight, heroEnd: 0 };
+export function createTimeline({ gsap, ScrollTrigger, hero, pin, slot, sub, beats }) {
+  const state = { p: 0 };
+  const geo = { rest: { x: 0, y: 0, w: 1, h: 1 }, heroEnd: 0 };
 
   function measure() {
     const pinBox = pin.getBoundingClientRect();
     const s = slot.getBoundingClientRect();
     // the slot's position inside the sticky box = its viewport rect while pinned
     geo.rest = { x: s.left - pinBox.left, y: s.top - pinBox.top, w: s.width, h: s.height };
-    const c = card.getBoundingClientRect();
-    geo.card = { x: c.left, y: c.top + scrollY, w: c.width, h: c.height };
-    geo.vh = innerHeight;
     geo.heroEnd = hero.offsetTop + hero.offsetHeight - innerHeight;
   }
   ScrollTrigger.addEventListener('refreshInit', measure);
   measure();
 
-  // Act 2: one scrubbed timeline drives the walk progress and the beats
+  // One scrubbed timeline drives the scene's progress and the beats
   const tl = gsap.timeline({
     defaults: { ease: 'none' },
     scrollTrigger: { trigger: hero, start: 'top top', end: 'bottom bottom', scrub: .6, invalidateOnRefresh: true },
@@ -43,34 +37,15 @@ export function createTimeline({ gsap, ScrollTrigger, hero, pin, slot, card, sub
     if (b <= 1) tl.to(el, { autoAlpha: 0, y: -24, duration: .04, ease: 'power1.in' }, b - .04);
   });
 
-  // Act 3: from the end of the pin until the card sits in the middle of the screen
-  gsap.to(state, {
-    t: 1, ease: 'none',
-    scrollTrigger: {
-      trigger: hero, start: 'bottom bottom',
-      end: () => Math.max(geo.heroEnd + 1, geo.card.y - Math.max((geo.vh - geo.card.h) / 2, 96)),
-      scrub: .6, invalidateOnRefresh: true,
-    },
-  });
-
   return {
     state, geo,
-    get walk() { return clamp(state.p / WALK_END); },
     get open() { return smooth(.1, .8, state.p); },
     /** Beat 1's visibility, for the tool ring (0..1), and how far it has turned. */
     get ring() { return { vis: smooth(.08, .13, state.p) * (1 - smooth(.25, .30, state.p)), turn: clamp((state.p - .06) / .26) }; },
-    /** Where the film panel is right now (viewport px), plus how card-like it is. */
+    /** Where the film panel is right now (viewport px): still while pinned, then it scrolls away with the hero. */
     stageRect(scroll) {
-      const e = easeInOut(state.t);
-      const { rest, card: c } = geo;
-      const cy = c.y - scroll;
-      return {
-        x: rest.x + (c.x - rest.x) * e,
-        y: rest.y + (cy - rest.y) * e,
-        w: rest.w + (c.w - rest.w) * e,
-        h: rest.h + (c.h - rest.h) * e,
-        e,
-      };
+      const { rest } = geo;
+      return { ...rest, y: rest.y - Math.max(0, scroll - geo.heroEnd) };
     },
   };
 }

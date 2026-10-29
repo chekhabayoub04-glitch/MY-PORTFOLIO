@@ -45,20 +45,12 @@
   },
   "work": {
     "title": "Selected work",
-    "lede": "Websites I designed and built, made to work on phones first. Open one to see it up close.",
-    "reel": "Watch the 10-second film",
-    "signature": "Out of the shadow, into the light.",
+    "lede": "Websites, ad visuals, AI films and logos, all made by me.",
     "carousel": "Selected websites",
     "prev": "Previous project",
     "next": "Next project",
     "webTitle": "Web development",
     "webLede": "Websites I designed and built. Stop on one and tap it to open the project."
-  },
-  "reel": {
-    "label": "Ayoub's film",
-    "close": "Close",
-    "soundOn": "Turn sound on",
-    "soundOff": "Turn sound off"
   },
   "portal": {
     "back": "Selected work",

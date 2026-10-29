@@ -1,5 +1,5 @@
 /* ============================================================
-   Nav, hero, reel card, dialog, thumb bar, ambient film.
+   Hero (all paths), Work intro, ambient film.
 
    The base styles are the complete page without JavaScript (and
    for reduced motion): a split hero with the poster in full light.
@@ -50,17 +50,16 @@
   aspect-ratio: 9 / 16;
 }
 .stage {
-  --feather: 1; --rad: 0px;
-  position: absolute; inset: 0; overflow: hidden; border-radius: var(--rad);
+  position: absolute; inset: 0; overflow: hidden;
   background: var(--abyss);
   /* soft edges so the film never sits in a box */
   -webkit-mask-image:
-    linear-gradient(to right, transparent, #000 calc(var(--feather) * 9%), #000 calc(100% - var(--feather) * 9%), transparent),
-    linear-gradient(to bottom, transparent, #000 calc(var(--feather) * 5%), #000 calc(100% - var(--feather) * 12%), transparent);
+    linear-gradient(to right, transparent, #000 9%, #000 91%, transparent),
+    linear-gradient(to bottom, transparent, #000 5%, #000 88%, transparent);
   -webkit-mask-composite: source-in;
   mask-image:
-    linear-gradient(to right, transparent, #000 calc(var(--feather) * 9%), #000 calc(100% - var(--feather) * 9%), transparent),
-    linear-gradient(to bottom, transparent, #000 calc(var(--feather) * 5%), #000 calc(100% - var(--feather) * 12%), transparent);
+    linear-gradient(to right, transparent, #000 9%, #000 91%, transparent),
+    linear-gradient(to bottom, transparent, #000 5%, #000 88%, transparent);
   mask-composite: intersect;
 }
 .stage-media, .stage-media > * { position: absolute; inset: 0; width: 100%; height: 100%; }
@@ -108,7 +107,8 @@
 .is-cinema .hero-ctas { grid-area: ctas; }
 .is-cinema .hero-sub { min-height: 5.2em; }
 
-.is-cinema .stage { position: fixed; inset: auto; left: 0; top: 0; z-index: 3; transform-origin: 0 0; will-change: transform; pointer-events: none; }
+/* the film stays in its slot (z-index 3) so the ring's icons can pass in front of and behind it */
+.is-cinema .stage { z-index: 3; pointer-events: none; }
 .is-cinema .tools { margin: 0; }
 .is-cinema .tool { position: fixed; left: 0; top: 0; z-index: 2; opacity: 0; will-change: transform, opacity; }
 .is-cinema .tool.is-front { z-index: 4; }
@@ -171,41 +171,10 @@
   .beats, .tools { padding-inline: 40px; }
 }
 
-/* ── Work intro + reel card ─────────────────────────────── */
-.work-intro {
-  display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center;
-  gap: clamp(32px, 5vw, 96px); max-width: 1680px; margin: 0 auto;
-  padding: clamp(72px, 10vh, 120px) var(--gutter) clamp(48px, 8vh, 96px);
-}
+/* ── Work intro ─────────────────────────────────────────── */
+.work-intro { max-width: 1680px; margin: 0 auto; padding: clamp(72px, 10vh, 120px) var(--gutter) clamp(32px, 5vh, 56px); }
 .work-head .display { font-size: var(--h2); }
 .work-head .lede { margin-top: 16px; max-width: 34em; color: var(--ash); }
-.work-head .chapter-index { margin-top: 32px; }
-.reel-card { width: clamp(240px, 22vw, 340px); }
-.reel-open { display: block; width: 100%; padding: 0; background: none; border: 0; color: inherit; text-align: start; cursor: pointer; }
-.reel-thumb { display: block; aspect-ratio: 9 / 16; border-radius: 18px; overflow: hidden; background: var(--asphalt); }
-.reel-thumb img { width: 100%; height: 100%; object-fit: cover; }
-.reel-label { display: flex; align-items: center; gap: 10px; margin-top: 16px; font-weight: 500; color: var(--fog); transition: color .2s; }
-.reel-label svg { width: 34px; height: 34px; padding: 9px; border-radius: 50%; background: var(--signal); color: var(--abyss); flex: none; }
-.reel-open:hover .reel-label { color: var(--signal); }
-.reel-card figcaption { margin-top: 10px; color: var(--ash); font-size: .9375rem; }
-.is-cinema .reel-thumb img { visibility: hidden; }
-.is-cinema .reel-thumb { background: transparent; }
-
-@media (max-width: 1023px) {
-  .work-intro { grid-template-columns: 1fr; padding-top: 72px; }
-  .reel-card { width: min(62vw, 300px); justify-self: center; }
-}
-
-/* ── Reel dialog ────────────────────────────────────────── */
-.reel-dialog {
-  margin: auto; padding: 0; border: 0; background: transparent; color: var(--fog);
-  max-width: 100vw; max-height: 100vh; overflow: visible;
-}
-.reel-dialog::backdrop { background: rgba(0, 0, 0, .88); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); }
-.reel-dialog video { display: block; height: min(80vh, 160vw); aspect-ratio: 9 / 16; border-radius: 16px; background: var(--asphalt); }
-.reel-controls { display: flex; justify-content: center; gap: 10px; margin-top: 14px; }
-.reel-dialog[open] { animation: rise .35s var(--ease); }
-@keyframes rise { from { opacity: 0; transform: translateY(16px); } }
 
 /* ── Ambient film behind the page ──────────────────────── */
 .ambient { position: fixed; inset: 0; z-index: 0; pointer-events: none; opacity: 0; transition: opacity 1s var(--ease); }
@@ -222,12 +191,12 @@ main, .footer { position: relative; z-index: 1; }
 
 /* Phones: scroll-linked motion that runs on the compositor (no JS).
    The film sinks and dims as you scroll off it, the headline lifts away,
-   beats, tools and the reel card rise in as they enter. */
+   beats, tools and the Work heading rise in as they enter. */
 @supports (animation-timeline: view()) {
   @media (max-width: 1023px) and (prefers-reduced-motion: no-preference) {
     .stage { animation: film-out linear both; animation-timeline: scroll(root); animation-range: 0 100svh; }
     .hero-intro { animation: intro-out linear both; animation-timeline: scroll(root); animation-range: 0 60svh; }
-    .beat, .reel-card, .work-head > * {
+    .beat, .work-head > *, .carousel-head {
       animation: rise-in linear both; animation-timeline: view(); animation-range: entry 0% entry 70%;
     }
     .tool {
@@ -243,5 +212,4 @@ main, .footer { position: relative; z-index: 1; }
 
 @media (prefers-reduced-motion: reduce) {
   .stage-grain, .stage-torch { animation: none !important; }
-  .reel-dialog[open] { animation: none; }
 }

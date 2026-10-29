@@ -1,6 +1,7 @@
 // Hero entry: pick a path for this device, then run everything from one
 // GSAP ticker (light, frame draw, ring, shader, Lenis).
-//   cinema  ≥1024px, mouse, motion OK: pinned scrub + light (2D, then WebGL if capable)
+//   cinema  ≥1024px, mouse, motion OK: the walk plays on its own, then holds on
+//           the smile; scrolling pins the hero for the beats (2D, then WebGL if capable)
 //   lite    phones, tablets, touch screens: muted loop + drifting light, no pin
 //   still   reduced motion: poster in full light, everything static
 import gsap from 'gsap';
@@ -16,7 +17,8 @@ const $ = (s, el = document) => el.querySelector(s);
 const $$ = (s, el = document) => [...el.querySelectorAll(s)];
 const rtl = root.dir === 'rtl';
 const CINEMA = '(min-width: 1024px) and (hover: hover) and (pointer: fine)';
-let lenis = null;
+const WALK_MS = 6000;   // the walk, from the dark street to the smile
+const easeInOut = t => (t < .5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2);
 
 // After the poster (LCP) has painted and the main thread is quiet
 const afterLoad = fn => {
@@ -30,7 +32,6 @@ export function initHero({ onLenis } = {}) {
   const hero = $('#top');
 
   revealHeadline(reduce);
-  initReelDialog();
 
   // Crossing the desktop breakpoint swaps the whole scene: reload into the right one
   const mq = matchMedia(CINEMA);
@@ -64,7 +65,7 @@ async function startCinema({ hero, saveData, onLenis }) {
   ]);
   gsap.registerPlugin(ScrollTrigger);
 
-  lenis = new Lenis({ lerp: .1, smoothWheel: true });
+  const lenis = new Lenis({ lerp: .1, smoothWheel: true });
   lenis.on('scroll', ScrollTrigger.update);
   gsap.ticker.add(t => lenis.raf(t * 1000));
   gsap.ticker.lagSmoothing(0);
@@ -84,18 +85,21 @@ async function startCinema({ hero, saveData, onLenis }) {
   const ring = createRing($$('.tool', hero));
   const tl = createTimeline({
     gsap, ScrollTrigger, hero,
-    pin: $('.hero-pin', hero), slot: $('.hero-stage-slot', hero), card: $('.reel-thumb'),
+    pin: $('.hero-pin', hero), slot: $('.hero-stage-slot', hero),
     sub: $('.hero-sub', hero), beats: $$('.beat', hero),
   });
   createAmbient({ hero, still: saveData });
 
-  let gl = null, lastFrame = -1, dirty = true, visible = null;
-  frames.onLoad = () => { dirty = true; };
+  let gl = null, lastFrame = -1, dirty = true, visible = null, playFrom = 0;
+  // The walk starts by itself once a quarter of the frames are in (every 4th),
+  // so it never stutters; the missing ones fill in while it plays.
+  frames.onLoad = () => {
+    dirty = true;
+    if (!playFrom && frames.loaded >= Math.ceil(frames.count / 4)) playFrom = performance.now();
+  };
 
   function layout() {
     const { rest } = tl.geo;
-    stage.style.width = `${rest.w}px`;
-    stage.style.height = `${rest.h}px`;
     drawer.resize(rest.w, rest.h);
     blur.width = 54; blur.height = 96;
     hero.style.setProperty('--stage-w', `${rest.w}px`);
@@ -111,7 +115,7 @@ async function startCinema({ hero, saveData, onLenis }) {
     const scroll = lenis.scroll;
     const r = tl.stageRect(scroll);
 
-    // The film panel: rest → reel card → rides with the card
+    // The film panel: still while pinned, then it leaves with the hero
     const nowVisible = r.y < innerHeight + 40 && r.y + r.h > -40;
     if (nowVisible !== visible) {
       visible = nowVisible;
@@ -119,18 +123,14 @@ async function startCinema({ hero, saveData, onLenis }) {
       stage.classList.toggle('is-off', !visible);
     }
     if (!visible) return;
-    const k = r.w / tl.geo.rest.w;
-    stage.style.transform = `translate3d(${r.x.toFixed(2)}px, ${r.y.toFixed(2)}px, 0) scale(${k.toFixed(4)})`;
-    stage.style.setProperty('--feather', (1 - r.e).toFixed(3));
-    stage.style.setProperty('--rad', `${(18 * r.e / k).toFixed(1)}px`);
 
-    // The light, in the panel's own (unscaled) coordinates
+    // The light, in the panel's coordinates
     const s = light.update(time * 1000, dt, { x: r.x, y: r.y, w: r.w, h: r.h });
-    const open = Math.max(tl.open, r.e);
+    // The walk plays once and holds on the smile; the light opens as he comes
+    const walk = playFrom ? Math.min(1, (performance.now() - playFrom) / WALK_MS) : 0;
+    const open = Math.max(tl.open, easeInOut(walk));
     const rest = tl.geo.rest;
-
-    // The walk
-    const f = tl.walk * (frames.count - 1);
+    const f = walk * (frames.count - 1);
     const img = frames.nearest(f);
     if (gl) {
       gl.render(img, f, s, open, time);
@@ -223,27 +223,4 @@ function startLite({ hero, saveData }) {
     const s = light.update(time * 1000, Math.min(deltaMs, 100) / 1000, vrect);
     torch.style.transform = `translate3d(${(s.x * rect.w - half).toFixed(1)}px, ${(s.y * rect.h - half).toFixed(1)}px, 0)`;
   });
-}
-
-// ── The reel: the full film with sound, in a dialog ─────────
-function initReelDialog() {
-  const dialog = $('#reelDialog');
-  const video = $('video', dialog);
-  const sound = $('[data-sound]', dialog);
-  const setSound = on => {
-    video.muted = !on;
-    sound.setAttribute('aria-pressed', String(on));
-    sound.textContent = on ? sound.dataset.off : sound.dataset.on;
-  };
-  $('.reel-open').addEventListener('click', () => {
-    dialog.showModal();
-    setSound(false);
-    video.currentTime = 0;
-    video.play().catch(() => {});
-    lenis?.stop();
-  });
-  sound.addEventListener('click', () => setSound(video.muted));
-  $('[data-close]', dialog).addEventListener('click', () => dialog.close());
-  dialog.addEventListener('click', e => { if (e.target === dialog) dialog.close(); });
-  dialog.addEventListener('close', () => { video.pause(); lenis?.start(); });
 }

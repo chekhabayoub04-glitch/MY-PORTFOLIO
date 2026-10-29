@@ -45,20 +45,12 @@
   },
   "work": {
     "title": "Projets choisis",
-    "lede": "Des sites que j'ai conçus et développés, pensés d'abord pour le mobile. Ouvrez-en un pour le voir de près.",
-    "reel": "Voir le film de 10 secondes",
-    "signature": "De l'ombre à la lumière.",
+    "lede": "Des sites, des visuels publicitaires, des films IA et des logos, tous réalisés par moi.",
     "carousel": "Sites choisis",
     "prev": "Projet précédent",
     "next": "Projet suivant",
     "webTitle": "Développement web",
     "webLede": "Des sites que j'ai conçus et développés. Arrêtez-vous sur l'un d'eux et touchez-le pour ouvrir le projet."
-  },
-  "reel": {
-    "label": "Le film d'Ayoub",
-    "close": "Fermer",
-    "soundOn": "Activer le son",
-    "soundOff": "Couper le son"
   },
   "portal": {
     "back": "Projets choisis",
