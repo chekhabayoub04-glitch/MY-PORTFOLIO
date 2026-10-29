@@ -101,6 +101,7 @@ export function portalBlocks(p, next, lang, t) {
           </div>
         </div>
       </div>
+      <script>/* phones start on the Mobile view before the first paint (no layout shift) */matchMedia('(max-width: 767px)').matches && (document.getElementById('devices').dataset.view = 'mobile');</script>
       <div class="stage-controls">
         <div class="device-switch" role="group" aria-label="${escape(P.devices)}">
           <button type="button" data-view="desktop" aria-pressed="false">${escape(P.desktop)}</button>
