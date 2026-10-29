@@ -110,6 +110,21 @@ const Haze = () => {
   );
 };
 
+// Dither over the light so its soft gradients don't band once encoded.
+const Dither = () => {
+  const frame = useCurrentFrame();
+  return (
+    <AbsoluteFill
+      style={{
+        backgroundImage: `url(${staticFile("dither.png")})`,
+        backgroundPosition: `${(frame * 97) % 256}px ${(frame * 61) % 256}px`,
+        mixBlendMode: "overlay",
+        opacity: 0.05,
+      }}
+    />
+  );
+};
+
 const Vignette = () => (
   <AbsoluteFill
     style={{
@@ -125,6 +140,7 @@ export const HeroFilm = ({ start }: FilmProps) => {
       <Graded start={start} />
       <LightCone />
       <Haze />
+      <Dither />
       <Vignette />
     </AbsoluteFill>
   );
