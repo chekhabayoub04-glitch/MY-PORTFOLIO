@@ -7,7 +7,7 @@ import { resolve } from 'node:path';
 import { escape } from './render.mjs';
 
 export const SITE = 'https://ayoubchekhab-dev.is-a.dev/';
-export const LANGS = { en: '', fr: 'fr/', ar: 'ar/' };
+export const LANGS = { en: '', fr: 'fr/', ar: 'ar/', de: 'de/' };
 
 const isTodo = v => v == null || v === 'TODO' || (Array.isArray(v) && (v.length === 0 || v.every(isTodo)));
 const fill = (s, map) => s.replace(/\{(\w+)\}/g, (_, k) => map[k] ?? '');
@@ -197,7 +197,8 @@ export function portalBlocks(p, next, lang, t) {
 
 export function portalVars(p, lang, t) {
   const P = t.portal;
-  const type = lang === 'ar' ? p.type[lang] : p.type[lang].toLowerCase();
+  // in a sentence: lower case in English and French (German nouns keep their capital)
+  const type = lang === 'en' || lang === 'fr' ? p.type[lang].toLowerCase() : p.type[lang];
   const name = p.name[lang];
   const waText = fill(P.wa, { name });
   return {
@@ -206,7 +207,7 @@ export function portalVars(p, lang, t) {
     title: fill(P.metaTitle, { name, type }),
     description: fill(P.metaDesc, { name, type }),
     url: SITE + portalPath(p.slug, lang).slice(1),
-    href_en: portalPath(p.slug, 'en'), href_fr: portalPath(p.slug, 'fr'), href_ar: portalPath(p.slug, 'ar'),
+    href_en: portalPath(p.slug, 'en'), href_fr: portalPath(p.slug, 'fr'), href_ar: portalPath(p.slug, 'ar'), href_de: portalPath(p.slug, 'de'),
     og: `${SITE}work/${p.slug}/og.jpg`,
     preload: `/work/${p.slug}/desktop-first`,
     pw: p.manifest.images['desktop-first'].w, psw: p.manifest.images['desktop-first'].sm.w,

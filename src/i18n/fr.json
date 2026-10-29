@@ -114,7 +114,173 @@
         "about": "présentation du médecin"
       }
     },
-    "metaTitle": "{name}, site {type} | Ayoub Chekhab",
-    "metaDesc": "{name} : un site {type} conçu et développé par Ayoub Chekhab. Voyez-le sur ordinateur et sur mobile, puis essayez-le en direct."
+    "metaTitle": "{name}, site pour {type} | Ayoub Chekhab",
+    "metaDesc": "{name} : un site pour {type}, conçu et développé par Ayoub Chekhab. Voyez-le sur ordinateur et sur mobile, puis essayez-le en direct."
+  },
+  "sections": {
+    "services": {
+      "title": "Ce que je peux faire pour votre entreprise",
+      "items": [
+        {
+          "name": "Sites web",
+          "text": "Des sites et landing pages rapides, parfaits sur mobile, qui transforment les visiteurs en clients.",
+          "link": "Voir les sites"
+        },
+        {
+          "name": "Visuels publicitaires",
+          "text": "Des posts et des pubs qui arrêtent le scroll et vendent l'offre.",
+          "link": "Voir les visuels"
+        },
+        {
+          "name": "Films de marque IA",
+          "text": "Des films de marque et des reels courts créés avec l'IA, pour une fraction du prix d'un tournage.",
+          "link": "Voir les films"
+        },
+        {
+          "name": "Logos et identité",
+          "text": "Des logos et des identités lisibles en une seconde, faits pour durer.",
+          "link": "Voir les logos"
+        },
+        {
+          "name": "Meta Ads",
+          "text": "Des campagnes Facebook et Instagram réglées pour toucher les personnes qui achètent.",
+          "link": "Voir les campagnes"
+        },
+        {
+          "name": "SEO et réseaux sociaux",
+          "text": "Les bases du référencement et des publications régulières pour rester visible chaque semaine.",
+          "link": "Voir les réseaux sociaux"
+        }
+      ]
+    },
+    "design": {
+      "title": "Design graphique",
+      "count": "7 collections, 21 visuels",
+      "more": "Ouvrir toute la galerie design",
+      "items": [
+        {
+          "title": "Souq Al Sayarat",
+          "meta": "Marché automobile, campagne sociale",
+          "text": "Une série de lancement aux tons désert : un style, trois accroches, pensée pour les réseaux arabes.",
+          "foot": "Campagne de lancement, 3 visuels clés",
+          "tag": "Automobile"
+        },
+        {
+          "title": "Pour chaque trajet",
+          "meta": "Lozan, Wheels, Ather Car",
+          "text": "Des campagnes d'entretien et de protection qui font d'un passage au garage une raison de faire confiance à la marque.",
+          "foot": "Campagnes de services, 4 visuels",
+          "tag": "Entretien auto"
+        },
+        {
+          "title": "Le parfum sous les projecteurs",
+          "meta": "Parfums et soins, publicités produit",
+          "text": "Contraste, texture et reflets : chaque flacon donne envie avant même la première ligne.",
+          "foot": "Campagne produit, 5 visuels",
+          "tag": "Beauté et parfum"
+        },
+        {
+          "title": "Pensé pour l'appétit",
+          "meta": "Restaurants, menus, fast-food",
+          "text": "Des menus et des promos où le plat se vend tout seul et où le prix se trouve en un coup d'œil.",
+          "foot": "Menus et réseaux, 3 visuels",
+          "tag": "Restauration"
+        },
+        {
+          "title": "Des produits qui accrochent",
+          "meta": "Électronique, agence digitale",
+          "text": "Des mises en page centrées sur l'essentiel : un produit, une promesse, un appel à l'action.",
+          "foot": "Systèmes produit, 2 visuels",
+          "tag": "Tech et digital"
+        },
+        {
+          "title": "Le confort, simplement",
+          "meta": "Fenêtres, vitrage, maison",
+          "text": "Des campagnes claires qui rendent la demande de devis en ligne rapide, sympathique et sans stress.",
+          "foot": "Campagne de services, 2 visuels",
+          "tag": "Services à domicile"
+        },
+        {
+          "title": "L'énergie du jour de match",
+          "meta": "Football, chaussures, culture",
+          "text": "Collages en couches et typographie forte pour des affiches aussi bruyantes que la foule.",
+          "foot": "Affiches et lancements, 2 visuels",
+          "tag": "Sport et streetwear"
+        }
+      ],
+      "open": "Ouvrir la collection :"
+    },
+    "films": {
+      "title": "Films de marque IA",
+      "text": "Des films de marque courts créés avec l'IA. Survolez pour un aperçu, appuyez sur le bouton pour écouter avec le son.",
+      "more": "Ouvrir la vidéothèque",
+      "film": "Film",
+      "sound": "Lire avec le son",
+      "mute": "Couper le son",
+      "items": [
+        "Marque de vêtements",
+        "Marque de verre",
+        "Villa et maison",
+        "Marque automobile"
+      ]
+    },
+    "marks": {
+      "title": "Logos",
+      "count": "12 identités",
+      "cardTitle": "Un symbole, toute une entreprise",
+      "meta": "Restauration, beauté, sport, café",
+      "text": "Des logos pensés pour fonctionner partout : vitrine, gobelet, story, favicon.",
+      "cta": "Ouvrir la galerie de logos",
+      "tag": "Logo et identité"
+    },
+    "about": {
+      "title": "Formé aux langues, à l'aise avec les pixels",
+      "lede": "Formation en langue et littérature espagnoles, Université d'Alger 2. Elle m'a appris comment se construit une histoire : le rythme, la tension, le mot juste. Aujourd'hui, je l'écris en mises en page, en code, en couleurs et en mouvement.",
+      "uniName": "Université d'Alger 2",
+      "uniPlace": "Abou El Kacem Saadallah, Bouzaréah, Alger",
+      "uniStudy": "Langue et littérature espagnoles",
+      "uniAlt": "Université d'Alger 2, campus Abou El Kacem Saadallah à Bouzaréah",
+      "note": "Une université publique à Bouzaréah, fondée en 2009 lorsque l'Université d'Alger a été divisée en trois.",
+      "stats": {
+        "projects": "Projets livrés",
+        "brands": "Marques",
+        "years": "Années d'expérience",
+        "disciplines": "Disciplines"
+      },
+      "speaks": "Langues",
+      "langs": [
+        "Arabe",
+        "Espagnol",
+        "Français",
+        "Anglais"
+      ],
+      "toolkit": "Mes outils"
+    },
+    "contact": {
+      "title": "Une marque cachée dans l'ombre ?",
+      "lede": "Landing page, logo, campagne ou film : dites-moi ce qu'il vous faut et je vous réponds dans la journée.",
+      "form": {
+        "name": "Votre nom",
+        "email": "Votre e-mail",
+        "mission": "De quoi avez-vous besoin ?",
+        "missions": [
+          "Site web",
+          "Logo",
+          "Campagne",
+          "Film IA"
+        ],
+        "message": "Parlez-moi de votre projet",
+        "send": "Envoyer le message",
+        "note": "Votre message arrive directement dans ma boîte de réception.",
+        "sending": "Envoi…",
+        "sent": "Message envoyé. Je vous réponds sous 24 heures.",
+        "failed": "Envoi impossible. Vérifiez votre connexion ou écrivez-moi sur WhatsApp.",
+        "whatsapp": "M'écrire sur WhatsApp"
+      }
+    },
+    "footer": {
+      "place": "Alger",
+      "top": "Retour en haut"
+    }
   }
 }

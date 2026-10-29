@@ -10,6 +10,7 @@
   <link rel="alternate" hreflang="en" href="https://ayoubchekhab-dev.is-a.dev/">
   <link rel="alternate" hreflang="fr" href="https://ayoubchekhab-dev.is-a.dev/fr/">
   <link rel="alternate" hreflang="ar" href="https://ayoubchekhab-dev.is-a.dev/ar/">
+  <link rel="alternate" hreflang="de" href="https://ayoubchekhab-dev.is-a.dev/de/">
   <link rel="alternate" hreflang="x-default" href="https://ayoubchekhab-dev.is-a.dev/">
 
   <!-- Link previews (WhatsApp, Facebook, LinkedIn, X, Telegram) -->
@@ -74,7 +75,7 @@
       var saved = null;
       try { saved = localStorage.getItem('lang'); } catch (e) {}
       var want = saved || (navigator.language || '').slice(0, 2).toLowerCase();
-      if (want === 'ar' || want === 'fr') location.replace('/' + want + '/' + location.hash);
+      if (want === 'ar' || want === 'fr' || want === 'de') location.replace('/' + want + '/' + location.hash);
     })();
     document.documentElement.classList.add('js');
   </script>
@@ -82,6 +83,7 @@
 
   {{#en}}<link rel="preload" href="/fonts/big-shoulders-display-latin.woff2" as="font" type="font/woff2" crossorigin>{{/en}}
   {{#fr}}<link rel="preload" href="/fonts/big-shoulders-display-latin.woff2" as="font" type="font/woff2" crossorigin>{{/fr}}
+  {{#de}}<link rel="preload" href="/fonts/big-shoulders-display-latin.woff2" as="font" type="font/woff2" crossorigin>{{/de}}
   {{#ar}}<link rel="preload" href="/fonts/readex-pro-arabic.woff2" as="font" type="font/woff2" crossorigin>{{/ar}}
   <link rel="preload" as="image" href="/hero/poster-720.webp" imagesrcset="/hero/poster-360.webp 360w, /hero/poster-540.webp 540w, /hero/poster-720.webp 720w" imagesizes="(min-width: 1024px) 34vw, 100vw" fetchpriority="high">
 

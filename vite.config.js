@@ -2,6 +2,7 @@ import { cpSync, existsSync, mkdirSync, readFileSync, writeFileSync } from 'node
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { defineConfig } from 'vite';
+import { WEB3FORMS_KEY } from './src/config.js';
 import { createRenderer } from './src/site/render.mjs';
 import { LANGS, SITE, carousel, loadProjects, portalBlocks, portalPath, portalVars, sitemap, todoReport } from './src/site/work.mjs';
 
@@ -40,8 +41,9 @@ function writePages() {
     writePage(`${dir}index.html`, render('src/pages/home.html', {
       lang, t,
       vars: {
-        ...common, url: SITE + dir, href_en: '/', href_fr: '/fr/', href_ar: '/ar/',
+        ...common, url: SITE + dir, href_en: '/', href_fr: '/fr/', href_ar: '/ar/', href_de: '/de/',
         wa: `https://wa.me/213658030536?text=${encodeURIComponent(t.wa.text)}`,
+        web3forms: WEB3FORMS_KEY,
       },
       blocks: { carousel: carousel(projects, lang, t) },
     }), `src/pages/home.html + src/i18n/${lang}.json`);

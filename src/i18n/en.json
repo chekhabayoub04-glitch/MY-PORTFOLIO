@@ -116,5 +116,171 @@
     },
     "metaTitle": "{name}, {type} website | Ayoub Chekhab",
     "metaDesc": "{name}: a {type} website designed and built by Ayoub Chekhab. See it on desktop and mobile, then try it live."
+  },
+  "sections": {
+    "services": {
+      "title": "What I can do for your business",
+      "items": [
+        {
+          "name": "Websites",
+          "text": "Fast websites and landing pages that work on every phone and turn visitors into clients.",
+          "link": "See the websites"
+        },
+        {
+          "name": "Ad visuals",
+          "text": "Social posts and ad designs that stop the scroll and sell the offer.",
+          "link": "See the designs"
+        },
+        {
+          "name": "AI brand films",
+          "text": "Short brand films and reels made with AI, for a fraction of the cost of a shoot.",
+          "link": "Watch the films"
+        },
+        {
+          "name": "Logos and identity",
+          "text": "Logos and identities that read in a second and last for years.",
+          "link": "See the logos"
+        },
+        {
+          "name": "Meta Ads",
+          "text": "Facebook and Instagram campaigns set up to reach the people who buy.",
+          "link": "See the campaigns"
+        },
+        {
+          "name": "SEO and social media",
+          "text": "Search basics and regular posts that keep your business visible every week.",
+          "link": "See the social media work"
+        }
+      ]
+    },
+    "design": {
+      "title": "Graphic design",
+      "count": "7 collections, 21 visuals",
+      "more": "Open the full design gallery",
+      "items": [
+        {
+          "title": "Souq Al Sayarat",
+          "meta": "Car marketplace, social campaign",
+          "text": "A desert-toned launch series: one look, three headlines, built for the Arabic social feed.",
+          "foot": "Launch campaign, 3 key visuals",
+          "tag": "Automotive"
+        },
+        {
+          "title": "Care for every journey",
+          "meta": "Lozan, Wheels, Ather Car",
+          "text": "Maintenance and protection campaigns that turn a garage visit into a reason to trust the brand.",
+          "foot": "Service campaigns, 4 visuals",
+          "tag": "Car care"
+        },
+        {
+          "title": "Scent, in the spotlight",
+          "meta": "Perfume and skincare, product ads",
+          "text": "Contrast, texture and reflection, so each bottle looks worth reaching for before a word is read.",
+          "foot": "Product campaign, 5 visuals",
+          "tag": "Beauty and fragrance"
+        },
+        {
+          "title": "Built for appetite",
+          "meta": "Restaurants, menus, fast food",
+          "text": "Menus and promo systems where the food sells itself and the price is never hard to find.",
+          "foot": "Menus and social, 3 visuals",
+          "tag": "Food and hospitality"
+        },
+        {
+          "title": "Products that click",
+          "meta": "Electronics, digital agency",
+          "text": "Feature-first layouts for gadgets and digital services: one product, one promise, one call to action.",
+          "foot": "Product systems, 2 visuals",
+          "tag": "Tech and digital"
+        },
+        {
+          "title": "Comfort, made simple",
+          "meta": "Windows, glazing, home",
+          "text": "Clear service campaigns that make an online quote feel quick, friendly and stress-free.",
+          "foot": "Service campaign, 2 visuals",
+          "tag": "Home services"
+        },
+        {
+          "title": "Match-day energy",
+          "meta": "Football, footwear, culture",
+          "text": "Layered collage and bold type for posters that feel as loud as the crowd.",
+          "foot": "Posters and drops, 2 visuals",
+          "tag": "Sports and streetwear"
+        }
+      ],
+      "open": "Open the collection:"
+    },
+    "films": {
+      "title": "AI brand films",
+      "text": "Short brand films made with AI. Hover to preview, press the button to listen with sound.",
+      "more": "Open the film library",
+      "film": "Film",
+      "sound": "Play with sound",
+      "mute": "Mute",
+      "items": [
+        "Clothing brand",
+        "Glass brand",
+        "Villa and home",
+        "Car brand"
+      ]
+    },
+    "marks": {
+      "title": "Logos",
+      "count": "12 identities",
+      "cardTitle": "One symbol, a whole business",
+      "meta": "Food, beauty, fitness, coffee",
+      "text": "Marks designed to work everywhere: storefront, cup, story, favicon.",
+      "cta": "Open the logo gallery",
+      "tag": "Logo and identity"
+    },
+    "about": {
+      "title": "Trained in language, fluent in pixels",
+      "lede": "Background in Spanish language and literature, University of Algiers 2. It taught me how a story is built: rhythm, tension, the one word that lands. Now I write it in layouts, code, colour and motion.",
+      "uniName": "University of Algiers 2",
+      "uniPlace": "Abou El Kacem Saadallah, Bouzareah, Algiers",
+      "uniStudy": "Spanish language and literature",
+      "uniAlt": "University of Algiers 2, Abou El Kacem Saadallah campus in Bouzareah",
+      "note": "A public university in Bouzareah, founded in 2009 when the University of Algiers was divided into three.",
+      "stats": {
+        "projects": "Projects delivered",
+        "brands": "Brands",
+        "years": "Years in the field",
+        "disciplines": "Disciplines"
+      },
+      "speaks": "Languages",
+      "langs": [
+        "Arabic",
+        "Spanish",
+        "French",
+        "English"
+      ],
+      "toolkit": "The toolkit"
+    },
+    "contact": {
+      "title": "Got a brand hiding in the dark?",
+      "lede": "Landing page, logo, campaign or film: tell me what you need and I'll answer within a day.",
+      "form": {
+        "name": "Your name",
+        "email": "Your email",
+        "mission": "What do you need?",
+        "missions": [
+          "Website",
+          "Logo",
+          "Campaign",
+          "AI film"
+        ],
+        "message": "Tell me about it",
+        "send": "Send the message",
+        "note": "Your message comes straight to my inbox.",
+        "sending": "Sending…",
+        "sent": "Message sent. I'll reply within 24 hours.",
+        "failed": "Couldn't send. Check your connection or message me on WhatsApp.",
+        "whatsapp": "Message me on WhatsApp"
+      }
+    },
+    "footer": {
+      "place": "Algiers",
+      "top": "Back to the top"
+    }
   }
 }

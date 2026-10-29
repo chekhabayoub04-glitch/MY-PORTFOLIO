@@ -1,7 +1,8 @@
 // The sections below the hero, carried over from js/noir/app.js until they
 // are rebuilt: drawer, stacked cards, browser frames, reels, tilt, counters,
 // contact beam and form. Smooth scroll now belongs to the hero (Lenis on the
-// GSAP ticker); the preloader and the glass cursor are gone.
+// GSAP ticker); the preloader and the glass cursor are gone. Every visible
+// word comes from the page (and so from its language), never from here.
 
 const $ = (s, root = document) => root.querySelector(s);
 const $$ = (s, root = document) => [...root.querySelectorAll(s)];
@@ -97,9 +98,9 @@ export function initSections() {
         reel.classList.add('is-loud');
         video.muted = false; video.currentTime = 0; video.play().catch(() => {});
         btn.querySelector('i').className = 'fas fa-volume-high';
-        btn.setAttribute('aria-label', 'Mute');
+        btn.setAttribute('aria-label', btn.dataset.off);
       } else {
-        btn.setAttribute('aria-label', 'Play with sound');
+        btn.setAttribute('aria-label', btn.dataset.on);
       }
     });
   });
@@ -184,13 +185,37 @@ export function initSections() {
     signal.style.setProperty('--sy', `${(sy * 100).toFixed(2)}%`);
   })(0);
 
-  $('#signalForm').addEventListener('submit', e => {
+  // Contact form → Web3Forms as JSON, so the visitor stays on the page.
+  // Messages come from the form's data-* attributes, in the page's language.
+  const form = $('#signalForm');
+  const status = $('#formStatus');
+  const send = $('button[type="submit"]', form);
+  form.addEventListener('submit', async e => {
     e.preventDefault();
-    const data = new FormData(e.currentTarget);
-    const mission = String(data.get('subject') || 'Project');
-    const subject = `${mission} — signal from ${data.get('name')}`;
-    const text = [`Name: ${data.get('name')}`, `Email: ${data.get('email')}`, `Mission: ${mission}`, '', String(data.get('message') || '')].join('\n');
-    location.href = `mailto:CHEKHABAYOUB04@GMAIL.COM?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(text)}`;
+    const data = Object.fromEntries(new FormData(form));
+    if (data.botcheck) return;   // the honeypot was filled: a bot
+    send.disabled = true;
+    status.className = 'form-status';
+    status.textContent = form.dataset.sending;
+    try {
+      const res = await fetch(form.action, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({ ...data, subject: `${data.mission}: ${data.name}` }),
+      });
+      const json = await res.json().catch(() => ({}));
+      if (!res.ok || !json.success) throw new Error(json.message || res.status);
+      form.reset();
+      status.classList.add('is-ok');
+      status.textContent = form.dataset.sent;
+    } catch {
+      status.classList.add('is-error');
+      status.textContent = `${form.dataset.failed} `;
+      const wa = Object.assign(document.createElement('a'), { href: form.dataset.wa, target: '_blank', rel: 'noopener', textContent: form.dataset.waLabel });
+      status.append(wa);
+    } finally {
+      send.disabled = false;
+    }
   });
 
   $('#year').textContent = new Date().getFullYear();

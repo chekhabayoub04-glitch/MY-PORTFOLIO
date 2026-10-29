@@ -1,0 +1,286 @@
+{
+  "meta": {
+    "title": "Ayoub Chekhab | Websites, Anzeigen und KI-Filme, die Kunden bringen",
+    "description": "Websites, Anzeigen und KI-Filme, die Ihrem Unternehmen Kunden bringen. Ayoub Chekhab, Digital Creator in Algerien: Webdesign, Werbegrafiken, KI-Markenfilme, Logos, Meta Ads und SEO.",
+    "locale": "de_DE",
+    "ogAlt": "Ayoub Chekhab, Digital Creator in Algerien: Websites, Anzeigen und KI-Filme"
+  },
+  "skip": "Zum Inhalt springen",
+  "nav": {
+    "label": "Hauptmenü",
+    "home": "Ayoub Chekhab, Startseite",
+    "work": "Arbeiten",
+    "services": "Leistungen",
+    "about": "Über mich",
+    "contact": "Kontakt",
+    "menu": "Menü öffnen",
+    "language": "Sprache"
+  },
+  "hero": {
+    "h1": "Websites, Anzeigen und KI-Filme, die Ihrem Unternehmen Kunden bringen.",
+    "sub": "Ich bin Ayoub, Digital Creator in Algerien. Ich gestalte, entwickle und bewerbe Marken, die gesehen werden wollen.",
+    "poster": "Ayoub Chekhab im schwarzen Anzug, lächelnd, in goldenem Licht",
+    "beats": [
+      {
+        "title": "Websites, die Termine bringen",
+        "proof": "Websites für Kliniken, Fitnessstudios und Immobilien, zuerst fürs Handy gebaut."
+      },
+      {
+        "title": "Anzeigen und Grafiken, die das Scrollen stoppen",
+        "proof": "Kampagnenmotive für 7 Branchen, von Autopflege bis Streetwear."
+      },
+      {
+        "title": "KI-Filme zum Bruchteil eines Drehs",
+        "proof": "Markenfilme für Mode-, Glas-, Villa- und Automarken, ganz ohne Filmteam."
+      }
+    ],
+    "tools": "Meine Werkzeuge"
+  },
+  "cta": {
+    "whatsapp": "Auf WhatsApp schreiben",
+    "work": "Arbeiten ansehen"
+  },
+  "wa": {
+    "text": "Hallo Ayoub, ich habe Ihr Portfolio gesehen und möchte über ein Projekt sprechen."
+  },
+  "work": {
+    "title": "Ausgewählte Arbeiten",
+    "lede": "Websites, Werbegrafiken, KI-Filme und Logos, alles von mir gemacht.",
+    "carousel": "Ausgewählte Websites",
+    "prev": "Vorheriges Projekt",
+    "next": "Nächstes Projekt",
+    "webTitle": "Webentwicklung",
+    "webLede": "Websites, die ich gestaltet und entwickelt habe. Bleiben Sie bei einer stehen und tippen Sie darauf, um das Projekt zu öffnen."
+  },
+  "portal": {
+    "back": "Ausgewählte Arbeiten",
+    "devices": "Website anzeigen auf",
+    "desktop": "Desktop",
+    "mobile": "Handy",
+    "both": "Beiden",
+    "tryLive": "Live ausprobieren",
+    "backToPreview": "Zurück zur Vorschau",
+    "liveFailed": "Die Website konnte hier nicht geladen werden. Öffnen Sie sie in einem neuen Tab.",
+    "visit": "Live-Website besuchen",
+    "paused": "Zum Pausieren mit der Maus darüberfahren oder auswählen.",
+    "facts": {
+      "type": "Art",
+      "city": "Stadt",
+      "services": "Meine Leistungen",
+      "delivery": "Lieferzeit",
+      "year": "Jahr"
+    },
+    "services": {
+      "website": "Website",
+      "seo": "SEO",
+      "metaAds": "Meta Ads",
+      "visuals": "Werbegrafiken",
+      "social": "Social Media",
+      "logo": "Logo"
+    },
+    "problem": "Das Problem",
+    "built": "Was ich gebaut habe",
+    "results": "Ergebnisse",
+    "testimonial": "Was der Kunde sagt",
+    "gallery": "Ein Blick in die Website",
+    "open": "Screenshot öffnen",
+    "close": "Schließen",
+    "prevShot": "Vorheriger Screenshot",
+    "nextShot": "Nächster Screenshot",
+    "cta": {
+      "clinic": "Sie möchten so eine Website für Ihre Praxis?",
+      "gym": "Sie möchten so eine Website für Ihr Studio?",
+      "school": "Sie möchten so eine Website für Ihre Schule?",
+      "business": "Sie möchten so eine Website für Ihr Unternehmen?"
+    },
+    "ctaText": "Erzählen Sie mir auf WhatsApp von Ihrem Projekt, und ich sage Ihnen, wie ich es bauen würde.",
+    "wa": "Hallo Ayoub, ich habe die Website {name} in Ihrem Portfolio gesehen und möchte so eine Website.",
+    "next": "Nächstes Projekt",
+    "alt": {
+      "shot": "Website {name}, {what} auf {where}",
+      "home": "Startseite",
+      "desktop": "dem Desktop",
+      "mobile": "dem Handy",
+      "kinds": {
+        "services": "Leistungen",
+        "booking": "Terminformular",
+        "menu": "Handy-Menü",
+        "pricing": "Preise",
+        "schedule": "Kursplan",
+        "listings": "Immobilienangebote",
+        "levels": "Sprachniveaus",
+        "resources": "Lernmaterial",
+        "gallery": "Fotogalerie",
+        "about": "Über den Arzt"
+      }
+    },
+    "metaTitle": "{name}, {type}: Website | Ayoub Chekhab",
+    "metaDesc": "{name} ({type}): eine Website, gestaltet und entwickelt von Ayoub Chekhab. Auf Desktop und Handy ansehen und live ausprobieren."
+  },
+  "sections": {
+    "services": {
+      "title": "Was ich für Ihr Unternehmen tun kann",
+      "items": [
+        {
+          "name": "Websites",
+          "text": "Schnelle Websites und Landingpages, die auf jedem Handy funktionieren und Besucher zu Kunden machen.",
+          "link": "Websites ansehen"
+        },
+        {
+          "name": "Werbegrafiken",
+          "text": "Social-Posts und Anzeigen, die beim Scrollen stoppen und das Angebot verkaufen.",
+          "link": "Designs ansehen"
+        },
+        {
+          "name": "KI-Markenfilme",
+          "text": "Kurze Markenfilme und Reels mit KI, zu einem Bruchteil der Kosten eines Drehs.",
+          "link": "Filme ansehen"
+        },
+        {
+          "name": "Logos und Markenidentität",
+          "text": "Logos und Identitäten, die man in einer Sekunde erfasst und die jahrelang halten.",
+          "link": "Logos ansehen"
+        },
+        {
+          "name": "Meta Ads",
+          "text": "Facebook- und Instagram-Kampagnen, die genau die Menschen erreichen, die kaufen.",
+          "link": "Kampagnen ansehen"
+        },
+        {
+          "name": "SEO und Social Media",
+          "text": "Suchmaschinen-Grundlagen und regelmäßige Beiträge, damit Ihr Unternehmen jede Woche sichtbar bleibt.",
+          "link": "Social-Media-Arbeiten ansehen"
+        }
+      ]
+    },
+    "design": {
+      "title": "Grafikdesign",
+      "count": "7 Kollektionen, 21 Motive",
+      "more": "Die ganze Design-Galerie öffnen",
+      "items": [
+        {
+          "title": "Souq Al Sayarat",
+          "meta": "Automarkt, Social-Kampagne",
+          "text": "Eine Launch-Serie in Wüstentönen: ein Look, drei Headlines, gemacht für den arabischen Social-Feed.",
+          "foot": "Launch-Kampagne, 3 Key Visuals",
+          "tag": "Automobil"
+        },
+        {
+          "title": "Für jede Fahrt",
+          "meta": "Lozan, Wheels, Ather Car",
+          "text": "Wartungs- und Schutzkampagnen, die aus einem Werkstattbesuch einen Grund machen, der Marke zu vertrauen.",
+          "foot": "Service-Kampagnen, 4 Motive",
+          "tag": "Autopflege"
+        },
+        {
+          "title": "Duft im Rampenlicht",
+          "meta": "Parfum und Hautpflege, Produktanzeigen",
+          "text": "Kontrast, Textur und Spiegelung: Jeder Flakon weckt Lust, bevor man ein Wort liest.",
+          "foot": "Produktkampagne, 5 Motive",
+          "tag": "Beauty und Duft"
+        },
+        {
+          "title": "Gemacht für Appetit",
+          "meta": "Restaurants, Speisekarten, Fast Food",
+          "text": "Speisekarten und Aktionen, bei denen das Essen sich selbst verkauft und der Preis sofort zu finden ist.",
+          "foot": "Speisekarten und Social, 3 Motive",
+          "tag": "Gastronomie"
+        },
+        {
+          "title": "Produkte, die überzeugen",
+          "meta": "Elektronik, Digitalagentur",
+          "text": "Layouts mit dem Wichtigsten zuerst: ein Produkt, ein Versprechen, ein Aufruf zum Handeln.",
+          "foot": "Produktsysteme, 2 Motive",
+          "tag": "Tech und Digital"
+        },
+        {
+          "title": "Komfort, ganz einfach",
+          "meta": "Fenster, Verglasung, Zuhause",
+          "text": "Klare Service-Kampagnen, die eine Online-Angebotsanfrage schnell, freundlich und stressfrei machen.",
+          "foot": "Service-Kampagne, 2 Motive",
+          "tag": "Haus-Services"
+        },
+        {
+          "title": "Energie am Spieltag",
+          "meta": "Fußball, Schuhe, Kultur",
+          "text": "Geschichtete Collagen und kräftige Schrift für Plakate, so laut wie die Fans.",
+          "foot": "Plakate und Drops, 2 Motive",
+          "tag": "Sport und Streetwear"
+        }
+      ],
+      "open": "Kollektion öffnen:"
+    },
+    "films": {
+      "title": "KI-Markenfilme",
+      "text": "Kurze Markenfilme, mit KI gemacht. Zum Vorschauen darüberfahren, zum Hören mit Ton den Knopf drücken.",
+      "more": "Die Filmbibliothek öffnen",
+      "film": "Film",
+      "sound": "Mit Ton abspielen",
+      "mute": "Ton aus",
+      "items": [
+        "Modemarke",
+        "Glasmarke",
+        "Villa und Zuhause",
+        "Automarke"
+      ]
+    },
+    "marks": {
+      "title": "Logos",
+      "count": "12 Identitäten",
+      "cardTitle": "Ein Symbol, ein ganzes Unternehmen",
+      "meta": "Gastronomie, Beauty, Fitness, Kaffee",
+      "text": "Logos, die überall funktionieren: Schaufenster, Becher, Story, Favicon.",
+      "cta": "Die Logo-Galerie öffnen",
+      "tag": "Logo und Identität"
+    },
+    "about": {
+      "title": "Sprachlich geschult, fließend in Pixeln",
+      "lede": "Ausbildung in spanischer Sprache und Literatur, Universität Algier 2. Dort habe ich gelernt, wie eine Geschichte gebaut wird: Rhythmus, Spannung, das eine Wort, das trifft. Heute schreibe ich sie mit Layouts, Code, Farbe und Bewegung.",
+      "uniName": "Universität Algier 2",
+      "uniPlace": "Abou El Kacem Saadallah, Bouzaréah, Algier",
+      "uniStudy": "Spanische Sprache und Literatur",
+      "uniAlt": "Universität Algier 2, Campus Abou El Kacem Saadallah in Bouzaréah",
+      "note": "Eine staatliche Universität in Bouzaréah, gegründet 2009, als die Universität Algier in drei Universitäten geteilt wurde.",
+      "stats": {
+        "projects": "Abgeschlossene Projekte",
+        "brands": "Marken",
+        "years": "Jahre Erfahrung",
+        "disciplines": "Disziplinen"
+      },
+      "speaks": "Sprachen",
+      "langs": [
+        "Arabisch",
+        "Spanisch",
+        "Französisch",
+        "Englisch"
+      ],
+      "toolkit": "Meine Werkzeuge"
+    },
+    "contact": {
+      "title": "Ihre Marke steht noch im Schatten?",
+      "lede": "Landingpage, Logo, Kampagne oder Film: Sagen Sie mir, was Sie brauchen, und ich antworte innerhalb eines Tages.",
+      "form": {
+        "name": "Ihr Name",
+        "email": "Ihre E-Mail",
+        "mission": "Was brauchen Sie?",
+        "missions": [
+          "Website",
+          "Logo",
+          "Kampagne",
+          "KI-Film"
+        ],
+        "message": "Erzählen Sie mir davon",
+        "send": "Nachricht senden",
+        "note": "Ihre Nachricht landet direkt in meinem Postfach.",
+        "sending": "Wird gesendet…",
+        "sent": "Nachricht gesendet. Ich antworte innerhalb von 24 Stunden.",
+        "failed": "Senden fehlgeschlagen. Prüfen Sie Ihre Verbindung oder schreiben Sie mir auf WhatsApp.",
+        "whatsapp": "Auf WhatsApp schreiben"
+      }
+    },
+    "footer": {
+      "place": "Algier",
+      "top": "Nach oben"
+    }
+  }
+}

@@ -4,41 +4,49 @@
 
   <div class="signal-inner">
     <div class="signal-copy">
-      <h2 class="signal-title" id="signalTitle">Got a brand<br>hiding in<br>the <em>dark?</em></h2>
-      <p class="lede">Light the signal. Landing page, logo, campaign or film, tell me the mission and I'll answer within a day.</p>
+      <h2 class="signal-title" id="signalTitle">{{sections.contact.title}}</h2>
+      <p class="lede">{{sections.contact.lede}}</p>
 
       <ul class="signal-lines">
-        <li><a href="mailto:CHEKHABAYOUB04@GMAIL.COM" data-lens="Write"><i class="fas fa-envelope" aria-hidden="true"></i><span>CHEKHABAYOUB04@GMAIL.COM</span></a></li>
-        <li><a href="tel:0658030536" data-lens="Call"><i class="fas fa-phone" aria-hidden="true"></i><span>0658 03 05 36</span></a></li>
-        <li><a href="https://www.linkedin.com/in/ayoub-chekhab-152750257/" target="_blank" rel="noopener noreferrer" data-lens="Visit"><i class="fab fa-linkedin-in" aria-hidden="true"></i><span>LinkedIn</span></a></li>
+        <li><a href="{{=wa}}" target="_blank" rel="noopener"><i class="fab fa-whatsapp" aria-hidden="true"></i><span>WhatsApp</span></a></li>
+        <li><a href="mailto:chekhabayoub04@gmail.com"><i class="fas fa-envelope" aria-hidden="true"></i><span>chekhabayoub04@gmail.com</span></a></li>
+        <li><a href="tel:+213658030536"><i class="fas fa-phone" aria-hidden="true"></i><span dir="ltr">0658 03 05 36</span></a></li>
+        <li><a href="https://www.linkedin.com/in/ayoub-chekhab-152750257/" target="_blank" rel="noopener noreferrer"><i class="fab fa-linkedin-in" aria-hidden="true"></i><span>LinkedIn</span></a></li>
       </ul>
     </div>
 
-    <form class="signal-form" id="signalForm" aria-describedby="signalNote">
+    <!-- Web3Forms: a real POST without JS; with JS it sends as JSON and stays on the page -->
+    <form class="signal-form" id="signalForm" action="https://api.web3forms.com/submit" method="POST" aria-describedby="signalNote"
+          data-sending="{{sections.contact.form.sending}}" data-sent="{{sections.contact.form.sent}}"
+          data-failed="{{sections.contact.form.failed}}" data-wa="{{=wa}}" data-wa-label="{{sections.contact.form.whatsapp}}">
+      <input type="hidden" name="access_key" value="{{=web3forms}}">
+      <input type="hidden" name="from_name" value="ayoubchekhab-dev.is-a.dev ({{=lang}})">
+      <input type="checkbox" name="botcheck" class="visually-hidden" tabindex="-1" autocomplete="off" aria-hidden="true">
       <div class="field">
         <input id="fName" name="name" type="text" autocomplete="name" placeholder=" " required>
-        <label for="fName">Your name</label>
+        <label for="fName">{{sections.contact.form.name}}</label>
       </div>
       <div class="field">
         <input id="fEmail" name="email" type="email" autocomplete="email" placeholder=" " required>
-        <label for="fEmail">Your email</label>
+        <label for="fEmail">{{sections.contact.form.email}}</label>
       </div>
       <fieldset class="field-chips">
-        <legend>The mission</legend>
-        <label><input type="radio" name="subject" value="Web Experience" checked><span>Website</span></label>
-        <label><input type="radio" name="subject" value="Brand Mark"><span>Logo</span></label>
-        <label><input type="radio" name="subject" value="Campaign Visuals"><span>Campaign</span></label>
-        <label><input type="radio" name="subject" value="AI Brand Film"><span>AI Film</span></label>
+        <legend>{{sections.contact.form.mission}}</legend>
+        <label><input type="radio" name="mission" value="Website" checked><span>{{sections.contact.form.missions.0}}</span></label>
+        <label><input type="radio" name="mission" value="Logo"><span>{{sections.contact.form.missions.1}}</span></label>
+        <label><input type="radio" name="mission" value="Campaign"><span>{{sections.contact.form.missions.2}}</span></label>
+        <label><input type="radio" name="mission" value="AI film"><span>{{sections.contact.form.missions.3}}</span></label>
       </fieldset>
       <div class="field">
         <textarea id="fMessage" name="message" rows="4" placeholder=" " required></textarea>
-        <label for="fMessage">Tell me about it</label>
+        <label for="fMessage">{{sections.contact.form.message}}</label>
       </div>
-      <button class="signal-send" type="submit" data-lens="Send">
-        <span>Send the signal</span>
+      <button class="signal-send" type="submit">
+        <span>{{sections.contact.form.send}}</span>
         <svg class="bat" viewBox="0 0 200 100" aria-hidden="true"><use href="#bat"/></svg>
       </button>
-      <p class="form-note" id="signalNote">Sending opens a prefilled message in your email app. Nothing is stored.</p>
+      <p class="form-note" id="signalNote">{{sections.contact.form.note}}</p>
+      <p class="form-status" id="formStatus" role="status" aria-live="polite"></p>
     </form>
   </div>
 </section>

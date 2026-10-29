@@ -2,57 +2,52 @@
 <section class="section origin" id="origin" aria-labelledby="originTitle">
   <div class="origin-grid">
     <div>
-      <h2 class="display" id="originTitle">Trained in<br><em>language.</em><br>Fluent in pixels.</h2>
-      <p class="lede">
-        Three years of <strong>Spanish Language &amp; Literature</strong> at the University of Algiers 2 taught me
-        how a story is built: rhythm, tension, the one word that lands. Now I write it in layouts,
-        code, colour and motion.
-      </p>
+      <h2 class="display" id="originTitle">{{sections.about.title}}</h2>
+      <p class="lede">{{sections.about.lede}}</p>
 
       <div class="origin-card" data-tilt>
         <div class="origin-card-media">
-          <img src="/images/opt/university-800.webp" alt="University of Algiers 2 — Abou El Kacem Saadallah, Bouzareah" width="739" height="415" loading="lazy" decoding="async">
+          <img src="/images/opt/university-800.webp" alt="{{sections.about.uniAlt}}" width="739" height="415" loading="lazy" decoding="async">
         </div>
         <div class="origin-card-body">
           <i class="fas fa-graduation-cap" aria-hidden="true"></i>
           <div>
-            <h3>University of Algiers 2</h3>
-            <p>Abou El Kacem Saadallah · Bouzareah, Algiers</p>
-            <p>Spanish Language &amp; Literature</p>
+            <h3>{{sections.about.uniName}}</h3>
+            <p>{{sections.about.uniPlace}}</p>
+            <p>{{sections.about.uniStudy}}</p>
           </div>
-          <span class="pill">2022 — 2025</span>
-          <p class="origin-note">A public university in Bouzareah, founded in 2009 when the University of Algiers was divided into three.</p>
+          <p class="origin-note">{{sections.about.note}}</p>
         </div>
       </div>
     </div>
 
     <div class="intel">
       <div class="intel-cell">
-        <span class="intel-num" data-count="50">0</span><span class="intel-plus">+</span>
-        <p>Projects shipped</p>
+        <span class="intel-num" data-count="50">50</span><span class="intel-plus">+</span>
+        <p>{{sections.about.stats.projects}}</p>
       </div>
       <div class="intel-cell">
-        <span class="intel-num" data-count="30">0</span><span class="intel-plus">+</span>
-        <p>Brands served</p>
+        <span class="intel-num" data-count="30">30</span><span class="intel-plus">+</span>
+        <p>{{sections.about.stats.brands}}</p>
       </div>
       <div class="intel-cell">
-        <span class="intel-num" data-count="3">0</span>
-        <p>Years in the field</p>
+        <span class="intel-num" data-count="4">4</span><span class="intel-plus">+</span>
+        <p>{{sections.about.stats.years}}</p>
       </div>
       <div class="intel-cell">
-        <span class="intel-num" data-count="4">0</span>
-        <p>Disciplines, one vision</p>
+        <span class="intel-num" data-count="6">6</span>
+        <p>{{sections.about.stats.disciplines}}</p>
       </div>
       <div class="intel-cell intel-cell--wide">
-        <p class="intel-label">Speaks</p>
-        <p class="intel-langs"><span>Arabic</span><span>Spanish</span><span>French</span><span>English</span></p>
+        <p class="intel-label">{{sections.about.speaks}}</p>
+        <p class="intel-langs"><span>{{sections.about.langs.0}}</span><span>{{sections.about.langs.1}}</span><span>{{sections.about.langs.2}}</span><span>{{sections.about.langs.3}}</span></p>
       </div>
     </div>
 
   </div>
 
   <div class="toolkit">
-    <p class="intel-label">The toolkit</p>
+    <p class="intel-label">{{sections.about.toolkit}}</p>
     <ul>
     <li><img src="/images/tools/html5.svg" alt="" width="34" height="34" loading="lazy"><span>HTML</span></li>
     <li><img src="/images/tools/css.svg" alt="" width="34" height="34" loading="lazy"><span>CSS</span></li>

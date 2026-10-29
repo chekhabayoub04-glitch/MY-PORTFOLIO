@@ -3,7 +3,7 @@
 //   {{@name}}        a block of HTML built in JS (blocks[name])
 //   {{=name}}        a page variable, escaped
 //   {{json:key}}     an i18n string as a JSON literal (for <script> blocks)
-//   {{#ar}}…{{/ar}}  only on that language
+//   {{#ar}}…{{/ar}}  only on that language (en, fr, ar, de)
 //   {{key.path}}     an i18n string, escaped
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
@@ -28,7 +28,7 @@ export function createRenderer(root) {
         return escape(vars[k]);
       })
       .replace(/\{\{json:([\w.]+)\}\}/g, (_, k) => JSON.stringify(get(k)).replace(/</g, '\\u003c'))
-      .replace(/\{\{#(en|fr|ar)\}\}([\s\S]*?)\{\{\/\1\}\}/g, (_, l, body) => (l === lang ? body : ''))
+      .replace(/\{\{#(en|fr|ar|de)\}\}([\s\S]*?)\{\{\/\1\}\}/g, (_, l, body) => (l === lang ? body : ''))
       .replace(/\{\{([\w.]+)\}\}/g, (m, k) => {
         const v = get(k);
         if (v == null) throw new Error(`Missing "${k}" in src/i18n/${lang}.json`);

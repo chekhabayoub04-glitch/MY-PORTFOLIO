@@ -13,37 +13,37 @@
       "slug": "dr-yahia",
       "url": "https://chekhabayoub11-ops.github.io/dr.213/",
       "showClientName": "TODO",
-      "name": { "en": "Dr Yahia", "fr": "Dr Yahia", "ar": "د. يحيى" },
-      "type": { "en": "Dental clinic", "fr": "Cabinet dentaire", "ar": "عيادة أسنان" },
-      "city": { "en": "Ben Aknoun, Algiers", "fr": "Ben Aknoun, Alger", "ar": "بن عكنون، الجزائر العاصمة" },
+      "name": { "en": "Dr Yahia", "fr": "Dr Yahia", "ar": "د. يحيى", "de": "Dr Yahia" },
+      "type": { "en": "Dental clinic", "fr": "Cabinet dentaire", "ar": "عيادة أسنان", "de": "Zahnarztpraxis" },
+      "city": { "en": "Ben Aknoun, Algiers", "fr": "Ben Aknoun, Alger", "ar": "بن عكنون، الجزائر العاصمة", "de": "Ben Aknoun, Algier" },
       "audience": "clinic",
       "year": "TODO",
-      "deliveryTime": { "en": "TODO", "fr": "TODO", "ar": "TODO" },
+      "deliveryTime": { "en": "TODO", "fr": "TODO", "ar": "TODO", "de": "TODO" },
       "services": [
         "website"
       ],
       "accent": "TODO",
-      "problem": { "en": [ "TODO", "TODO", "TODO" ], "fr": [ "TODO", "TODO", "TODO" ], "ar": [ "TODO", "TODO", "TODO" ] },
+      "problem": { "en": [ "TODO", "TODO", "TODO" ], "fr": [ "TODO", "TODO", "TODO" ], "ar": [ "TODO", "TODO", "TODO" ], "de": [ "TODO", "TODO", "TODO" ] },
       "solution": [
         {
           "icon": "calendar",
-          "title": { "en": "TODO", "fr": "TODO", "ar": "TODO" },
-          "text": { "en": "TODO", "fr": "TODO", "ar": "TODO" }
+          "title": { "en": "TODO", "fr": "TODO", "ar": "TODO", "de": "TODO" },
+          "text": { "en": "TODO", "fr": "TODO", "ar": "TODO", "de": "TODO" }
         },
         {
           "icon": "phone",
-          "title": { "en": "TODO", "fr": "TODO", "ar": "TODO" },
-          "text": { "en": "TODO", "fr": "TODO", "ar": "TODO" }
+          "title": { "en": "TODO", "fr": "TODO", "ar": "TODO", "de": "TODO" },
+          "text": { "en": "TODO", "fr": "TODO", "ar": "TODO", "de": "TODO" }
         },
         {
           "icon": "language",
-          "title": { "en": "TODO", "fr": "TODO", "ar": "TODO" },
-          "text": { "en": "TODO", "fr": "TODO", "ar": "TODO" }
+          "title": { "en": "TODO", "fr": "TODO", "ar": "TODO", "de": "TODO" },
+          "text": { "en": "TODO", "fr": "TODO", "ar": "TODO", "de": "TODO" }
         },
         {
           "icon": "search",
-          "title": { "en": "TODO", "fr": "TODO", "ar": "TODO" },
-          "text": { "en": "TODO", "fr": "TODO", "ar": "TODO" }
+          "title": { "en": "TODO", "fr": "TODO", "ar": "TODO", "de": "TODO" },
+          "text": { "en": "TODO", "fr": "TODO", "ar": "TODO", "de": "TODO" }
         }
       ],
       "results": [],
@@ -72,37 +72,37 @@
       "slug": "dr-sofian",
       "url": "https://chekhabayoub11-ops.github.io/dr-sofian-clinic/",
       "showClientName": "TODO",
-      "name": { "en": "Dr Sofian", "fr": "Dr Sofian", "ar": "د. سفيان" },
-      "type": { "en": "Gastroenterology clinic", "fr": "Cabinet de gastro-entérologie", "ar": "عيادة أمراض الجهاز الهضمي" },
-      "city": { "en": "Algiers", "fr": "Alger", "ar": "الجزائر العاصمة" },
+      "name": { "en": "Dr Sofian", "fr": "Dr Sofian", "ar": "د. سفيان", "de": "Dr Sofian" },
+      "type": { "en": "Gastroenterology clinic", "fr": "Cabinet de gastro-entérologie", "ar": "عيادة أمراض الجهاز الهضمي", "de": "Gastroenterologische Praxis" },
+      "city": { "en": "Algiers", "fr": "Alger", "ar": "الجزائر العاصمة", "de": "Algier" },
       "audience": "clinic",
       "year": "TODO",
-      "deliveryTime": { "en": "TODO", "fr": "TODO", "ar": "TODO" },
+      "deliveryTime": { "en": "TODO", "fr": "TODO", "ar": "TODO", "de": "TODO" },
       "services": [
         "website"
       ],
       "accent": "TODO",
-      "problem": { "en": [ "TODO", "TODO", "TODO" ], "fr": [ "TODO", "TODO", "TODO" ], "ar": [ "TODO", "TODO", "TODO" ] },
+      "problem": { "en": [ "TODO", "TODO", "TODO" ], "fr": [ "TODO", "TODO", "TODO" ], "ar": [ "TODO", "TODO", "TODO" ], "de": [ "TODO", "TODO", "TODO" ] },
       "solution": [
         {
           "icon": "calendar",
-          "title": { "en": "TODO", "fr": "TODO", "ar": "TODO" },
-          "text": { "en": "TODO", "fr": "TODO", "ar": "TODO" }
+          "title": { "en": "TODO", "fr": "TODO", "ar": "TODO", "de": "TODO" },
+          "text": { "en": "TODO", "fr": "TODO", "ar": "TODO", "de": "TODO" }
         },
         {
           "icon": "phone",
-          "title": { "en": "TODO", "fr": "TODO", "ar": "TODO" },
-          "text": { "en": "TODO", "fr": "TODO", "ar": "TODO" }
+          "title": { "en": "TODO", "fr": "TODO", "ar": "TODO", "de": "TODO" },
+          "text": { "en": "TODO", "fr": "TODO", "ar": "TODO", "de": "TODO" }
         },
         {
           "icon": "map",
-          "title": { "en": "TODO", "fr": "TODO", "ar": "TODO" },
-          "text": { "en": "TODO", "fr": "TODO", "ar": "TODO" }
+          "title": { "en": "TODO", "fr": "TODO", "ar": "TODO", "de": "TODO" },
+          "text": { "en": "TODO", "fr": "TODO", "ar": "TODO", "de": "TODO" }
         },
         {
           "icon": "search",
-          "title": { "en": "TODO", "fr": "TODO", "ar": "TODO" },
-          "text": { "en": "TODO", "fr": "TODO", "ar": "TODO" }
+          "title": { "en": "TODO", "fr": "TODO", "ar": "TODO", "de": "TODO" },
+          "text": { "en": "TODO", "fr": "TODO", "ar": "TODO", "de": "TODO" }
         }
       ],
       "results": [],
@@ -131,37 +131,37 @@
       "slug": "dr-badis",
       "url": "https://chekhabayoub11-ops.github.io/dr.badis/",
       "showClientName": "TODO",
-      "name": { "en": "Dr Badis", "fr": "Dr Badis", "ar": "د. باديس" },
-      "type": { "en": "Family medicine clinic", "fr": "Cabinet de médecine générale", "ar": "عيادة الطب العام" },
-      "city": { "en": "TODO", "fr": "TODO", "ar": "TODO" },
+      "name": { "en": "Dr Badis", "fr": "Dr Badis", "ar": "د. باديس", "de": "Dr Badis" },
+      "type": { "en": "Family medicine clinic", "fr": "Cabinet de médecine générale", "ar": "عيادة الطب العام", "de": "Hausarztpraxis" },
+      "city": { "en": "TODO", "fr": "TODO", "ar": "TODO", "de": "TODO" },
       "audience": "clinic",
       "year": "TODO",
-      "deliveryTime": { "en": "TODO", "fr": "TODO", "ar": "TODO" },
+      "deliveryTime": { "en": "TODO", "fr": "TODO", "ar": "TODO", "de": "TODO" },
       "services": [
         "website"
       ],
       "accent": "TODO",
-      "problem": { "en": [ "TODO", "TODO", "TODO" ], "fr": [ "TODO", "TODO", "TODO" ], "ar": [ "TODO", "TODO", "TODO" ] },
+      "problem": { "en": [ "TODO", "TODO", "TODO" ], "fr": [ "TODO", "TODO", "TODO" ], "ar": [ "TODO", "TODO", "TODO" ], "de": [ "TODO", "TODO", "TODO" ] },
       "solution": [
         {
           "icon": "calendar",
-          "title": { "en": "TODO", "fr": "TODO", "ar": "TODO" },
-          "text": { "en": "TODO", "fr": "TODO", "ar": "TODO" }
+          "title": { "en": "TODO", "fr": "TODO", "ar": "TODO", "de": "TODO" },
+          "text": { "en": "TODO", "fr": "TODO", "ar": "TODO", "de": "TODO" }
         },
         {
           "icon": "phone",
-          "title": { "en": "TODO", "fr": "TODO", "ar": "TODO" },
-          "text": { "en": "TODO", "fr": "TODO", "ar": "TODO" }
+          "title": { "en": "TODO", "fr": "TODO", "ar": "TODO", "de": "TODO" },
+          "text": { "en": "TODO", "fr": "TODO", "ar": "TODO", "de": "TODO" }
         },
         {
           "icon": "heart",
-          "title": { "en": "TODO", "fr": "TODO", "ar": "TODO" },
-          "text": { "en": "TODO", "fr": "TODO", "ar": "TODO" }
+          "title": { "en": "TODO", "fr": "TODO", "ar": "TODO", "de": "TODO" },
+          "text": { "en": "TODO", "fr": "TODO", "ar": "TODO", "de": "TODO" }
         },
         {
           "icon": "search",
-          "title": { "en": "TODO", "fr": "TODO", "ar": "TODO" },
-          "text": { "en": "TODO", "fr": "TODO", "ar": "TODO" }
+          "title": { "en": "TODO", "fr": "TODO", "ar": "TODO", "de": "TODO" },
+          "text": { "en": "TODO", "fr": "TODO", "ar": "TODO", "de": "TODO" }
         }
       ],
       "results": [],
@@ -190,37 +190,37 @@
       "slug": "titan-gym",
       "url": "https://chekhabayoub04-glitch.github.io/titan-gym/",
       "showClientName": "TODO",
-      "name": { "en": "Titan Gym", "fr": "Titan Gym", "ar": "Titan Gym" },
-      "type": { "en": "Fitness club", "fr": "Salle de sport", "ar": "نادي رياضي" },
-      "city": { "en": "Algiers", "fr": "Alger", "ar": "الجزائر العاصمة" },
+      "name": { "en": "Titan Gym", "fr": "Titan Gym", "ar": "Titan Gym", "de": "Titan Gym" },
+      "type": { "en": "Fitness club", "fr": "Salle de sport", "ar": "نادي رياضي", "de": "Fitnessstudio" },
+      "city": { "en": "Algiers", "fr": "Alger", "ar": "الجزائر العاصمة", "de": "Algier" },
       "audience": "gym",
       "year": "TODO",
-      "deliveryTime": { "en": "TODO", "fr": "TODO", "ar": "TODO" },
+      "deliveryTime": { "en": "TODO", "fr": "TODO", "ar": "TODO", "de": "TODO" },
       "services": [
         "website"
       ],
       "accent": "TODO",
-      "problem": { "en": [ "TODO", "TODO", "TODO" ], "fr": [ "TODO", "TODO", "TODO" ], "ar": [ "TODO", "TODO", "TODO" ] },
+      "problem": { "en": [ "TODO", "TODO", "TODO" ], "fr": [ "TODO", "TODO", "TODO" ], "ar": [ "TODO", "TODO", "TODO" ], "de": [ "TODO", "TODO", "TODO" ] },
       "solution": [
         {
           "icon": "calendar",
-          "title": { "en": "TODO", "fr": "TODO", "ar": "TODO" },
-          "text": { "en": "TODO", "fr": "TODO", "ar": "TODO" }
+          "title": { "en": "TODO", "fr": "TODO", "ar": "TODO", "de": "TODO" },
+          "text": { "en": "TODO", "fr": "TODO", "ar": "TODO", "de": "TODO" }
         },
         {
           "icon": "phone",
-          "title": { "en": "TODO", "fr": "TODO", "ar": "TODO" },
-          "text": { "en": "TODO", "fr": "TODO", "ar": "TODO" }
+          "title": { "en": "TODO", "fr": "TODO", "ar": "TODO", "de": "TODO" },
+          "text": { "en": "TODO", "fr": "TODO", "ar": "TODO", "de": "TODO" }
         },
         {
           "icon": "chart",
-          "title": { "en": "TODO", "fr": "TODO", "ar": "TODO" },
-          "text": { "en": "TODO", "fr": "TODO", "ar": "TODO" }
+          "title": { "en": "TODO", "fr": "TODO", "ar": "TODO", "de": "TODO" },
+          "text": { "en": "TODO", "fr": "TODO", "ar": "TODO", "de": "TODO" }
         },
         {
           "icon": "search",
-          "title": { "en": "TODO", "fr": "TODO", "ar": "TODO" },
-          "text": { "en": "TODO", "fr": "TODO", "ar": "TODO" }
+          "title": { "en": "TODO", "fr": "TODO", "ar": "TODO", "de": "TODO" },
+          "text": { "en": "TODO", "fr": "TODO", "ar": "TODO", "de": "TODO" }
         }
       ],
       "results": [],
@@ -249,37 +249,37 @@
       "slug": "new-vession-promotion",
       "url": "https://chekhabayoub04-glitch.github.io/new-vession-promition-/",
       "showClientName": "TODO",
-      "name": { "en": "New Vession Promotion", "fr": "New Vession Promotion", "ar": "New Vession Promotion" },
-      "type": { "en": "Real estate", "fr": "Immobilier", "ar": "عقارات" },
-      "city": { "en": "El Bouni, Annaba", "fr": "El Bouni, Annaba", "ar": "البوني، عنابة" },
+      "name": { "en": "New Vession Promotion", "fr": "New Vession Promotion", "ar": "New Vession Promotion", "de": "New Vession Promotion" },
+      "type": { "en": "Real estate", "fr": "Immobilier", "ar": "عقارات", "de": "Immobilien" },
+      "city": { "en": "El Bouni, Annaba", "fr": "El Bouni, Annaba", "ar": "البوني، عنابة", "de": "El Bouni, Annaba" },
       "audience": "business",
       "year": "TODO",
-      "deliveryTime": { "en": "TODO", "fr": "TODO", "ar": "TODO" },
+      "deliveryTime": { "en": "TODO", "fr": "TODO", "ar": "TODO", "de": "TODO" },
       "services": [
         "website"
       ],
       "accent": "TODO",
-      "problem": { "en": [ "TODO", "TODO", "TODO" ], "fr": [ "TODO", "TODO", "TODO" ], "ar": [ "TODO", "TODO", "TODO" ] },
+      "problem": { "en": [ "TODO", "TODO", "TODO" ], "fr": [ "TODO", "TODO", "TODO" ], "ar": [ "TODO", "TODO", "TODO" ], "de": [ "TODO", "TODO", "TODO" ] },
       "solution": [
         {
           "icon": "building",
-          "title": { "en": "TODO", "fr": "TODO", "ar": "TODO" },
-          "text": { "en": "TODO", "fr": "TODO", "ar": "TODO" }
+          "title": { "en": "TODO", "fr": "TODO", "ar": "TODO", "de": "TODO" },
+          "text": { "en": "TODO", "fr": "TODO", "ar": "TODO", "de": "TODO" }
         },
         {
           "icon": "phone",
-          "title": { "en": "TODO", "fr": "TODO", "ar": "TODO" },
-          "text": { "en": "TODO", "fr": "TODO", "ar": "TODO" }
+          "title": { "en": "TODO", "fr": "TODO", "ar": "TODO", "de": "TODO" },
+          "text": { "en": "TODO", "fr": "TODO", "ar": "TODO", "de": "TODO" }
         },
         {
           "icon": "map",
-          "title": { "en": "TODO", "fr": "TODO", "ar": "TODO" },
-          "text": { "en": "TODO", "fr": "TODO", "ar": "TODO" }
+          "title": { "en": "TODO", "fr": "TODO", "ar": "TODO", "de": "TODO" },
+          "text": { "en": "TODO", "fr": "TODO", "ar": "TODO", "de": "TODO" }
         },
         {
           "icon": "search",
-          "title": { "en": "TODO", "fr": "TODO", "ar": "TODO" },
-          "text": { "en": "TODO", "fr": "TODO", "ar": "TODO" }
+          "title": { "en": "TODO", "fr": "TODO", "ar": "TODO", "de": "TODO" },
+          "text": { "en": "TODO", "fr": "TODO", "ar": "TODO", "de": "TODO" }
         }
       ],
       "results": [],
@@ -308,37 +308,37 @@
       "slug": "we-can-speak-deutsch",
       "url": "https://chekhabayoub11-ops.github.io/we-can-speak-deutsch/",
       "showClientName": true,
-      "name": { "en": "We Can Speak Deutsch", "fr": "We Can Speak Deutsch", "ar": "We Can Speak Deutsch" },
-      "type": { "en": "Language school", "fr": "École de langues", "ar": "مدرسة لغات" },
-      "city": { "en": "TODO", "fr": "TODO", "ar": "TODO" },
+      "name": { "en": "We Can Speak Deutsch", "fr": "We Can Speak Deutsch", "ar": "We Can Speak Deutsch", "de": "We Can Speak Deutsch" },
+      "type": { "en": "Language school", "fr": "École de langues", "ar": "مدرسة لغات", "de": "Sprachschule" },
+      "city": { "en": "TODO", "fr": "TODO", "ar": "TODO", "de": "TODO" },
       "audience": "school",
       "year": "TODO",
-      "deliveryTime": { "en": "TODO", "fr": "TODO", "ar": "TODO" },
+      "deliveryTime": { "en": "TODO", "fr": "TODO", "ar": "TODO", "de": "TODO" },
       "services": [
         "website"
       ],
       "accent": "TODO",
-      "problem": { "en": [ "TODO", "TODO", "TODO" ], "fr": [ "TODO", "TODO", "TODO" ], "ar": [ "TODO", "TODO", "TODO" ] },
+      "problem": { "en": [ "TODO", "TODO", "TODO" ], "fr": [ "TODO", "TODO", "TODO" ], "ar": [ "TODO", "TODO", "TODO" ], "de": [ "TODO", "TODO", "TODO" ] },
       "solution": [
         {
           "icon": "language",
-          "title": { "en": "TODO", "fr": "TODO", "ar": "TODO" },
-          "text": { "en": "TODO", "fr": "TODO", "ar": "TODO" }
+          "title": { "en": "TODO", "fr": "TODO", "ar": "TODO", "de": "TODO" },
+          "text": { "en": "TODO", "fr": "TODO", "ar": "TODO", "de": "TODO" }
         },
         {
           "icon": "phone",
-          "title": { "en": "TODO", "fr": "TODO", "ar": "TODO" },
-          "text": { "en": "TODO", "fr": "TODO", "ar": "TODO" }
+          "title": { "en": "TODO", "fr": "TODO", "ar": "TODO", "de": "TODO" },
+          "text": { "en": "TODO", "fr": "TODO", "ar": "TODO", "de": "TODO" }
         },
         {
           "icon": "image",
-          "title": { "en": "TODO", "fr": "TODO", "ar": "TODO" },
-          "text": { "en": "TODO", "fr": "TODO", "ar": "TODO" }
+          "title": { "en": "TODO", "fr": "TODO", "ar": "TODO", "de": "TODO" },
+          "text": { "en": "TODO", "fr": "TODO", "ar": "TODO", "de": "TODO" }
         },
         {
           "icon": "search",
-          "title": { "en": "TODO", "fr": "TODO", "ar": "TODO" },
-          "text": { "en": "TODO", "fr": "TODO", "ar": "TODO" }
+          "title": { "en": "TODO", "fr": "TODO", "ar": "TODO", "de": "TODO" },
+          "text": { "en": "TODO", "fr": "TODO", "ar": "TODO", "de": "TODO" }
         }
       ],
       "results": [],

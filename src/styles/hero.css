@@ -186,9 +186,6 @@ main, .footer { position: relative; z-index: 1; }
   .ambient video { width: 20%; height: 20%; transform: scale(5); transform-origin: 0 0; filter: grayscale(.75) blur(2px); }
 }
 
-/* Off-screen sections skip rendering until they come near */
-#services, #origin, #signal, .footer { content-visibility: auto; contain-intrinsic-size: auto 900px; }
-
 /* Phones: scroll-linked motion that runs on the compositor (no JS).
    The film sinks and dims as you scroll off it, the headline lifts away,
    beats, tools and the Work heading rise in as they enter. */
