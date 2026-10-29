@@ -50,7 +50,9 @@
     "signature": "De l'ombre à la lumière.",
     "carousel": "Sites choisis",
     "prev": "Projet précédent",
-    "next": "Projet suivant"
+    "next": "Projet suivant",
+    "webTitle": "Développement web",
+    "webLede": "Des sites que j'ai conçus et développés. Arrêtez-vous sur l'un d'eux et touchez-le pour ouvrir le projet."
   },
   "reel": {
     "label": "Le film d'Ayoub",

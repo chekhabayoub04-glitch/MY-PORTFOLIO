@@ -23,6 +23,8 @@
 }
 .carousel-track::-webkit-scrollbar { display: none; }
 .carousel.is-dragging .carousel-track { scroll-snap-type: none; cursor: grabbing; }
+/* While the row glides by itself, snapping would fight it */
+.carousel.is-auto .carousel-track { scroll-snap-type: none; }
 .carousel.is-dragging .phone-link { pointer-events: none; }
 
 .phone-card {
@@ -63,6 +65,21 @@
 .carousel-arrow svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 [dir="rtl"] .carousel-arrow svg { transform: scaleX(-1); }
 @media (hover: none) { .carousel-nav { display: none; } .carousel-track { cursor: auto; } }
+
+/* "Web development": says what these phones are, right above them */
+.carousel-head { position: relative; z-index: 1; max-width: 640px; margin: 0 auto; padding: 0 var(--gutter); text-align: center; }
+.carousel-head h3 {
+  display: inline-flex; align-items: center; gap: 14px;
+  font: 800 clamp(2rem, 1.3rem + 2.4vw, 3.25rem)/1 var(--f-display); color: var(--fog);
+}
+.carousel-head h3::before, .carousel-head h3::after { content: ""; width: clamp(24px, 4vw, 56px); height: 2px; border-radius: 2px; background: var(--signal); }
+:lang(ar) .carousel-head h3 { font-weight: 600; line-height: 1.3; }
+.carousel-head p { margin-top: 12px; color: var(--ash); }
+
+/* The name is part of the link: it lights up with the phone */
+.phone-name { transition: color .25s var(--ease); }
+.phone-link:hover .phone-name, .phone-link:focus-visible .phone-name, .phone-card.is-active .phone-name { color: var(--signal); }
+.phone-link:hover .phone-name { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 6px; }
 
 /* The Work intro on top of the carousel */
 .work-head .lede { max-width: 30em; }

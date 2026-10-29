@@ -50,7 +50,9 @@
     "signature": "Out of the shadow, into the light.",
     "carousel": "Selected websites",
     "prev": "Previous project",
-    "next": "Next project"
+    "next": "Next project",
+    "webTitle": "Web development",
+    "webLede": "Websites I designed and built. Stop on one and tap it to open the project."
   },
   "reel": {
     "label": "Ayoub's film",

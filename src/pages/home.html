@@ -200,7 +200,11 @@
       </div>
 
       <div class="carousel" id="carousel" data-ambient="off">
-        <ul class="carousel-track" aria-label="{{work.carousel}}">{{@carousel}}
+        <div class="carousel-head">
+          <h3 id="webTitle">{{work.webTitle}}</h3>
+          <p>{{work.webLede}}</p>
+        </div>
+        <ul class="carousel-track" aria-describedby="webTitle" aria-label="{{work.carousel}}">{{@carousel}}
         </ul>
         <div class="carousel-nav">
           <button class="carousel-arrow" type="button" data-dir="-1" aria-label="{{work.prev}}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>

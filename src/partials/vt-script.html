@@ -6,7 +6,8 @@
       var name = function (el, slug, vt) {
         if (!el || el.style.viewTransitionName) return;
         el.style.viewTransitionName = 'shot-' + slug;
-        vt.finished.finally(function () { el.style.viewTransitionName = ''; });
+        var clear = function () { el.style.viewTransitionName = ''; };
+        vt.finished.then(clear, clear);   // a skipped transition rejects: not an error
       };
       // Leaving: name the phone that was clicked (carousel card or "next project")
       addEventListener('pageswap', function (e) {
@@ -17,9 +18,11 @@
       // project we came from morphs back into its card
       addEventListener('pagereveal', function (e) {
         if (!e.viewTransition) return;
+        e.viewTransition.ready.catch(function () {});   // skipped (e.g. styles not in yet): no error
         var root = document.documentElement;
         root.classList.add('is-arriving');
-        e.viewTransition.finished.finally(function () { root.classList.remove('is-arriving'); });
+        var done = function () { root.classList.remove('is-arriving'); };
+        e.viewTransition.finished.then(done, done);
         var from = window.navigation && navigation.activation && navigation.activation.from && slugOf(navigation.activation.from.url);
         if (from) name(document.querySelector('.phone-card[data-slug="' + from + '"] .phone-shot'), from, e.viewTransition);
       });

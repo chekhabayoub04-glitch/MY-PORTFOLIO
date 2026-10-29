@@ -1,5 +1,6 @@
 // The Selected work carousel. Native horizontal scroll with snap (touch,
 // trackpad, Shift+wheel), plus mouse drag and arrow buttons on desktop.
+// It glides on its own, back and forth, until the visitor reaches for it.
 // Each frame on the shared GSAP ticker: scale and opacity by distance from
 // the centre, and the active phone's tilt. Card centres are measured on
 // resize only; per frame we read the scroll offset and do math.
@@ -27,6 +28,12 @@ export function initCarousel() {
     last = NaN;
   }
   const scrollFor = i => centers[i] - half;
+  const nearest = () => {
+    const sl = track.scrollLeft;
+    let best = 0;
+    centers.forEach((c, i) => { if (Math.abs(c - sl - half) < Math.abs(centers[best] - sl - half)) best = i; });
+    return best;
+  };
   const go = (i, instant) => {
     i = Math.max(0, Math.min(cards.length - 1, i));
     track.scrollTo({ left: scrollFor(i), behavior: instant || reduce ? 'auto' : 'smooth' });
@@ -34,20 +41,36 @@ export function initCarousel() {
 
   new ResizeObserver(measure).observe(track);
   measure();
-  new IntersectionObserver(([e]) => { visible = e.isIntersecting; }, { rootMargin: '200px 0px' }).observe(root);
+  // Auto-glide: hover, touch, drag, wheel, keyboard or the arrows stop it; it
+  // then settles on the nearest phone (ready to tap) and resumes after a pause.
+  const SPEED = fine ? 42 : 32;   // px per second
+  let held = false, resumeAt = 0, gliding = false, pos = 0, dir = 1, dragging = false;
+  const hold = (ms = 2500) => { resumeAt = performance.now() + ms; };
+  root.addEventListener('pointerenter', e => { if (e.pointerType === 'mouse') held = true; });
+  root.addEventListener('pointerleave', e => { if (e.pointerType === 'mouse') { held = false; hold(1200); } });
+  track.addEventListener('touchstart', () => { held = true; }, { passive: true });
+  track.addEventListener('touchend', () => { held = false; hold(4000); }, { passive: true });
+  track.addEventListener('wheel', () => hold(3000), { passive: true });
+  track.addEventListener('focusin', () => { held = true; });
+  track.addEventListener('focusout', () => { held = false; hold(); });
+
+  new IntersectionObserver(([e]) => {
+    visible = e.isIntersecting;
+    if (visible) hold(900);
+  }, { rootMargin: '200px 0px' }).observe(root);
 
   // Back from a portal: the carousel opens on the project you came from
   try {
     const i = cards.findIndex(c => c.dataset.slug === sessionStorage.getItem(KEY));
-    if (i >= 0) go(i, true);
+    if (i >= 0) { go(i, true); hold(6000); }
   } catch {}
   cards.forEach(c => c.querySelector('a').addEventListener('click', () => {
     try { sessionStorage.setItem(KEY, c.dataset.slug); } catch {}
   }));
 
   // Arrows and keyboard
-  prevBtn.addEventListener('click', () => go(active - 1));
-  nextBtn.addEventListener('click', () => go(active + 1));
+  prevBtn.addEventListener('click', () => { hold(5000); go(active - 1); });
+  nextBtn.addEventListener('click', () => { hold(5000); go(active + 1); });
   track.addEventListener('focusin', e => {
     const i = cards.findIndex(c => c.contains(e.target));
     if (i >= 0 && i !== active) go(i);
@@ -63,7 +86,7 @@ export function initCarousel() {
 
   // Mouse drag (touch keeps native scrolling)
   if (fine) {
-    let startX = 0, startScroll = 0, dragging = false, down = false;
+    let startX = 0, startScroll = 0, down = false;
     track.addEventListener('dragstart', e => e.preventDefault());
     track.addEventListener('pointerdown', e => {
       if (e.pointerType !== 'mouse' || e.button !== 0) return;
@@ -79,12 +102,10 @@ export function initCarousel() {
       if (!down) return;
       down = false;
       if (!dragging) return;
+      dragging = false;
       root.classList.remove('is-dragging');
-      // settle on the nearest phone
-      const sl = track.scrollLeft;
-      let best = 0;
-      centers.forEach((c, i) => { if (Math.abs(c - sl - half) < Math.abs(centers[best] - sl - half)) best = i; });
-      go(best);
+      hold(4000);
+      go(nearest());
       // a drag is not a click
       track.addEventListener('click', e => { e.preventDefault(); e.stopPropagation(); }, { capture: true, once: true });
     });
@@ -105,6 +126,19 @@ export function initCarousel() {
 
   gsap.ticker.add((time, deltaMs) => {
     if (!visible) return;
+    const glide = !reduce && !held && !dragging && !document.hidden && performance.now() > resumeAt;
+    if (glide) {
+      if (!gliding) { gliding = true; pos = track.scrollLeft; root.classList.add('is-auto'); }
+      const a = scrollFor(0), b = scrollFor(cards.length - 1);
+      const lo = Math.min(a, b), hi = Math.max(a, b);
+      pos += dir * SPEED * Math.min(deltaMs, 100) / 1000;
+      if (pos >= hi) { pos = hi; dir = -1; } else if (pos <= lo) { pos = lo; dir = 1; }
+      track.scrollLeft = pos;
+    } else if (gliding) {
+      gliding = false;
+      root.classList.remove('is-auto');
+      go(nearest());
+    }
     const sl = track.scrollLeft;
     if (sl !== last) {
       last = sl;
