@@ -188,7 +188,9 @@ function startLite({ hero, saveData }) {
   stage.classList.add('has-torch');
   const light = createSpotlight({ mode: 'drift', rtl });
   createAmbient({ hero, still: saveData, small: innerWidth < 768 });
-  heroVideo(stage, stage);
+  // on phones the walk starts as soon as the page has loaded, so the poster (LCP) has the network first
+  const walk = () => heroVideo(stage, stage);
+  document.readyState === 'complete' ? walk() : addEventListener('load', walk, { once: true });
 
   // The light is a fixed-size gradient layer that only translates: sized once
   // here (one repaint), then every frame is a compositor-only transform.

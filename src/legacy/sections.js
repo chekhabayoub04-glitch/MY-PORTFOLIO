@@ -81,7 +81,13 @@ export function initSections() {
   // Reels: hover previews muted, the button plays with sound
   $$('[data-reel]').forEach(reel => {
     const video = $('video', reel), btn = $('.reel-sound', reel);   // the timecode is written at build (src/site/counts.mjs)
-    new IntersectionObserver(([e]) => { if (e.isIntersecting && video.preload === 'none') video.preload = 'metadata'; }, { rootMargin: '300px' }).observe(reel);
+    // the poster and metadata load only as the reel comes near (keeps the hero's bandwidth free)
+    new IntersectionObserver(([e], io) => {
+      if (!e.isIntersecting) return;
+      video.poster = video.dataset.poster;
+      video.preload = 'metadata';
+      io.disconnect();
+    }, { rootMargin: '300px' }).observe(reel);
     if (finePointer) {
       reel.addEventListener('pointerenter', () => { if (!reel.classList.contains('is-loud')) video.play().catch(() => {}); });
       reel.addEventListener('pointerleave', () => { if (!reel.classList.contains('is-loud')) video.pause(); });
