@@ -155,7 +155,7 @@
     },
     "design": {
       "title": "Design graphique",
-      "count": "7 collections, 21 visuels",
+      "count": "{collections}, {visuals}",
       "more": "Ouvrir toute la galerie design",
       "items": [
         {
@@ -226,7 +226,7 @@
     },
     "marks": {
       "title": "Logos",
-      "count": "12 identités",
+      "count": "{identities}",
       "cardTitle": "Un symbole, toute une entreprise",
       "meta": "Restauration, beauté, sport, café",
       "text": "Des logos pensés pour fonctionner partout : vitrine, gobelet, story, favicon.",
@@ -281,6 +281,20 @@
     "footer": {
       "place": "Alger",
       "top": "Retour en haut"
+    },
+    "counts": {
+      "collections": {
+        "one": "{n} collection",
+        "other": "{n} collections"
+      },
+      "visuals": {
+        "one": "{n} visuel",
+        "other": "{n} visuels"
+      },
+      "identities": {
+        "one": "{n} identité",
+        "other": "{n} identités"
+      }
     }
   }
 }

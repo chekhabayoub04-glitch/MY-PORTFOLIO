@@ -155,7 +155,7 @@
     },
     "design": {
       "title": "Graphic design",
-      "count": "7 collections, 21 visuals",
+      "count": "{collections}, {visuals}",
       "more": "Open the full design gallery",
       "items": [
         {
@@ -226,7 +226,7 @@
     },
     "marks": {
       "title": "Logos",
-      "count": "12 identities",
+      "count": "{identities}",
       "cardTitle": "One symbol, a whole business",
       "meta": "Food, beauty, fitness, coffee",
       "text": "Marks designed to work everywhere: storefront, cup, story, favicon.",
@@ -281,6 +281,20 @@
     "footer": {
       "place": "Algiers",
       "top": "Back to the top"
+    },
+    "counts": {
+      "collections": {
+        "one": "{n} collection",
+        "other": "{n} collections"
+      },
+      "visuals": {
+        "one": "{n} visual",
+        "other": "{n} visuals"
+      },
+      "identities": {
+        "one": "{n} identity",
+        "other": "{n} identities"
+      }
     }
   }
 }

@@ -155,7 +155,7 @@
     },
     "design": {
       "title": "Grafikdesign",
-      "count": "7 Kollektionen, 21 Motive",
+      "count": "{collections}, {visuals}",
       "more": "Die ganze Design-Galerie öffnen",
       "items": [
         {
@@ -226,7 +226,7 @@
     },
     "marks": {
       "title": "Logos",
-      "count": "12 Identitäten",
+      "count": "{identities}",
       "cardTitle": "Ein Symbol, ein ganzes Unternehmen",
       "meta": "Gastronomie, Beauty, Fitness, Kaffee",
       "text": "Logos, die überall funktionieren: Schaufenster, Becher, Story, Favicon.",
@@ -281,6 +281,20 @@
     "footer": {
       "place": "Algier",
       "top": "Nach oben"
+    },
+    "counts": {
+      "collections": {
+        "one": "{n} Kollektion",
+        "other": "{n} Kollektionen"
+      },
+      "visuals": {
+        "one": "{n} Motiv",
+        "other": "{n} Motive"
+      },
+      "identities": {
+        "one": "{n} Identität",
+        "other": "{n} Identitäten"
+      }
     }
   }
 }

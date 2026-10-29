@@ -79,10 +79,8 @@ export function initSections() {
   });
 
   // Reels: hover previews muted, the button plays with sound
-  const fmt = t => `${Math.floor(t / 60)}:${String(Math.round(t % 60)).padStart(2, '0')}`;
   $$('[data-reel]').forEach(reel => {
-    const video = $('video', reel), btn = $('.reel-sound', reel), time = $('.reel-time', reel);
-    video.addEventListener('loadedmetadata', () => { time.textContent = fmt(video.duration); });
+    const video = $('video', reel), btn = $('.reel-sound', reel);   // the timecode is written at build (src/site/counts.mjs)
     new IntersectionObserver(([e]) => { if (e.isIntersecting && video.preload === 'none') video.preload = 'metadata'; }, { rootMargin: '300px' }).observe(reel);
     if (finePointer) {
       reel.addEventListener('pointerenter', () => { if (!reel.classList.contains('is-loud')) video.play().catch(() => {}); });

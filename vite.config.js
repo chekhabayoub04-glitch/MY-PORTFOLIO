@@ -4,6 +4,7 @@ import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { defineConfig } from 'vite';
 import { WEB3FORMS_KEY } from './src/config.js';
+import { fillCounts } from './src/site/counts.mjs';
 import { createRenderer } from './src/site/render.mjs';
 import { LANGS, SITE, carousel, loadProjects, portalBlocks, portalPath, portalVars, sitemap, todoReport } from './src/site/work.mjs';
 
@@ -39,7 +40,7 @@ function writePages() {
     const t = JSON.parse(readFileSync(r(`src/i18n/${lang}.json`), 'utf8'));
     const common = { lang, dir: lang === 'ar' ? 'rtl' : 'ltr', base: `/${dir}` };
 
-    writePage(`${dir}index.html`, render('src/pages/home.html', {
+    writePage(`${dir}index.html`, fillCounts(render('src/pages/home.html', {
       lang, t,
       vars: {
         ...common, url: SITE + dir, href_en: '/', href_fr: '/fr/', href_ar: '/ar/', href_de: '/de/',
@@ -47,7 +48,7 @@ function writePages() {
         web3forms: WEB3FORMS_KEY,
       },
       blocks: { carousel: carousel(projects, lang, t) },
-    }), `src/pages/home.html + src/i18n/${lang}.json`);
+    }), { lang, t, root }), `src/pages/home.html + src/i18n/${lang}.json`);
 
     projects.forEach((p, i) => {
       const next = projects[(i + 1) % projects.length];
