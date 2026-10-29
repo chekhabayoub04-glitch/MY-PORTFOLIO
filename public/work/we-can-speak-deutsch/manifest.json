@@ -1,0 +1,84 @@
+{
+  "url": "https://chekhabayoub11-ops.github.io/we-can-speak-deutsch/",
+  "captured": "2026-10-29",
+  "images": {
+    "desktop-first": {
+      "w": 1600,
+      "h": 1000,
+      "sm": {
+        "w": 800,
+        "h": 500
+      }
+    },
+    "desktop-full": {
+      "w": 1600,
+      "h": 4004
+    },
+    "gallery-1": {
+      "w": 1600,
+      "h": 708,
+      "sm": {
+        "w": 800,
+        "h": 354
+      }
+    },
+    "mobile-first": {
+      "w": 780,
+      "h": 1688,
+      "sm": {
+        "w": 390,
+        "h": 844
+      }
+    },
+    "mobile-full": {
+      "w": 780,
+      "h": 5599
+    },
+    "gallery-2": {
+      "w": 780,
+      "h": 2848,
+      "sm": {
+        "w": 390,
+        "h": 1424
+      }
+    },
+    "gallery-3": {
+      "w": 780,
+      "h": 1526,
+      "sm": {
+        "w": 390,
+        "h": 763
+      }
+    },
+    "gallery-4": {
+      "w": 780,
+      "h": 1688,
+      "sm": {
+        "w": 390,
+        "h": 844
+      }
+    }
+  },
+  "gallery": [
+    {
+      "file": "gallery-1",
+      "kind": "levels",
+      "viewport": "desktop"
+    },
+    {
+      "file": "gallery-2",
+      "kind": "levels",
+      "viewport": "mobile"
+    },
+    {
+      "file": "gallery-3",
+      "kind": "resources",
+      "viewport": "mobile"
+    },
+    {
+      "file": "gallery-4",
+      "kind": "gallery",
+      "viewport": "mobile"
+    }
+  ]
+}

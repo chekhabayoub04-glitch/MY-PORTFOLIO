@@ -1,0 +1,128 @@
+{
+  "meta": {
+    "title": "Ayoub Chekhab | Sites, pubs et films IA qui amènent des clients",
+    "description": "Des sites, des pubs et des films IA qui amènent des clients à votre entreprise. Ayoub Chekhab, créateur digital en Algérie : sites web, visuels publicitaires, films de marque IA, logos, Meta Ads et SEO.",
+    "locale": "fr_FR",
+    "ogAlt": "Ayoub Chekhab, créateur digital en Algérie : sites, pubs et films IA"
+  },
+  "skip": "Aller au contenu",
+  "nav": {
+    "label": "Principale",
+    "home": "Ayoub Chekhab, accueil",
+    "work": "Projets",
+    "services": "Services",
+    "about": "À propos",
+    "contact": "Contact",
+    "menu": "Ouvrir le menu",
+    "language": "Langue"
+  },
+  "hero": {
+    "h1": "Des sites, des pubs et des films IA qui amènent des clients à votre entreprise.",
+    "sub": "Je suis Ayoub, créateur digital en Algérie. Je conçois, développe et fais connaître les marques.",
+    "poster": "Ayoub Chekhab en costume noir, souriant, sous une lumière dorée",
+    "beats": [
+      {
+        "title": "Des sites qui ramènent des clients",
+        "proof": "Des sites pour cliniques, salles de sport et immobilier, pensés d'abord pour le mobile."
+      },
+      {
+        "title": "Des pubs et des visuels qui arrêtent le scroll",
+        "proof": "Des visuels de campagne pour 7 secteurs, de l'entretien auto au streetwear."
+      },
+      {
+        "title": "Des films IA pour une fraction d'un tournage",
+        "proof": "Des films de marque pour la mode, le verre, l'immobilier et l'automobile, sans équipe de tournage."
+      }
+    ],
+    "tools": "Mes outils"
+  },
+  "cta": {
+    "whatsapp": "Discuter sur WhatsApp",
+    "work": "Voir les projets"
+  },
+  "wa": {
+    "text": "Bonjour Ayoub, j'ai vu votre portfolio et j'aimerais parler d'un projet."
+  },
+  "work": {
+    "title": "Projets choisis",
+    "lede": "Des sites que j'ai conçus et développés, pensés d'abord pour le mobile. Ouvrez-en un pour le voir de près.",
+    "reel": "Voir le film de 10 secondes",
+    "signature": "De l'ombre à la lumière.",
+    "carousel": "Sites choisis",
+    "prev": "Projet précédent",
+    "next": "Projet suivant",
+    "webTitle": "Développement web",
+    "webLede": "Des sites que j'ai conçus et développés. Arrêtez-vous sur l'un d'eux et touchez-le pour ouvrir le projet."
+  },
+  "reel": {
+    "label": "Le film d'Ayoub",
+    "close": "Fermer",
+    "soundOn": "Activer le son",
+    "soundOff": "Couper le son"
+  },
+  "portal": {
+    "back": "Projets choisis",
+    "devices": "Afficher le site sur",
+    "desktop": "Ordinateur",
+    "mobile": "Mobile",
+    "both": "Les deux",
+    "tryLive": "L'essayer en direct",
+    "backToPreview": "Revenir à l'aperçu",
+    "liveFailed": "Le site n'a pas pu s'afficher ici. Ouvrez-le dans un nouvel onglet.",
+    "visit": "Voir le site en ligne",
+    "paused": "Survolez ou sélectionnez l'aperçu pour le mettre en pause.",
+    "facts": {
+      "type": "Type",
+      "city": "Ville",
+      "services": "Ce que j'ai livré",
+      "delivery": "Délai",
+      "year": "Année"
+    },
+    "services": {
+      "website": "Site web",
+      "seo": "SEO",
+      "metaAds": "Meta Ads",
+      "visuals": "Visuels publicitaires",
+      "social": "Réseaux sociaux",
+      "logo": "Logo"
+    },
+    "problem": "Le problème",
+    "built": "Ce que j'ai construit",
+    "results": "Résultats",
+    "testimonial": "Ce que dit le client",
+    "gallery": "À l'intérieur du site",
+    "open": "Ouvrir la capture",
+    "close": "Fermer",
+    "prevShot": "Capture précédente",
+    "nextShot": "Capture suivante",
+    "cta": {
+      "clinic": "Vous voulez un site comme celui-ci pour votre cabinet ?",
+      "gym": "Vous voulez un site comme celui-ci pour votre salle ?",
+      "school": "Vous voulez un site comme celui-ci pour votre école ?",
+      "business": "Vous voulez un site comme celui-ci pour votre entreprise ?"
+    },
+    "ctaText": "Parlez-moi de votre projet sur WhatsApp et je vous dirai comment je le construirais.",
+    "wa": "Bonjour Ayoub, j'ai vu le site {name} dans votre portfolio et j'aimerais un site comme celui-ci.",
+    "next": "Projet suivant",
+    "alt": {
+      "shot": "Site {name}, {what} sur {where}",
+      "home": "page d'accueil",
+      "desktop": "ordinateur",
+      "mobile": "mobile",
+      "kinds": {
+        "services": "section services",
+        "booking": "formulaire de rendez-vous",
+        "menu": "menu mobile",
+        "pricing": "tarifs",
+        "schedule": "planning des cours",
+        "listings": "annonces immobilières",
+        "levels": "niveaux de langue",
+        "resources": "ressources",
+        "gallery": "galerie photo",
+        "about": "présentation du médecin"
+      }
+    },
+    "metaTitle": "{name}, site {type} | Ayoub Chekhab",
+    "metaDesc": "{name} : un site {type} conçu et développé par Ayoub Chekhab. Voyez-le sur ordinateur et sur mobile, puis essayez-le en direct."
+  }
+}

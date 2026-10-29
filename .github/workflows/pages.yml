@@ -1,0 +1,49 @@
+# Builds the site with Vite on every push; deploys to GitHub Pages from main only.
+# (Pages must be set to "Source: GitHub Actions" in the repo settings.)
+name: Build and deploy
+
+on:
+  push:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - name: Check the published files
+        run: |
+          for f in CNAME index.html fr/index.html ar/index.html ai-videos.html campaigns.html editing.html \
+                   graphic-design.html logo-design.html social-media.html web-development.html \
+                   hero/poster-720.webp hero/frames/f_120.webp; do
+            test -e "dist/$f" || { echo "missing dist/$f"; exit 1; }
+          done
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    if: github.ref == 'refs/heads/main'
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

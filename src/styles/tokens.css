@@ -1,0 +1,105 @@
+/* ============================================================
+   Tokens, fonts and base. One brand idea: a gold signal light in
+   a black night. True black behind the film, warm gold for the
+   light and the actions, fog-white text.
+============================================================ */
+
+@font-face {
+  font-family: 'Big Shoulders Display';
+  src: url('/fonts/big-shoulders-display-latin.woff2') format('woff2');
+  font-weight: 600 800;
+  font-display: swap;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Readex Pro';
+  src: url('/fonts/readex-pro-latin.woff2') format('woff2');
+  font-weight: 300 600;
+  font-display: swap;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Readex Pro';
+  src: url('/fonts/readex-pro-arabic.woff2') format('woff2');
+  font-weight: 300 600;
+  font-display: swap;
+  unicode-range: U+0600-06FF, U+0750-077F, U+0870-0891, U+0897-08E1, U+08E3-08FF, U+200C-200E, U+2010-2011, U+204F, U+2E41, U+FB50-FDFF, U+FE70-FE74, U+FE76-FEFC;
+}
+
+:root {
+  --abyss: #000000;     /* page, behind the film */
+  --asphalt: #15171B;   /* raised surfaces, cards, dialog */
+  --signal: #FFD23F;    /* the light, actions, focus */
+  --sodium: #F2A33A;    /* streetlamp glow at the edge of the light only */
+  --fog: #ECEAE5;       /* text */
+  --ash: #8C9096;       /* secondary text: 6.6:1 on abyss, 5.6:1 on asphalt */
+  --line: rgba(236, 234, 229, .16);
+
+  --f-display: 'Big Shoulders Display', 'Readex Pro', Impact, sans-serif;
+  --f-body: 'Readex Pro', system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  --h1: min(clamp(2.75rem, 1.2rem + 5.2vw, 7rem), 10.5vh);
+  --h2: clamp(2rem, 1.2rem + 2.6vw, 3.5rem);
+  --beat: clamp(1.75rem, 1rem + 1.9vw, 2.75rem);
+  --body: clamp(1rem, .95rem + .2vw, 1.125rem);
+
+  --gutter: clamp(16px, 4vw, 56px);
+  --nav-h: 72px;
+  --ease: cubic-bezier(.22, 1, .36, 1);
+
+  /* The older sections read these names until they are rebuilt */
+  --black: var(--abyss);
+  --ink: var(--abyss);
+  --coal: var(--asphalt);
+  --gold: var(--signal);
+  --amber: var(--signal);
+  --ember: var(--sodium);
+  --cream: var(--fog);
+  --text: var(--fog);
+  --muted: var(--ash);
+  --f-power: var(--f-display);
+  --f-serif: var(--f-body);
+}
+
+/* Arabic: Readex Pro carries the headlines too, a touch smaller and looser */
+:root:lang(ar) {
+  --f-display: 'Readex Pro', system-ui, sans-serif;
+  --h1: min(clamp(2.1rem, 1rem + 3.6vw, 4.75rem), 8.2vh);
+  --beat: clamp(1.5rem, .9rem + 1.4vw, 2.25rem);
+}
+
+/* Lenis (official CSS) */
+html.lenis, html.lenis body { height: auto; }
+.lenis:not(.lenis-autoToggle).lenis-stopped { overflow: clip; }
+.lenis [data-lenis-prevent], .lenis [data-lenis-prevent-wheel], .lenis [data-lenis-prevent-touch] { overscroll-behavior: contain; }
+.lenis.lenis-smooth iframe { pointer-events: none; }
+.lenis.lenis-autoToggle { transition-property: overflow; transition-duration: 1ms; transition-behavior: allow-discrete; }
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+a { color: inherit; text-decoration: none; }
+img, video, canvas { display: block; max-width: 100%; }
+ul, ol { list-style: none; }
+button, input, textarea, select { font: inherit; color: inherit; }
+
+html { background: var(--abyss); overflow-x: clip; -webkit-text-size-adjust: 100%; }
+body {
+  background: var(--abyss);
+  color: var(--fog);
+  font-family: var(--f-body);
+  font-size: var(--body);
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+:focus-visible { outline: 2px solid var(--signal); outline-offset: 3px; border-radius: 6px; }
+::selection { background: var(--signal); color: var(--abyss); }
+
+.skip-link {
+  position: fixed; top: -60px; inset-inline-start: 16px; z-index: 300;
+  padding: 10px 16px; border-radius: 999px; background: var(--signal); color: var(--abyss); font-weight: 600;
+}
+.skip-link:focus { top: 16px; }
+
+/* Older sections: no italic accent words, no bracketed eyebrows */
+.display em, .signal-title em, .footer em { font-style: normal; color: inherit; font-family: inherit; }
+.display, .signal-title { font-family: var(--f-display); font-weight: 800; letter-spacing: 0; text-transform: none; line-height: .95; }
+.rule { display: none; }
