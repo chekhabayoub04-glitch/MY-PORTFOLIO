@@ -97,7 +97,7 @@ export function createRing(items) {
         const z = Math.sin(a);                    // > 0: in front of him
         const x = cx + ex * cos - ey * sin, y = cy + ex * sin + ey * cos;
         const depth = (z + 1) / 2;
-        el.style.transform = `translate3d(${(x - 23).toFixed(1)}px, ${(y - 23).toFixed(1)}px, 0) scale(${(.74 + .36 * depth).toFixed(3)})`;
+        el.style.transform = `translate3d(${(x - 26).toFixed(1)}px, ${(y - 26).toFixed(1)}px, 0) scale(${(.74 + .36 * depth).toFixed(3)})`;
         el.style.opacity = (vis * (.32 + .68 * depth)).toFixed(3);
         el.style.pointerEvents = vis > .5 ? 'auto' : 'none';
         el.classList.toggle('is-front', z > 0);

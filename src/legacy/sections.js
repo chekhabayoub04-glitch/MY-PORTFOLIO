@@ -42,8 +42,12 @@ export function initSections() {
 
   // Stacked cards: the card being covered shrinks and dims (--cover 0→1)
   const stackCards = $$('.stack-card');
+  const liveStacks = new Set();
+  const stackIO = new IntersectionObserver(entries => entries.forEach(e => (e.isIntersecting ? liveStacks.add(e.target) : liveStacks.delete(e.target))));
+  $$('.stack').forEach(st => stackIO.observe(st));
   function coverStacks() {
     stackCards.forEach(card => {
+      if (!liveStacks.has(card.parentElement)) return;
       const next = card.nextElementSibling;
       if (!next || reducedMotion) return;
       const gap = next.getBoundingClientRect().top - card.getBoundingClientRect().top;

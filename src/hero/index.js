@@ -178,12 +178,22 @@ function startLite({ hero, saveData }) {
   root.classList.add('is-lite');
   const stage = $('#stage');
   const media = $('.stage-media', stage);
-  stage.classList.add('has-light');
+  const torch = $('.stage-torch', stage);
+  stage.classList.add('has-torch');
   const light = createSpotlight({ mode: 'drift', rtl });
   createAmbient({ hero, still: saveData, small: innerWidth < 768 });
 
-  let rect = { x: 0, y: 0, w: 1, h: 1 };
-  const measure = () => { const b = stage.getBoundingClientRect(); rect = { x: b.left, y: b.top + scrollY, w: b.width, h: b.height }; };
+  // The light is a fixed-size gradient layer that only translates: sized once
+  // here (one repaint), then every frame is a compositor-only transform.
+  let rect = { x: 0, y: 0, w: 1, h: 1 }, half = 0;
+  const measure = () => {
+    const b = stage.getBoundingClientRect();
+    rect = { x: b.left, y: b.top + scrollY, w: b.width, h: b.height };
+    const size = Math.ceil(2 * (b.width + b.height));
+    half = size / 2;
+    torch.style.setProperty('--torch', `${size}px`);
+    torch.style.setProperty('--r', `${Math.round(Math.max(b.width * .82, 260))}px`);
+  };
   measure();
   addEventListener('resize', measure, { passive: true });
 
@@ -211,7 +221,7 @@ function startLite({ hero, saveData }) {
     if (!inView) return;
     const vrect = { ...rect, y: rect.y - scrollY };
     const s = light.update(time * 1000, Math.min(deltaMs, 100) / 1000, vrect);
-    applyLight(stage, s, rect, .18);
+    torch.style.transform = `translate3d(${(s.x * rect.w - half).toFixed(1)}px, ${(s.y * rect.h - half).toFixed(1)}px, 0)`;
   });
 }
 

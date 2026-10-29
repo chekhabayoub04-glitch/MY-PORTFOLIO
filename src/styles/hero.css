@@ -79,10 +79,17 @@
 :lang(ar) .beat h2 { font-weight: 600; line-height: 1.3; }
 .beat p { margin-top: 6px; color: var(--ash); }
 
-.tools { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 28px; }
-.tool { width: 40px; height: 40px; color: var(--fog); opacity: .78; transition: color .2s, opacity .2s; }
-.tool svg { width: 100%; height: 100%; display: block; }
-.tool:hover { color: var(--signal); opacity: 1; }
+/* Tool logos in their own colours, each on a small dark glass tile */
+.tools { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+.tool {
+  width: 52px; height: 52px; display: grid; place-items: center; border-radius: 14px;
+  background: linear-gradient(160deg, #1d2026, #101215);
+  border: 1px solid rgba(255, 255, 255, .09);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .07), 0 10px 26px rgba(0, 0, 0, .45);
+  transition: border-color .25s var(--ease), box-shadow .25s var(--ease);
+}
+.tool img { width: 28px; height: 28px; object-fit: contain; }
+.tool:hover { border-color: rgba(255, 210, 63, .55); box-shadow: inset 0 1px 0 rgba(255, 255, 255, .07), 0 0 0 3px rgba(255, 210, 63, .12), 0 10px 26px rgba(0, 0, 0, .45); }
 
 .hero-ctas { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 36px; }
 
@@ -109,7 +116,7 @@
 .stage-poster, .stage-video { object-fit: cover; object-position: 50% 30%; }
 .stage-canvas, .stage-video, .stage-gl { opacity: 0; transition: opacity .6s var(--ease); }
 .stage.has-canvas .stage-canvas, .stage.has-video .stage-video, .stage.is-gl .stage-gl { opacity: 1; }
-.stage-sodium, .stage-grain { position: absolute; pointer-events: none; display: none; }
+.stage-sodium, .stage-grain, .stage-torch { position: absolute; pointer-events: none; display: none; }
 
 .hero-progress { display: none; }
 
@@ -152,7 +159,7 @@
 
 .is-cinema .stage { position: fixed; inset: auto; left: 0; top: 0; z-index: 3; transform-origin: 0 0; will-change: transform; pointer-events: none; }
 .is-cinema .tools { margin: 0; }
-.is-cinema .tool { position: fixed; left: 0; top: 0; z-index: 2; width: 46px; height: 46px; opacity: 0; will-change: transform, opacity; }
+.is-cinema .tool { position: fixed; left: 0; top: 0; z-index: 2; opacity: 0; will-change: transform, opacity; }
 .is-cinema .tool.is-front { z-index: 4; }
 
 .is-cinema .hero-blur {
@@ -194,6 +201,20 @@
   .hero-ctas { display: none; }
   .is-lite .stage-poster, .is-lite .stage-video { object-position: 50% 22%; }
 }
+/* Phones: the light is one big gradient layer that only moves (translate3d),
+   so nothing repaints while it drifts. It settles in over the first second. */
+.stage.has-torch .stage-torch {
+  display: block; left: 0; top: 0; width: var(--torch, 300vmax); height: var(--torch, 300vmax);
+  will-change: transform; animation: torch-in 1.2s var(--ease) both;
+  background: radial-gradient(circle at 50% 50%, transparent 0, transparent calc(var(--r, 300px) * .3), rgba(242, 163, 58, .06) calc(var(--r, 300px) * .62), rgba(0, 0, 0, .9) var(--r, 300px));
+}
+.stage.has-torch .stage-grain {
+  display: block; inset: -50%; opacity: .06;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  animation: grain .9s steps(6) infinite;
+}
+@keyframes torch-in { from { opacity: 0; } }
+
 @media (max-width: 1023px) and (min-width: 600px) {
   .hero-intro { padding-inline: 40px; max-width: 760px; }
   .beats, .tools { padding-inline: 40px; }
@@ -265,8 +286,36 @@
 .ambient video { width: 100%; height: 100%; object-fit: cover; filter: blur(14px) grayscale(.75) brightness(.9); transform: scale(1.08); }
 .ambient.is-on { opacity: .13; }
 main, .footer { position: relative; z-index: 1; }
+/* Phones: blur by down-scaling (a small video stretched 5×) instead of a big blur filter */
+@media (max-width: 1023px) {
+  .ambient video { width: 20%; height: 20%; transform: scale(5); transform-origin: 0 0; filter: grayscale(.75) blur(2px); }
+}
+
+/* Off-screen sections skip rendering until they come near */
+#services, #origin, #signal, .footer { content-visibility: auto; contain-intrinsic-size: auto 900px; }
+
+/* Phones: scroll-linked motion that runs on the compositor (no JS).
+   The film sinks and dims as you scroll off it, the headline lifts away,
+   beats, tools and the reel card rise in as they enter. */
+@supports (animation-timeline: view()) {
+  @media (max-width: 1023px) and (prefers-reduced-motion: no-preference) {
+    .stage { animation: film-out linear both; animation-timeline: scroll(root); animation-range: 0 100svh; }
+    .hero-intro { animation: intro-out linear both; animation-timeline: scroll(root); animation-range: 0 60svh; }
+    .beat, .reel-card, .work-head > * {
+      animation: rise-in linear both; animation-timeline: view(); animation-range: entry 0% entry 70%;
+    }
+    .tool {
+      animation: tile-in linear both; animation-timeline: view();
+      animation-range: entry calc(var(--i, 0) * 5%) entry calc(55% + var(--i, 0) * 5%);
+    }
+  }
+}
+@keyframes film-out { to { transform: translate3d(0, 22%, 0) scale(1.08); opacity: .3; } }
+@keyframes intro-out { to { transform: translate3d(0, -14%, 0); opacity: 0; } }
+@keyframes rise-in { from { transform: translate3d(0, 32px, 0); opacity: 0; } }
+@keyframes tile-in { from { transform: translate3d(0, 18px, 0) scale(.86); opacity: 0; } }
 
 @media (prefers-reduced-motion: reduce) {
-  .stage-grain { animation: none !important; }
+  .stage-grain, .stage-torch { animation: none !important; }
   .reel-dialog[open] { animation: none; }
 }

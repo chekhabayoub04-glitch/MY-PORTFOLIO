@@ -36,8 +36,6 @@ function render(lang) {
   return html
     // /images/ and /videos/ are published as they are (see STATIC): don't hash copies of them
     .replace(/<(img|video|source|link)\b(?=[^>]*="\/(?:images|videos)\/)/g, '<$1 vite-ignore')
-    // {{icon:name}} inlines a monochrome tool icon
-    .replace(/\{\{icon:([\w-]+)\}\}/g, (_, n) => readFileSync(r(`src/icons/${n}.svg`), 'utf8').trim())
     // {{=name}} is a page variable, {{json:key}} a JSON string for scripts
     .replace(/\{\{=(\w+)\}\}/g, (_, k) => escape(vars[k]))
     .replace(/\{\{json:([\w.]+)\}\}/g, (_, k) => JSON.stringify(get(k)).replace(/</g, '\\u003c'))
@@ -62,9 +60,9 @@ const i18nPages = () => ({
   name: 'i18n-pages',
   config() { writePages(); },
   configureServer(server) {
-    server.watcher.add([r('src/pages'), r('src/partials'), r('src/i18n'), r('src/icons')]);
+    server.watcher.add([r('src/pages'), r('src/partials'), r('src/i18n')]);
     server.watcher.on('change', file => {
-      if (/src\/(pages|partials|i18n|icons)\//.test(file)) {
+      if (/src\/(pages|partials|i18n)\//.test(file)) {
         writePages();
         server.ws.send({ type: 'full-reload' });
       }
