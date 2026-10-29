@@ -10,7 +10,7 @@ across the screen that flips day → night and reveals the services beside Ayoub
 bat-signal) · Manifesto · Arsenal (the work in four chapters: stacked sticky cards — a browser frame where
 pointer x switches between three live sites and pointer y scrolls them, poster trios, AI-film reels
 with sound, a logo wall) · Case Files (pinned horizontal archive) · Origin (education + numbers) · Protocol (process) ·
-The Emblem (real-time Three.js gold bat emblem, lazy-loaded) · Signal (contact). The previous home page is kept as `index-v1.html`.
+The Emblem (real-time Three.js gold bat emblem, lazy-loaded) · Signal (contact). The previous home page is kept, not indexed, as `archive/index-v1.html`.
 
 ### Hero asset pipeline (Python)
 
@@ -139,6 +139,6 @@ git push -u origin main
 | WebGL / GLSL | Shadow Reveal hero shader (metaball light, noise edge, gold rim) |
 | Three.js r170 (ES module) | The Emblem: extruded PBR gold/obsidian bat, env-map reflections, pointer torch, gold dust |
 | Python (Pillow + NumPy) | Hero cut-out, silhouette, responsive WebP pipeline |
-| Three.js (r128) | 3D background on the legacy home page (`index-v1.html`) |
+| Three.js (r128) | 3D background on the archived home page (`archive/index-v1.html`) |
 | Google Fonts | Bebas Neue, Black Ops One, Outfit |
 | Font Awesome 6 | Icons |

@@ -1,3 +1,4 @@
+import { createHash } from 'node:crypto';
 import { cpSync, existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -18,7 +19,7 @@ const render = createRenderer(root);
 // Pages and folders that are published as they are (the subpages keep
 // their own CSS/JS until they are restyled).
 const STATIC = [
-  'CNAME', 'index-v1.html', 'ai-videos.html', 'campaigns.html', 'editing.html',
+  'CNAME', 'archive', 'ai-videos.html', 'campaigns.html', 'editing.html',
   'graphic-design.html', 'logo-design.html', 'social-media.html', 'web-development.html',
   'css', 'js', 'images', 'videos',
 ];
@@ -92,6 +93,15 @@ const copyStatic = () => ({
         recursive: true,
         filter: src => !NOT_PUBLISHED.some(p => src.startsWith(r(p))) && !src.endsWith('.DS_Store'),
       });
+    }
+    // The subpages load css/ and js/ by fixed names: version each one by its
+    // content, so a browser never pairs a new page with an old file
+    const hash = file => createHash('sha256').update(readFileSync(r(file))).digest('hex').slice(0, 8);
+    for (const page of STATIC.filter(f => f.endsWith('.html')).concat('archive/index-v1.html')) {
+      const file = resolve(out, page);
+      if (!existsSync(file)) continue;
+      writeFileSync(file, readFileSync(file, 'utf8').replace(/((?:href|src)="\/?)((?:css|js)\/[^"?#]+\.(?:css|js))"/g,
+        (m, pre, path) => (existsSync(r(path)) ? `${pre}${path}?v=${hash(path)}"` : m)));
     }
   },
 });
