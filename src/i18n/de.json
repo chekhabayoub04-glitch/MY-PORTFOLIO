@@ -1,9 +1,9 @@
 {
   "meta": {
     "title": "Ayoub Chekhab | Websites, Anzeigen und KI-Filme, die Kunden bringen",
-    "description": "Websites, Anzeigen und KI-Filme, die Ihrem Unternehmen Kunden bringen. Ayoub Chekhab, Digital Creator in Algerien: Webdesign, Werbegrafiken, KI-Markenfilme, Logos, Meta Ads und SEO.",
+    "description": "Websites, Anzeigen und KI-Filme, die Ihrem Unternehmen Kunden bringen. Ayoub Chekhab, freiberuflicher Digital Creator für Kunden weltweit: Webdesign, Werbegrafiken, KI-Markenfilme, Logos, Meta Ads und SEO.",
     "locale": "de_DE",
-    "ogAlt": "Ayoub Chekhab, Digital Creator in Algerien: Websites, Anzeigen und KI-Filme"
+    "ogAlt": "Ayoub Chekhab, freiberuflicher Digital Creator: Websites, Anzeigen und KI-Filme"
   },
   "skip": "Zum Inhalt springen",
   "nav": {
@@ -18,7 +18,7 @@
   },
   "hero": {
     "h1": "Websites, Anzeigen und KI-Filme, die Ihrem Unternehmen Kunden bringen.",
-    "sub": "Ich bin Ayoub, Digital Creator in Algerien. Ich gestalte, entwickle und bewerbe Marken, die gesehen werden wollen.",
+    "sub": "Ich bin Ayoub, freiberuflicher Digital Creator für Kunden weltweit. Ich gestalte, entwickle und bewerbe Marken, die gesehen werden wollen.",
     "poster": "Ayoub Chekhab im schwarzen Anzug, lächelnd, in goldenem Licht",
     "beats": [
       {
@@ -288,7 +288,7 @@
       }
     },
     "footer": {
-      "place": "Algier",
+      "place": "Freelance, weltweit",
       "top": "Nach oben"
     },
     "counts": {

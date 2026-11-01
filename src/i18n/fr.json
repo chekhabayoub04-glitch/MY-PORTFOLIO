@@ -1,9 +1,9 @@
 {
   "meta": {
     "title": "Ayoub Chekhab | Sites, pubs et films IA qui amènent des clients",
-    "description": "Des sites, des pubs et des films IA qui amènent des clients à votre entreprise. Ayoub Chekhab, créateur digital en Algérie : sites web, visuels publicitaires, films de marque IA, logos, Meta Ads et SEO.",
+    "description": "Des sites, des pubs et des films IA qui amènent des clients à votre entreprise. Ayoub Chekhab, créateur digital freelance pour des clients du monde entier : sites web, visuels publicitaires, films de marque IA, logos, Meta Ads et SEO.",
     "locale": "fr_FR",
-    "ogAlt": "Ayoub Chekhab, créateur digital en Algérie : sites, pubs et films IA"
+    "ogAlt": "Ayoub Chekhab, créateur digital freelance : sites, pubs et films IA"
   },
   "skip": "Aller au contenu",
   "nav": {
@@ -18,7 +18,7 @@
   },
   "hero": {
     "h1": "Des sites, des pubs et des films IA qui amènent des clients à votre entreprise.",
-    "sub": "Je suis Ayoub, créateur digital en Algérie. Je conçois, développe et fais connaître les marques.",
+    "sub": "Je suis Ayoub, créateur digital freelance pour des clients du monde entier. Je conçois, développe et fais connaître les marques.",
     "poster": "Ayoub Chekhab en costume noir, souriant, sous une lumière dorée",
     "beats": [
       {
@@ -288,7 +288,7 @@
       }
     },
     "footer": {
-      "place": "Alger",
+      "place": "Freelance, partout dans le monde",
       "top": "Retour en haut"
     },
     "counts": {

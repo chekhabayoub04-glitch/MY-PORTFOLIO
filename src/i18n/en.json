@@ -1,9 +1,9 @@
 {
   "meta": {
     "title": "Ayoub Chekhab | Websites, ads and AI films that bring clients",
-    "description": "Websites, ads and AI films that bring clients to your business. Ayoub Chekhab, digital creator in Algeria: web design, ad visuals, AI brand films, logos, Meta Ads and SEO.",
+    "description": "Websites, ads and AI films that bring clients to your business. Ayoub Chekhab, freelance digital creator working worldwide: web design, ad visuals, AI brand films, logos, Meta Ads and SEO.",
     "locale": "en_US",
-    "ogAlt": "Ayoub Chekhab, digital creator in Algeria: websites, ads and AI films"
+    "ogAlt": "Ayoub Chekhab, freelance digital creator: websites, ads and AI films"
   },
   "skip": "Skip to content",
   "nav": {
@@ -18,7 +18,7 @@
   },
   "hero": {
     "h1": "Websites, ads and AI films that bring clients to your business.",
-    "sub": "I'm Ayoub, a digital creator in Algeria. I design, build and promote brands that are ready to be seen.",
+    "sub": "I'm Ayoub, a freelance digital creator working with clients worldwide. I design, build and promote brands that are ready to be seen.",
     "poster": "Ayoub Chekhab in a black suit, smiling, under a gold light",
     "beats": [
       {
@@ -288,7 +288,7 @@
       }
     },
     "footer": {
-      "place": "Algiers",
+      "place": "Freelance, worldwide",
       "top": "Back to the top"
     },
     "counts": {

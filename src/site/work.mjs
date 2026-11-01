@@ -23,7 +23,7 @@ export function loadProjects(root) {
 }
 
 export function todoReport(projects) {
-  const fields = ['showClientName', 'city', 'year', 'deliveryTime', 'problem', 'solution', 'results', 'testimonial'];
+  const fields = ['showClientName', 'year', 'deliveryTime', 'problem', 'solution', 'results', 'testimonial'];
   return projects.map(p => {
     const missing = fields.filter(f => {
       const v = p[f];
@@ -51,14 +51,13 @@ const shotAlt = (t, p, lang, what, where) => fill(t.portal.alt.shot, { name: p.n
 export function carousel(projects, lang, t) {
   return projects.map((p, i) => {
     const img = p.manifest.images['mobile-first'];
-    const city = isTodo(p.city[lang]) ? '' : `<span class="phone-city">${escape(p.city[lang])}</span>`;
     return `
           <li class="phone-card" data-slug="${p.slug}" style="--i:${i}">
             <a class="phone-link" href="${portalPath(p.slug, lang)}">
               <span class="phone"><span class="phone-screen">${picture(p.slug, 'mobile-first', img, {
                 alt: shotAlt(t, p, lang, t.portal.alt.home, 'mobile'), sizes: '(min-width: 1024px) 280px, 64vw', cls: 'phone-shot',
               })}</span></span>
-              <span class="phone-meta"><span class="phone-name">${escape(p.name[lang])}</span><span class="phone-type">${escape(p.type[lang])}</span>${city}</span>
+              <span class="phone-meta"><span class="phone-name">${escape(p.name[lang])}</span><span class="phone-type">${escape(p.type[lang])}</span></span>
             </a>
           </li>`;
   }).join('');
@@ -115,7 +114,6 @@ export function portalBlocks(p, next, lang, t) {
 
   const facts = [
     [P.facts.type, L(p.type)],
-    [P.facts.city, L(p.city)],
     [P.facts.services, (p.services || []).map(s => P.services[s] || s).join(', ')],
     [P.facts.delivery, L(p.deliveryTime)],
     [P.facts.year, p.year],
@@ -203,7 +201,7 @@ export function portalVars(p, lang, t) {
   const name = p.name[lang];
   const waText = fill(P.wa, { name });
   return {
-    slug: p.slug, name, type: p.type[lang], city: isTodo(p.city[lang]) ? '' : p.city[lang],
+    slug: p.slug, name, type: p.type[lang],
     live: p.url,
     title: fill(P.metaTitle, { name, type }),
     description: fill(P.metaDesc, { name, type }),
