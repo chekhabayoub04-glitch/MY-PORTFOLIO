@@ -24,7 +24,7 @@ const STATIC = [
   'graphic-design.html', 'logo-design.html', 'social-media.html', 'web-development.html',
   'css', 'js', 'images', 'videos',
 ];
-const NOT_PUBLISHED = ['videos/source-originals', 'videos/film', 'images/film', 'images/sites/raw'];
+const NOT_PUBLISHED = ['videos/source-originals', 'images/graphic-design', 'videos/film', 'images/film', 'images/sites/raw'];
 
 const pages = [];
 function writePage(file, html, banner) {

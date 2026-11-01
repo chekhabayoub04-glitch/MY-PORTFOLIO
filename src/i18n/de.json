@@ -206,6 +206,13 @@
           "text": "Geschichtete Collagen und kräftige Schrift für Plakate, so laut wie die Fans.",
           "foot": "Plakate und Drops, 2 Motive",
           "tag": "Sport und Streetwear"
+        },
+        {
+          "title": "Lächeln, die Termine füllen",
+          "meta": "Zahnkliniken, arabische Social-Media-Kampagne",
+          "text": "Kinderzahnpflege, Zahnspangen und Zahnersatz: warme, klinische Visuals, die Patienten zum Anrufen bewegen.",
+          "foot": "Klinikkampagne, 4 Visuals",
+          "tag": "Zahnmedizin"
         }
       ],
       "open": "Kollektion öffnen:"
@@ -221,7 +228,9 @@
         "Modemarke",
         "Glasmarke",
         "Villa und Zuhause",
-        "Automarke"
+        "Automarke",
+        "Smile Makeover",
+        "Veneer-Design"
       ]
     },
     "marks": {

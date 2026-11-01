@@ -206,6 +206,13 @@
           "text": "Collages en couches et typographie forte pour des affiches aussi bruyantes que la foule.",
           "foot": "Affiches et lancements, 2 visuels",
           "tag": "Sport et streetwear"
+        },
+        {
+          "title": "Des sourires qui prennent rendez-vous",
+          "meta": "Cliniques dentaires, campagne sociale en arabe",
+          "text": "Soins des enfants, orthodontie et prothèses : des visuels chaleureux et cliniques qui donnent envie d'appeler le cabinet.",
+          "foot": "Campagne clinique, 4 visuels",
+          "tag": "Soins dentaires"
         }
       ],
       "open": "Ouvrir la collection :"
@@ -221,7 +228,9 @@
         "Marque de vêtements",
         "Marque de verre",
         "Villa et maison",
-        "Marque automobile"
+        "Marque automobile",
+        "Transformation du sourire",
+        "Conception de facettes"
       ]
     },
     "marks": {

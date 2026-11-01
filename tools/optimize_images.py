@@ -26,6 +26,9 @@ SOURCES = [
     "images/logo2.jpg", "images/logo5.jpg", "images/logo7.jpg",
     "videos/posters/02-glass-brand.png", "videos/posters/03-villa-home-brand.png",
     "images/aprilll.jpg", "images/april1.jpg", "images/april2.jpg", "images/lozan1.jpg", "images/loazan3.jpg",
+    "images/graphic-design/dental-confidence.png", "images/graphic-design/dental-braces.png",
+    "images/graphic-design/dental-kids.jpg", "images/graphic-design/dental-precision.jpg",
+    "videos/posters/05-smile-makeover.png", "videos/posters/06-veneers-design.png",
     "images/rozan4.jpg", "images/graphic2.jpg", "images/graphic3.jpg", "images/graphic5.jpg", "images/graphic6.jpg",
 ]
 SITE_SHOTS = ROOT / "images/sites/raw"   # written by tools/capture_sites.mjs

@@ -37,7 +37,7 @@
   <main class="service-main video-library">
     <section class="hero-landing">
       <h2>Brand stories in motion</h2>
-      <p>Four brand films, arranged as a cinematic reel. Choose a card to bring it forward, then play it with sound.</p>
+      <p>Six films, from dental clinics to brands, arranged as a cinematic reel. Choose a card to bring it forward, then play it with sound.</p>
     </section>
 
     <section class="video-collection" id="brand-identity" aria-labelledby="brandVideosTitle">
@@ -46,14 +46,14 @@
           <span class="section-label">AI CREATION</span>
           <h2 id="brandVideosTitle">Brand Identity Films</h2>
         </div>
-        <code>videos/brand-identity/</code>
+        <code>videos/dental/ · videos/brand-identity/</code>
       </div>
       <div class="cinema-carousel" id="brandCarousel" role="region" aria-label="AI brand identity films" aria-roledescription="carousel">
         <div class="cinema-stage" id="brandVideos"></div>
         <div class="cinema-controls">
           <button class="cinema-arrow" id="filmPrevious" type="button" aria-label="Previous video"><i class="fas fa-arrow-left" aria-hidden="true"></i></button>
           <button class="cinema-rotation" id="filmRotation" type="button" aria-pressed="false" aria-label="Pause automatic rotation"><i class="fas fa-pause" aria-hidden="true"></i><span>Pause rotation</span></button>
-          <span class="cinema-status" id="filmStatus" aria-live="polite">01 / 04</span>
+          <span class="cinema-status" id="filmStatus" aria-live="polite">01 / 06</span>
           <button class="cinema-arrow" id="filmNext" type="button" aria-label="Next video"><i class="fas fa-arrow-right" aria-hidden="true"></i></button>
         </div>
         <div class="cinema-dots" id="filmDots" aria-label="Choose a video"></div>
@@ -84,10 +84,12 @@
 
   <script>
     const brandFilms = [
-      { title: 'Clothing Brand', category: 'Fashion Film', src: '01-clothing-brand.m4v', poster: 'videos/posters/01-clothing-brand.png' },
-      { title: 'Glass Brand', category: 'Product Film', src: '02-glass-brand.m4v', poster: 'videos/posters/02-glass-brand.png' },
-      { title: 'Villa & Home', category: 'Interior Film', src: '03-villa-home-brand.m4v', poster: 'videos/posters/03-villa-home-brand.png' },
-      { title: 'Car Brand', category: 'Automotive Film', src: '04-car-brand.m4v', poster: 'videos/posters/04-car-brand.png' }
+      { title: 'Smile Makeover', category: 'Dental Film', src: 'dental/01-smile-makeover.mp4', poster: 'images/opt/05-smile-makeover-800.webp' },
+      { title: 'Veneer Design', category: 'Dental Film', src: 'dental/02-veneers-design.mp4', poster: 'images/opt/06-veneers-design-800.webp' },
+      { title: 'Clothing Brand', category: 'Fashion Film', src: 'brand-identity/01-clothing-brand.m4v', poster: 'videos/posters/01-clothing-brand.png' },
+      { title: 'Glass Brand', category: 'Product Film', src: 'brand-identity/02-glass-brand.m4v', poster: 'videos/posters/02-glass-brand.png' },
+      { title: 'Villa & Home', category: 'Interior Film', src: 'brand-identity/03-villa-home-brand.m4v', poster: 'videos/posters/03-villa-home-brand.png' },
+      { title: 'Car Brand', category: 'Automotive Film', src: 'brand-identity/04-car-brand.m4v', poster: 'videos/posters/04-car-brand.png' }
     ];
 
     const carousel = document.getElementById('brandCarousel');
@@ -134,7 +136,7 @@
       copy.className = 'cinema-copy';
       const kicker = document.createElement('span');
       kicker.className = 'cinema-kicker';
-      kicker.textContent = `${formatIndex(index)} / 04  ·  ${film.category}`;
+      kicker.textContent = `${formatIndex(index)} / ${formatIndex(brandFilms.length - 1)}  ·  ${film.category}`;
       const title = document.createElement('h3');
       title.textContent = film.title;
       copy.append(kicker, title);
@@ -220,14 +222,14 @@
         const distance = Math.abs(position);
         slide.style.transform = `translate(calc(-50% + ${position * step}px), -50%) scale(${distance === 0 ? 1 : distance === 1 ? 0.84 : 0.68}) rotateY(${position * -11}deg)`;
         slide.style.zIndex = String(brandFilms.length - distance);
-        slide.style.opacity = distance > 1 ? '0.2' : distance === 1 ? '0.7' : '1';
+        slide.style.opacity = distance > 2 ? '0' : distance > 1 ? '0.2' : distance === 1 ? '0.7' : '1';
         slide.style.filter = distance === 0 ? 'none' : `blur(${distance === 1 ? 1 : 2}px)`;
         slide.setAttribute('aria-current', String(distance === 0));
         slide.classList.toggle('is-active', distance === 0);
         video.controls = distance === 0;
 
         if (distance === 0 && !video.getAttribute('src')) {
-          video.src = `videos/brand-identity/${film.src}`;
+          video.src = `videos/${film.src}`;
           video.load();
         } else if (distance !== 0 && video.hasAttribute('src')) {
           video.pause();

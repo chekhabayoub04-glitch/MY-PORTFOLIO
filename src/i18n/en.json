@@ -206,6 +206,13 @@
           "text": "Layered collage and bold type for posters that feel as loud as the crowd.",
           "foot": "Posters and drops, 2 visuals",
           "tag": "Sports and streetwear"
+        },
+        {
+          "title": "Smiles that book appointments",
+          "meta": "Dental clinics, Arabic social campaign",
+          "text": "Kids' care, braces and prosthetics: warm, clinical visuals that make a patient want to call the clinic.",
+          "foot": "Clinic campaign, 4 visuals",
+          "tag": "Dental care"
         }
       ],
       "open": "Open the collection:"
@@ -221,7 +228,9 @@
         "Clothing brand",
         "Glass brand",
         "Villa and home",
-        "Car brand"
+        "Car brand",
+        "Smile makeover",
+        "Veneer design"
       ]
     },
     "marks": {
