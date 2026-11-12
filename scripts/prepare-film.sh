@@ -5,7 +5,7 @@
 #   scripts/prepare-film.sh videos/film/gemini_generated_video_3db71569.mp4 4 6
 #
 # --preview      only 3 stills (start, middle, end), the poster and its depth map
-# --poster N     the frame of the scrub range used as the poster (default 128)
+# --poster N     the frame used as the poster (default 12: the loop starts there)
 # --stage S      render (Remotion only), encode (ffmpeg + depth only) or all (default)
 #
 # Writes to public/hero/:
@@ -26,7 +26,7 @@ XF=0.5   # loop crossfade, seconds
 
 [ $# -ge 3 ] || { sed -n 2,10p "$0"; exit 1; }
 INPUT="$(cd "$(dirname "$1")" && pwd)/$(basename "$1")"; START="$2"; DURATION="$3"; shift 3
-PREVIEW=0; POSTER=128; STAGE=all
+PREVIEW=0; POSTER=12; STAGE=all
 while [ $# -gt 0 ]; do
   case "$1" in
     --preview) PREVIEW=1 ;;

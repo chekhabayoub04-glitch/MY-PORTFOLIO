@@ -9,6 +9,7 @@
 import gsap from 'gsap';
 import { SplitText } from 'gsap/SplitText';
 import { createAmbient } from './ambient.js';
+import { runIntro } from './intro.js';
 import { applyLight, createSpotlight } from './spotlight.js';
 
 gsap.registerPlugin(SplitText);
@@ -32,13 +33,12 @@ export function initHero({ onLenis } = {}) {
   const saveData = !!navigator.connection?.saveData;
   const hero = $('#top');
 
-  revealHeadline(reduce);
-
   // Crossing the desktop breakpoint swaps the whole scene: reload into the right one
   const mq = matchMedia(CINEMA);
   mq.addEventListener('change', () => location.reload());
 
   if (reduce) {
+    document.getElementById('intro')?.remove();
     root.classList.add('is-still');
     createAmbient({ hero, still: true, small: !mq.matches });
     return;
@@ -47,11 +47,10 @@ export function initHero({ onLenis } = {}) {
   else startLite({ hero, saveData });
 }
 
-function revealHeadline(reduce) {
+function revealHeadline() {
   // The headline is real text from the first paint. The line reveal is only a
-  // flourish: skipped if motion is reduced or the page took long to boot.
+  // flourish, played as the opening screen lifts.
   const h1 = $('.hero-h1');
-  if (reduce || performance.now() > 1500) return;
   const split = SplitText.create(h1, { type: 'lines', mask: 'lines' });
   gsap.from(split.lines, {
     yPercent: 105, duration: .55, stagger: .05, ease: 'power3.out',
@@ -64,22 +63,34 @@ function revealHeadline(reduce) {
 // or the tab is hidden. The poster stays underneath until the first frame.
 // Desktop gets the 1080p encode (the panel is ~830 device px wide on a 2x
 // screen), phones the lighter 720p one.
+// It is held (loading, not playing) until release(): then it starts from the
+// first frame. A refused play() (iOS Low Power Mode, data saver, a phone that
+// wasn't ready yet) is retried when the video can play and on the first touch,
+// scroll or key, so it never waits for the visitor to scroll away and back.
 function heroVideo(stage, watch, src) {
-  const video = Object.assign(document.createElement('video'), {
-    className: 'stage-video', muted: true, loop: true, playsInline: true, autoplay: true,
-    preload: 'auto', src,
-  });
-  video.setAttribute('aria-hidden', 'true');
-  video.setAttribute('disablepictureinpicture', '');
+  const video = document.createElement('video');
+  Object.assign(video, { className: 'stage-video', muted: true, defaultMuted: true, loop: true, playsInline: true, preload: 'auto' });
+  for (const a of ['muted', 'playsinline', 'webkit-playsinline', 'disablepictureinpicture', 'aria-hidden']) video.setAttribute(a, a === 'aria-hidden' ? 'true' : '');
+  video.src = src;
   video.addEventListener('playing', () => stage.classList.add('has-video'), { once: true });
   $('.stage-media', stage).append(video);
 
-  let inView = true;
-  const sync = () => (inView && !document.hidden ? video.play().catch(() => {}) : video.pause());
+  let held = true, inView = true;
+  const want = () => !held && inView && !document.hidden;
+  const sync = () => (want() ? video.paused && video.play().catch(() => {}) : video.pause());
+  ['loadeddata', 'canplay'].forEach(t => video.addEventListener(t, sync));
+  ['touchstart', 'pointerdown', 'keydown', 'scroll'].forEach(t => addEventListener(t, sync, { passive: true }));
   new IntersectionObserver(([e]) => { inView = e.isIntersecting; sync(); }).observe(watch);
   document.addEventListener('visibilitychange', sync);
-  sync();
-  return video;
+  const release = () => {
+    held = false;
+    try { video.currentTime = 0; } catch {}
+    sync();
+    // a refusal right at the start (decoder busy, phone waking up): try again a few times
+    let tries = 0;
+    const retry = setInterval(() => { if (!video.paused || ++tries > 8) clearInterval(retry); else sync(); }, 400);
+  };
+  return { video, release };
 }
 
 // Where the loop is in the walk, 0 (far, in the dark) → 1 (the smile).
@@ -107,7 +118,9 @@ async function startCinema({ hero, saveData, onLenis }) {
   const progress = $('.hero-progress', hero);
   stage.classList.add('has-light');
 
-  const video = heroVideo(stage, hero, '/hero/walk-1080.mp4');
+  const { video, release } = heroVideo(stage, hero, '/hero/walk-1080.mp4');
+  lenis.stop();
+  runIntro(() => video).then(() => { lenis.start(); revealHeadline(); release(); });
   const light = createSpotlight({ mode: 'cursor', rtl });
   const ring = createRing($$('.tool', hero));
   const tl = createTimeline({
@@ -190,9 +203,13 @@ function startLite({ hero, saveData }) {
   stage.classList.add('has-torch');
   const light = createSpotlight({ mode: 'drift', rtl });
   createAmbient({ hero, still: saveData, small: innerWidth < 768 });
-  // on phones the walk starts as soon as the page has loaded, so the poster (LCP) has the network first
-  const walk = () => heroVideo(stage, stage, '/hero/walk-720.mp4');
-  document.readyState === 'complete' ? walk() : addEventListener('load', walk, { once: true });
+  // the walk starts loading once the poster (LCP) is in, so the poster has the network first;
+  // the opening screen waits for it, then the walk plays from its first frame
+  let walk = null;
+  const poster = $('.stage-poster', stage);
+  const load = () => { walk ||= heroVideo(stage, stage, '/hero/walk-720.mp4'); };
+  poster.complete ? load() : (poster.addEventListener('load', load, { once: true }), poster.addEventListener('error', load, { once: true }));
+  runIntro(() => walk?.video).then(() => { load(); revealHeadline(); walk.release(); });
 
   // The light is a fixed-size gradient layer that only translates: sized once
   // here (one repaint), then every frame is a compositor-only transform.
