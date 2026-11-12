@@ -6,6 +6,8 @@ import { HeroFilm } from "./HeroFilm";
 export type FilmProps = {
   readonly start: number;
   readonly duration: number;
+  // baked film grain; the site adds its own over the walk, so it renders with 0
+  readonly grain?: number;
 };
 
 const calculateMetadata: CalculateMetadataFunction<FilmProps> = ({

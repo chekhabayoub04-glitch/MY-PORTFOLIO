@@ -19,7 +19,7 @@ const clamp = {
 
 // Grade: deeper blacks, warm gold highlights (#FFD23F / #F2A33A), skin kept
 // natural by doing the warming in the top of the curves, not with saturation.
-const Graded = ({ start }: { start: number }) => {
+const Graded = ({ start, grain }: { start: number; grain: number }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
   return (
@@ -49,7 +49,7 @@ const Graded = ({ start }: { start: number }) => {
           channel: "blue",
           points: [[0, 0.01], [0.5, 0.47], [0.85, 0.74], [1, 0.84]],
         }),
-        noise({ amount: 0.055, seed: frame }),
+        ...(grain > 0 ? [noise({ amount: grain, seed: frame })] : []),
       ]}
     />
   );
@@ -134,10 +134,10 @@ const Vignette = () => (
   />
 );
 
-export const HeroFilm = ({ start }: FilmProps) => {
+export const HeroFilm = ({ start, grain = 0.055 }: FilmProps) => {
   return (
     <AbsoluteFill style={{ backgroundColor: "#000" }}>
-      <Graded start={start} />
+      <Graded start={start} grain={grain} />
       <LightCone />
       <Haze />
       <Dither />

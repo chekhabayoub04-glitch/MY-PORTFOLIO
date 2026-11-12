@@ -62,10 +62,12 @@ function revealHeadline(reduce) {
 // The walk: graded, 5.5 s, crossfaded into itself at the loop point. It plays
 // from the first moment, loops, and pauses only while the hero is off screen
 // or the tab is hidden. The poster stays underneath until the first frame.
-function heroVideo(stage, watch) {
+// Desktop gets the 1080p encode (the panel is ~830 device px wide on a 2x
+// screen), phones the lighter 720p one.
+function heroVideo(stage, watch, src) {
   const video = Object.assign(document.createElement('video'), {
     className: 'stage-video', muted: true, loop: true, playsInline: true, autoplay: true,
-    preload: 'auto', src: '/hero/walk-720.mp4',
+    preload: 'auto', src,
   });
   video.setAttribute('aria-hidden', 'true');
   video.setAttribute('disablepictureinpicture', '');
@@ -105,7 +107,7 @@ async function startCinema({ hero, saveData, onLenis }) {
   const progress = $('.hero-progress', hero);
   stage.classList.add('has-light');
 
-  const video = heroVideo(stage, hero);
+  const video = heroVideo(stage, hero, '/hero/walk-1080.mp4');
   const light = createSpotlight({ mode: 'cursor', rtl });
   const ring = createRing($$('.tool', hero));
   const tl = createTimeline({
@@ -189,7 +191,7 @@ function startLite({ hero, saveData }) {
   const light = createSpotlight({ mode: 'drift', rtl });
   createAmbient({ hero, still: saveData, small: innerWidth < 768 });
   // on phones the walk starts as soon as the page has loaded, so the poster (LCP) has the network first
-  const walk = () => heroVideo(stage, stage);
+  const walk = () => heroVideo(stage, stage, '/hero/walk-720.mp4');
   document.readyState === 'complete' ? walk() : addEventListener('load', walk, { once: true });
 
   // The light is a fixed-size gradient layer that only translates: sized once

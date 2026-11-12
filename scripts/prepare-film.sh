@@ -11,7 +11,7 @@
 # Writes to public/hero/:
 #   poster-{360,540,720}.webp, poster-depth.webp
 #   depth-atlas.webp          4x4 depth maps of walk frames 0,8,..,112,119 (WebGL parallax)
-#   walk-720.mp4              the hero walk loop (no audio, 0.5 s crossfade at the loop point)
+#   walk-1080.mp4, walk-720.mp4  the hero walk loop, desktop / phones (no audio, 0.5 s crossfade at the loop point)
 #   ambient.webm, ambient.mp4 desktop background loop (full clip, graded, crossfaded)
 #   ambient-540.mp4           phone background loop
 set -euo pipefail
@@ -46,13 +46,14 @@ cd "$FILM"
 
 render() {
   cp "$INPUT" public/source.mp4
-  rm -rf out/poster && npx remotion render HeroWalk out/poster --sequence --frames="$POSTER" --image-format=png --props="$WALK"
+  rm -rf out/poster && npx remotion render HeroWalk out/poster --sequence --frames="$POSTER" --image-format=png --props="${WALK%\}},\"grain\":0}"
   if [ "$PREVIEW" = 1 ]; then
     rm -rf out/preview
     npx remotion render HeroWalk out/preview --sequence --frames="0,$((TOTAL / 2)),$((TOTAL - 1))" --image-format=png --props="$WALK"
     return
   fi
-  rm -rf out/walk && npx remotion render HeroWalk out/walk --sequence --image-format=png --props="$WALK"
+  # the walk without baked grain: the site lays its own over it, and grain costs bits
+  rm -rf out/walk && npx remotion render HeroWalk out/walk --sequence --image-format=png --props="${WALK%\}},\"grain\":0}"
   npx remotion render Ambient out/ambient-master.mp4 --codec=h264 --crf=14 --muted --props="{\"start\":0,\"duration\":$FULL}"
 }
 
@@ -60,7 +61,8 @@ render() {
 # so the cut is invisible.
 loop() {  # loop <input> <duration> <extra filters> <encoder args...>
   local in="$1" dur="$2" vf="$3"; shift 3
-  "$FF" -v error -y -i "$in" -an -filter_complex \
+  local src=(-i "$in"); [[ "$in" == *'*'* ]] && src=(-framerate 24 -pattern_type glob -i "$in")
+  "$FF" -v error -y "${src[@]}" -an -filter_complex \
     "[0]${vf}split[a][b];[a]trim=start=$XF,setpts=PTS-STARTPTS,fps=24[body];[b]trim=end=$XF,setpts=PTS-STARTPTS,fps=24[head];[body][head]xfade=transition=fade:duration=$XF:offset=$(echo "$dur - 2 * $XF" | bc)" \
     "$@"
 }
@@ -68,7 +70,7 @@ loop() {  # loop <input> <duration> <extra filters> <encoder args...>
 encode() {
   local png; png="$(ls out/poster/*.png | head -1)"
   for w in 360 540 720; do
-    "$FF" -v error -y -i "$png" -vf "scale=$w:-2:flags=lanczos" -c:v libwebp -quality 80 -preset photo "$OUT/poster-$w.webp"
+    "$FF" -v error -y -i "$png" -vf "scale=$w:-2:flags=lanczos" -c:v libwebp -quality 85 -preset photo "$OUT/poster-$w.webp"
   done
   "$PY" "$ROOT/scripts/depth.py" "$png" "$OUT/poster-depth.webp"
   [ "$PREVIEW" = 1 ] && return
@@ -83,9 +85,11 @@ encode() {
   for k in 0 8 16 24 32 40 48 56 64 72 80 88 96 104 112 119; do atlas="$atlas $(pick "$k")"; done
   "$PY" "$ROOT/scripts/depth.py" --atlas "$OUT/depth-atlas.webp" $atlas
 
-  # The hero loop from the same graded frames.
-  "$FF" -v error -y -framerate 24 -pattern_type glob -i 'out/walk/*.png' -c:v libx264 -crf 12 -pix_fmt yuv420p out/walk-master.mp4
-  loop out/walk-master.mp4 "$(echo "$n / 24" | bc -l)" "" -c:v libx264 -preset slow -crf 28 -pix_fmt yuv420p -movflags +faststart "$OUT/walk-720.mp4"
+  # The hero loop, straight from the lossless graded frames (one encode only):
+  # 1080p for desktop, 720p for phones.
+  local dur; dur="$(echo "$n / 24" | bc -l)"
+  loop "out/walk/*.png" "$dur" "scale=1080:1920:flags=lanczos,unsharp=5:5:0.4:5:5:0," -c:v libx264 -preset veryslow -tune film -crf 22 -pix_fmt yuv420p -movflags +faststart "$OUT/walk-1080.mp4"
+  loop "out/walk/*.png" "$dur" "" -c:v libx264 -preset veryslow -tune film -crf 20 -pix_fmt yuv420p -movflags +faststart "$OUT/walk-720.mp4"
 
   # Ambient loop: the whole clip, graded, no audio.
   local amb; amb="$(echo "$(printf '%.0f' "$(echo "$FULL * 24" | bc)") / 24" | bc -l)"
