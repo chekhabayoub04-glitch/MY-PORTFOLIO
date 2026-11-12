@@ -111,7 +111,8 @@
         "levels": "niveaux de langue",
         "resources": "ressources",
         "gallery": "galerie photo",
-        "about": "présentation du médecin"
+        "about": "présentation du médecin",
+        "rooms": "chambres"
       }
     },
     "metaTitle": "{name}, site pour {type} | Ayoub Chekhab",

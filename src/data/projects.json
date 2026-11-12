@@ -10,6 +10,35 @@
   ],
   "projects": [
     {
+      "slug": "hotel-youcef",
+      "url": "https://hotelyoucefkhenchela.com/",
+      "showClientName": "TODO",
+      "name": { "en": "Hotel Youcef", "fr": "Hôtel Youcef", "ar": "فندق يوسف", "de": "Hotel Youcef" },
+      "type": { "en": "Hotel", "fr": "Hôtel", "ar": "فندق", "de": "Hotel" },
+      "audience": "business",
+      "year": "TODO",
+      "deliveryTime": { "en": "TODO", "fr": "TODO", "ar": "TODO", "de": "TODO" },
+      "services": [
+        "website"
+      ],
+      "accent": "TODO",
+      "problem": { "en": [ "TODO", "TODO", "TODO" ], "fr": [ "TODO", "TODO", "TODO" ], "ar": [ "TODO", "TODO", "TODO" ], "de": [ "TODO", "TODO", "TODO" ] },
+      "solution": [
+        { "icon": "calendar", "title": { "en": "TODO", "fr": "TODO", "ar": "TODO", "de": "TODO" }, "text": { "en": "TODO", "fr": "TODO", "ar": "TODO", "de": "TODO" } },
+        { "icon": "phone", "title": { "en": "TODO", "fr": "TODO", "ar": "TODO", "de": "TODO" }, "text": { "en": "TODO", "fr": "TODO", "ar": "TODO", "de": "TODO" } },
+        { "icon": "language", "title": { "en": "TODO", "fr": "TODO", "ar": "TODO", "de": "TODO" }, "text": { "en": "TODO", "fr": "TODO", "ar": "TODO", "de": "TODO" } },
+        { "icon": "search", "title": { "en": "TODO", "fr": "TODO", "ar": "TODO", "de": "TODO" }, "text": { "en": "TODO", "fr": "TODO", "ar": "TODO", "de": "TODO" } }
+      ],
+      "results": [],
+      "testimonial": null,
+      "capture": [
+        { "kind": "rooms", "scrollTo": "#rooms" },
+        { "kind": "menu", "click": ".menu-btn" },
+        { "kind": "booking", "click": "[data-book]" },
+        { "kind": "gallery", "viewport": "desktop", "scrollTo": "#gallery-tour" }
+      ]
+    },
+    {
       "slug": "dr-yahia",
       "url": "https://chekhabayoub11-ops.github.io/dr.213/",
       "showClientName": "TODO",

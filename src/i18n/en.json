@@ -111,7 +111,8 @@
         "levels": "language levels",
         "resources": "learning resources",
         "gallery": "photo gallery",
-        "about": "about the doctor"
+        "about": "about the doctor",
+        "rooms": "hotel rooms"
       }
     },
     "metaTitle": "{name}, {type} website | Ayoub Chekhab",

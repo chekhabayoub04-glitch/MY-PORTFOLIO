@@ -37,6 +37,7 @@ const CLEAN_CSS = `
     opacity: 1 !important; transform: none !important; visibility: visible !important; }
   [id*="cookie" i], [class*="cookie" i], [id*="consent" i], [class*="consent" i],
   [class*="wa-float" i], [class*="whatsapp-float" i], [class*="float-badge" i], [class*="chat-widget" i],
+  a.skip, .skip-link, .skip-to-content,
   iframe[src*="tawk"], iframe[src*="crisp"], iframe[src*="intercom"] { display: none !important; }
 `;
 
@@ -175,9 +176,15 @@ for (const project of projects) {
             await el.scrollIntoViewIfNeeded({ timeout: 5000 });
             await wait(500);
             const box = await el.boundingBox();
+            // a section shot: hide sticky/fixed headers, or they land mid-image
+            const hidden = await page.evaluate(() => [...document.querySelectorAll('header, nav, [class*="header" i]')]
+              .filter(h => ['fixed', 'sticky'].includes(getComputedStyle(h).position))
+              .map(h => (h.style.visibility = 'hidden', h)).length);
             buffer = box && box.height <= opts.viewport.height * 1.8
               ? await el.screenshot()
               : await page.screenshot();   // a long section: its first screen
+            if (hidden) await page.evaluate(() => document.querySelectorAll('header, nav, [class*="header" i]')
+              .forEach(h => h.style.removeProperty('visibility')));
           }
           const key = `gallery-${++n}`;
           await save(buffer, `${dir}/${key}`, opts.maxWidth, manifest.images, key);
