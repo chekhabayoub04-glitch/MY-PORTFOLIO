@@ -12,6 +12,7 @@
 #   poster-{360,540,720}.webp, poster-depth.webp
 #   depth-atlas.webp          4x4 depth maps of walk frames 0,8,..,112,119 (WebGL parallax)
 #   walk-1080.mp4, walk-720.mp4  the hero walk loop, desktop / phones (no audio, 0.5 s crossfade at the loop point)
+#   walk-720.avif, walk-540.webp the same loop as animated images, when autoplaying video is refused
 #   ambient.webm, ambient.mp4 desktop background loop (full clip, graded, crossfaded)
 #   ambient-540.mp4           phone background loop
 set -euo pipefail
@@ -90,6 +91,10 @@ encode() {
   local dur; dur="$(echo "$n / 24" | bc -l)"
   loop "out/walk/*.png" "$dur" "scale=1080:1920:flags=lanczos,unsharp=5:5:0.4:5:5:0," -c:v libx264 -preset veryslow -tune film -crf 22 -pix_fmt yuv420p -movflags +faststart "$OUT/walk-1080.mp4"
   loop "out/walk/*.png" "$dur" "" -c:v libx264 -preset veryslow -tune film -crf 20 -pix_fmt yuv420p -movflags +faststart "$OUT/walk-720.mp4"
+  # The same loop as animated images, for browsers that refuse autoplaying video
+  # (iPhone Low Power Mode): AVIF first, WebP for older phones.
+  loop "out/walk/*.png" "$dur" "" -pix_fmt yuv420p -c:v libaom-av1 -crf 26 -cpu-used 3 -row-mt 1 -f avif "$OUT/walk-720.avif"
+  loop "out/walk/*.png" "$dur" "scale=540:960:flags=lanczos," -c:v libwebp_anim -quality 45 -loop 0 -preset picture "$OUT/walk-540.webp"
 
   # Ambient loop: the whole clip, graded, no audio.
   local amb; amb="$(echo "$(printf '%.0f' "$(echo "$FULL * 24" | bc)") / 24" | bc -l)"

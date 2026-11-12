@@ -64,10 +64,11 @@ function revealHeadline() {
 // Desktop gets the 1080p encode (the panel is ~830 device px wide on a 2x
 // screen), phones the lighter 720p one.
 // It is held (loading, not playing) until release(): then it starts from the
-// first frame. A refused play() (iOS Low Power Mode, data saver, a phone that
-// wasn't ready yet) is retried when the video can play and on the first touch,
-// scroll or key, so it never waits for the visitor to scroll away and back.
-function heroVideo(stage, watch, src) {
+// first frame. A refused play() is retried for a moment; if the browser keeps
+// refusing (iPhone Low Power Mode blocks every autoplaying video, Data Saver,
+// some in-app browsers), the walk switches to an animated image of the same
+// loop, which those modes still play, so it moves without a touch.
+function heroVideo(stage, watch, src, onFallback) {
   const video = document.createElement('video');
   Object.assign(video, { className: 'stage-video', muted: true, defaultMuted: true, loop: true, playsInline: true, preload: 'auto' });
   for (const a of ['muted', 'playsinline', 'webkit-playsinline', 'disablepictureinpicture', 'aria-hidden']) video.setAttribute(a, a === 'aria-hidden' ? 'true' : '');
@@ -75,9 +76,11 @@ function heroVideo(stage, watch, src) {
   video.addEventListener('playing', () => stage.classList.add('has-video'), { once: true });
   $('.stage-media', stage).append(video);
 
-  let held = true, inView = true;
-  const want = () => !held && inView && !document.hidden;
-  const sync = () => (want() ? video.paused && video.play().catch(() => {}) : video.pause());
+  let held = true, inView = true, refused = false, gaveUp = false;
+  const want = () => !held && !gaveUp && inView && !document.hidden;
+  const sync = () => (want()
+    ? video.paused && video.play().catch(err => { if (err?.name === 'NotAllowedError') refused = true; })
+    : video.pause());
   ['loadeddata', 'canplay'].forEach(t => video.addEventListener(t, sync));
   ['touchstart', 'pointerdown', 'keydown', 'scroll'].forEach(t => addEventListener(t, sync, { passive: true }));
   new IntersectionObserver(([e]) => { inView = e.isIntersecting; sync(); }).observe(watch);
@@ -86,10 +89,28 @@ function heroVideo(stage, watch, src) {
     held = false;
     try { video.currentTime = 0; } catch {}
     sync();
-    // a refusal right at the start (decoder busy, phone waking up): try again a few times
+    // a refusal right at the start (decoder busy, phone waking up): try again a
+    // few times; still refused after ~1.2 s (or never started after ~3.6 s): the image
     let tries = 0;
-    const retry = setInterval(() => { if (!video.paused || ++tries > 8) clearInterval(retry); else sync(); }, 400);
+    const retry = setInterval(() => {
+      if (!video.paused) return clearInterval(retry);
+      if (++tries >= (refused ? 3 : 9)) { clearInterval(retry); fallback(); return; }
+      sync();
+    }, 400);
   };
+  function fallback() {
+    if (!video.paused || gaveUp) return;
+    gaveUp = true;
+    // <source> before the <img> gets its src, so only one format is fetched
+    const pic = document.createElement('picture');
+    pic.className = 'stage-anim';
+    pic.append(Object.assign(document.createElement('source'), { type: 'image/avif', srcset: '/hero/walk-720.avif' }));
+    const img = Object.assign(document.createElement('img'), { alt: '', decoding: 'async' });
+    pic.append(img);
+    $('.stage-media', stage).append(pic);
+    img.addEventListener('load', () => { stage.classList.add('has-anim'); onFallback?.(); }, { once: true });
+    img.src = '/hero/walk-540.webp';
+  }
   return { video, release };
 }
 
@@ -118,7 +139,11 @@ async function startCinema({ hero, saveData, onLenis }) {
   const progress = $('.hero-progress', hero);
   stage.classList.add('has-light');
 
-  const { video, release } = heroVideo(stage, hero, '/hero/walk-1080.mp4');
+  const { video, release } = heroVideo(stage, hero, '/hero/walk-1080.mp4', () => {
+    // the animated image replaces the video: back to the 2D light over it
+    gl?.dispose(); gl = null;
+    stage.classList.remove('is-gl'); stage.classList.add('has-light'); root.classList.remove('is-webgl');
+  });
   lenis.stop();
   runIntro(() => video).then(() => { lenis.start(); revealHeadline(); release(); });
   const light = createSpotlight({ mode: 'cursor', rtl });
@@ -178,9 +203,10 @@ async function startCinema({ hero, saveData, onLenis }) {
 
   // WebGL (depth parallax) once the page is up, on capable machines
   if (!saveData) afterLoad(() => import('./webgl.js').then(async ({ webglCapable, createGL }) => {
-    if (!webglCapable()) return;
+    if (!webglCapable() || stage.classList.contains('has-anim')) return;
     try {
       const g = await createGL(media, video);
+      if (stage.classList.contains('has-anim')) return g.dispose();
       g.resize(tl.geo.rest.w, tl.geo.rest.h);
       gl = g;
       stage.classList.remove('has-light');
